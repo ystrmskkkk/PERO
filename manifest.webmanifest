@@ -1,0 +1,30 @@
+{
+  "name": "PERO",
+  "short_name": "PERO",
+  "description": "PERO — классика как игра: читай книгу по уровням, проходи мини-игры и собирай карточки героев.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#E9DFC7",
+  "theme_color": "#E9DFC7",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
