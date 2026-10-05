@@ -29,7 +29,17 @@
   --f-ui:"PT Serif", Georgia, serif;
   --r:4px; color-scheme:light;
   --f-sys:-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", sans-serif;
-  --navbg:rgba(233,223,199,.86);
+  --navbg:rgba(233,223,199,.86); --hair:rgba(58,42,28,.25); --segbg:rgba(58,42,28,.12); --artf:none;
+}
+/* Night: the same map by candlelight — warm ink-dark paper, light sepia ink */
+:root[data-app-theme="night"]{
+  --bg:#1D1812; --surface:#2A231A; --ink:#ECE2CB; --muted:#B4A58A; --line:#4B4031;
+  --accent:#E06A52; --accent-soft:#4A2820; --gold:#D9B464; --gold-soft:#4A3B1E;
+  --good:#93C27A; --good-soft:#2B3A22; --bad:#E06A52; --bad-soft:#4A2820;
+  --band:#120E09; --band-ink:#ECE2CB; --snow:rgba(236,226,203,.3);
+  --navbg:rgba(29,24,18,.86); --hair:rgba(236,226,203,.18); --segbg:rgba(236,226,203,.1);
+  --artf:invert(1) hue-rotate(180deg) brightness(.92) sepia(.25);
+  color-scheme:dark;
 }
 html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:17px;line-height:1.5;padding-inline:16px;padding-block:0;-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-font-smoothing:antialiased}
@@ -255,7 +265,7 @@ button.stat:hover{border-color:var(--accent)}
 .app.has-tabs{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 .app .back[data-go]{display:none}
 .top{display:none}
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;margin-inline:-16px;padding:6px 16px 8px;background:var(--navbg);-webkit-backdrop-filter:saturate(1.4) blur(18px);backdrop-filter:saturate(1.4) blur(18px);border-bottom:.5px solid rgba(58,42,28,.25)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;margin-inline:-16px;padding:6px 16px 8px;background:var(--navbg);-webkit-backdrop-filter:saturate(1.4) blur(18px);backdrop-filter:saturate(1.4) blur(18px);border-bottom:.5px solid var(--hair)}
 .nav .bar3{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:44px;gap:6px}
 .navback{justify-self:start;display:inline-flex;align-items:center;gap:2px;background:none;border:0;padding:8px 8px 8px 0;margin-left:-6px;min-height:44px;font:400 17px/1 var(--f-sys);color:var(--accent)}
 .navback svg{width:13px;height:21px}
@@ -265,12 +275,12 @@ button.stat:hover{border-color:var(--accent)}
 .nav.root .bar3{grid-template-columns:1fr auto}
 .large{font-family:var(--f-display);font-size:34px;line-height:1.1;margin-top:2px}
 .stats .stat{font-family:var(--f-sys);font-size:14px}
-.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--navbg);-webkit-backdrop-filter:saturate(1.4) blur(18px);backdrop-filter:saturate(1.4) blur(18px);border-top:.5px solid rgba(58,42,28,.3);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--navbg);-webkit-backdrop-filter:saturate(1.4) blur(18px);backdrop-filter:saturate(1.4) blur(18px);border-top:.5px solid var(--hair);padding-bottom:env(safe-area-inset-bottom,0px)}
 .tabbar .in{max-width:460px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
 .tab{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 0 6px;min-height:49px;font:500 10.5px var(--f-sys);color:var(--muted)}
 .tab svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .tab[aria-current="page"]{color:var(--accent)}
-.seg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:rgba(58,42,28,.12);border-radius:9px;padding:2px;gap:2px}
+.seg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:var(--segbg);border-radius:9px;padding:2px;gap:2px}
 .seg button{border:0;background:transparent;border-radius:7px;padding:7px 4px;min-height:32px;font:600 13px var(--f-sys);color:var(--ink)}
 .seg button[aria-pressed="true"]{background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.18),0 0 0 .5px rgba(0,0,0,.06)}
 .btn{min-height:50px;border-radius:12px;font-family:var(--f-sys);font-weight:600;font-size:17px;box-shadow:none}
@@ -329,6 +339,18 @@ button.stat:hover{border-color:var(--accent)}
 .lp.wheel2{animation:creak 3.6s ease-in-out -.4s infinite}
 @keyframes creak{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
 @keyframes reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.vimg img,.live img,.deco.raster img,.vstrip img{filter:var(--artf)}
+.deco.raster.sketch img{filter:var(--artf) grayscale(1)}
+.themes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px}
+.th{border:2px solid var(--line);border-radius:12px;background:none;padding:8px 8px 10px;display:flex;flex-direction:column;gap:8px;align-items:center;font:500 14px var(--f-sys);color:var(--ink);min-height:44px}
+.th[aria-pressed="true"]{border-color:var(--accent)}
+.th .sw{width:100%;aspect-ratio:3/4;border-radius:8px;display:flex;flex-direction:column;gap:5px;padding:8px;box-sizing:border-box;overflow:hidden}
+.th .sw i{display:block;height:5px;border-radius:2px}
+.th .sw i.t{width:60%;height:8px}
+.th .sw i.r{width:30%;background:#9E2B1F!important;margin-top:auto;height:10px;border-radius:3px}
+.sw.paper{background:#E9DFC7}.sw.paper i{background:#3A2A1C}
+.sw.night{background:#1D1812}.sw.night i{background:#ECE2CB}
+.sw.auto{background:linear-gradient(135deg,#E9DFC7 50%,#1D1812 50%)}.sw.auto i{background:#8A7A63}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -1069,11 +1091,17 @@ const ICONS={
 
 let S={screen:'library',age:'Все',xp:0,streak:2,done:[],cards:[],
   level:null,gi:0,first:true,backPara:null,sel:null,answered:false,order:[],earned:null,gained:0,openHint:null,
-  boss:null,flashXp:false,dossier:[],justDone:null,act:1,duelBest:0,lockCfg:null,lockLast:0,fair:{blitz:null,lock:0,snos:0,lockOk:false,snosOk:false}};
+  boss:null,flashXp:false,theme:'paper',dossier:[],justDone:null,act:1,duelBest:0,lockCfg:null,lockLast:0,fair:{blitz:null,lock:0,snos:0,lockOk:false,snosOk:false}};
 try{const saved=JSON.parse(localStorage.getItem('bq-proto')||'null');if(saved){Object.assign(S,saved,{screen:'library'});}}catch(e){}
-function save(){try{localStorage.setItem('bq-proto',JSON.stringify({xp:S.xp,streak:S.streak,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,act:S.act,duelBest:S.duelBest}))}catch(e){}}
+function save(){try{localStorage.setItem('bq-proto',JSON.stringify({xp:S.xp,streak:S.streak,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,act:S.act,duelBest:S.duelBest}))}catch(e){}}
 
 const app=document.getElementById('app');
+const darkMQ=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+function applyTheme(){const t=S.theme==='auto'?(darkMQ&&darkMQ.matches?'night':'paper'):S.theme;document.documentElement.setAttribute('data-app-theme',t);
+ const m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='night'?'#1D1812':'#E9DFC7');
+ const st=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(st)st.setAttribute('content',t==='night'?'black-translucent':'default');
+ document.documentElement.style.background=getComputedStyle(document.documentElement).getPropertyValue('--bg')}
+if(darkMQ&&darkMQ.addEventListener)darkMQ.addEventListener('change',()=>{if(S.theme==='auto'){applyTheme();render()}});
 let timerId=null, snowStop=null, gameStop=null;
 function clearTimers(){if(timerId){clearInterval(timerId);timerId=null}if(snowStop){snowStop();snowStop=null}if(gameStop){gameStop();gameStop=null}}
 function go(screen,patch){const from=S.screen;clearTimers();Object.assign(S,patch||{},{screen});render();window.scrollTo(0,0);
@@ -1117,6 +1145,9 @@ function vProfile(){
  <div class="grow"><span>Опыт</span><span>${S.xp} XP</span></div>
  <div class="grow"><span>Карточки</span><span>${S.cards.length} из ${total}</span></div>
  <div class="grow"><span>Пройдено мест на картах</span><span>${S.done.length} из ${ALLNODES.length}</span></div></div>
+ <div class="ghead">Тема</div><div class="group"><div class="themes" role="group" aria-label="Тема оформления">
+ ${[['paper','Бумага'],['night','Ночь'],['auto','Как в системе']].map(([k,n])=>`<button class="th" data-theme-set="${k}" aria-pressed="${S.theme===k}"><span class="sw ${k}"><i class="t"></i><i></i><i style="width:80%"></i><i class="r"></i></span>${n}</button>`).join('')}
+ </div></div>
  <div class="ghead">Чтение</div><div class="group">
  <div class="grow"><span>Сейчас читаю</span><span>Капитанская дочка</span></div>
  <div class="grow"><span>Оформление</span><span>Старинная карта</span></div></div>
@@ -1424,6 +1455,7 @@ app.addEventListener('click',e=>{
  if(t.dataset.tab){if(S.screen!==t.dataset.tab)go(t.dataset.tab);return}
  if(t.dataset.back){go(backTarget());return}
  if(t.dataset.go){go(t.dataset.go);return}
+ if(t.dataset.themeSet){S.theme=t.dataset.themeSet;save();applyTheme();render();return}
  if(t.dataset.age){S.age=t.dataset.age;render();return}
  if(t.dataset.actSw){S.act=+t.dataset.actSw;save();render();return}
  if(t.dataset.node){const id=t.dataset.node;
@@ -1465,6 +1497,7 @@ app.addEventListener('click',e=>{
  if(act==='reset'){S.xp=0;S.done=[];S.cards=[];S.dossier=[];S.duelBest=0;S.act=1;S.fair={blitz:null,lock:0,snos:0,lockOk:false,snosOk:false};save();go('library');return}
 });
 window.__PERO={LEVELS};
+applyTheme();
 let sw=null;
 document.addEventListener('touchstart',e=>{const t=e.touches[0];sw=(DEPTH[S.screen]>0&&S.screen!=='result'&&t.clientX<28)?{x:t.clientX,y:t.clientY}:null},{passive:true});
 document.addEventListener('touchend',e=>{if(!sw)return;const t=e.changedTouches[0];if(t.clientX-sw.x>80&&Math.abs(t.clientY-sw.y)<60)go(backTarget());sw=null},{passive:true});
