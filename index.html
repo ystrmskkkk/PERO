@@ -1239,8 +1239,7 @@ const SFX=(()=>{let ctx=null,master=null,noiseBuf=null;
   const now=c.currentTime;if(last[name]&&now-last[name]<0.04)return;last[name]=now;try{P[name](now+0.01)}catch(e){}}
 })();
 window.__SFX=SFX;
-document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('button,a');if(!b||b.disabled)return;
- const d=b.dataset;if(d.opt!==undefined||d.word!==undefined||d.pv!==undefined||d.boss!==undefined||d.snq!==undefined||b.id==='lk-go')return;SFX('tap')},true);
+
 function addXp(n){S.xp+=n;S.gained+=n;S.flashXp=true;save()}
 function isDone(id){return S.done.includes(id)}
 function actNodes(){return ACTS[S.act].nodes}
