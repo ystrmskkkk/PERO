@@ -1,7 +1,7 @@
 // Офлайн-кеш PERO.
 // Страница приложения грузится из сети, если она есть (так обновления приходят сразу),
 // а без интернета берётся из кеша. Иконки и шрифты — сначала из кеша.
-const CACHE = 'pero-v35';
+const CACHE = 'pero-v36';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './apple-touch-icon.png', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {

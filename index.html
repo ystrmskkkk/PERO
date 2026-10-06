@@ -514,7 +514,10 @@ const LEVELS={
    {note:'Вскоре дорожный указал, куда ехать.'},
    {t:'«А потому, что ветер оттоле потянул, — отвечал дорожный, — и я слышу, дымом пахнуло; знать, деревня близко»'},
    {note:'Дорожный вывел кибитку к постоялому двору. Здесь Пётр впервые разглядел своего вожатого.'},
-   {t:'Наружность его показалась мне замечательна: он был лет сорока, росту среднего, худощав и широкоплеч. В чёрной бороде его показывалась проседь; живые большие глаза так и бегали. Лицо его имело выражение довольно приятное, но плутовское. Волоса были обстрижены в кружок; на нём был оборванный армяк и татарские шаровары.'}
+   {t:'Наружность его показалась мне замечательна: он был лет сорока, росту среднего, худощав и широкоплеч. В чёрной бороде его показывалась проседь; живые большие глаза так и бегали. Лицо его имело выражение довольно приятное, но плутовское. Волоса были обстрижены в кружок; на нём был оборванный армяк и татарские шаровары.'},
+   {note:'Постоялый двор стоял «в стороне, в степи, далече от всякого селения» и «очень походил на разбойническую пристань». Хозяин узнал вожатого и заговорил с ним странно.'},
+   {t:'«Эхе, — сказал он, — опять ты в нашем краю! Отколе бог принес?» Вожатый мой мигнул значительно и отвечал поговоркою: «В огород летал, конопли клевал; швырнула бабушка камушком — да мимо. Ну, а что ваши?» — Да что наши! — отвечал хозяин, продолжая иносказательный разговор. — Стали было к вечерне звонить, да попадья не велит: поп в гостях, черти на погосте. «Молчи, дядя, — возразил мой бродяга, — будет дождик, будут и грибки; а будут грибки, будет и кузов. А теперь (тут он мигнул опять) заткни топор за спину: лесничий ходит. Ваше благородие! за ваше здоровье!»'},
+   {t:'Я ничего не мог тогда понять из этого воровского разговора; но после уж догадался, что дело шло о делах Яицкого войска, в то время только что усмиренного после бунта 1772 года.'}
   ],
   games:[
    {type:'choice',label:'Детали',q:'Что, по словам ямщика, чернелось в снегу?',opts:['Воз с сеном','Сухое дерево','Или волк, или человек','Огни деревни'],a:2,para:0,ex:'«Воз не воз, дерево не дерево… или волк, или человек».'},
@@ -855,17 +858,18 @@ function snowSVG(w,h,n,cls){let o='';const rnd=k=>{const v=Math.sin(k*12.9898+78
   else{const L=5+rnd(i+13)*9;o+=`<path class="st" d="M${x.toFixed(1)} ${y.toFixed(1)}q${(L*.5).toFixed(1)} ${(L*.05).toFixed(1)} ${L.toFixed(1)} ${(L*.32).toFixed(1)}"/>`}}
  return `<svg class="${cls}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g class="sf1">${o}</g><g class="sf2">${o}</g></svg>`}
 const LOCKQ=[
- {q:'Кто воспитывал Петрушу с пяти лет?',opts:['Савельич','Князь Б.','Отец','Ямщик'],a:0},
- {q:'В какой полк записали Петрушу?',opts:['Семёновский','Измайловский','Преображенский','Конный'],a:0},
- {q:'С какой стороны шла туча?',opts:['восток','запад','юг','север'],a:0},
- {q:'Чем пахло, по словам дорожного?',opts:['дымом','хлебом','морозом','сеном'],a:0},
- {q:'Куда отец отправил служить сына?',opts:['Оренбург','Петербург','Москва','Казань'],a:0},
- {q:'Что варила матушка в гостиной?',opts:['варенье','щи','кисель','пироги'],a:0},
- {q:'Что читал батюшка у окна?',opts:['календарь','газету','письмо','псалтырь'],a:0},
- {q:'Сколько детей было в семье Гринёвых?',opts:['девять','трое','пятеро','семь'],a:0},
- {q:'Кто закричал: «беда: буран!»?',opts:['ямщик','Савельич','Пётр','дорожный'],a:0},
- {q:'«Береги платье снову, а … смолоду»',opts:['честь','имя','слово','шпагу'],a:0},
- {q:'Где жил отец после отставки?',opts:['под Симбирском','в Петербурге','в Оренбурге','в Москве'],a:0}
+ {q:'«В огород летал, … клевал»',opts:['конопли','горох','пшено','овёс'],a:0},
+ {q:'«швырнула бабушка … — да мимо»',opts:['камушком','палкой','веником','сапогом'],a:0},
+ {q:'«Стали было к вечерне звонить, да … не велит»',opts:['попадья','староста','барыня','дьячок'],a:0},
+ {q:'«поп в гостях, … на погосте»',opts:['черти','волки','гости','псы'],a:0},
+ {q:'«будет дождик, будут и …»',opts:['грибки','ягоды','лужи','хлеба'],a:0},
+ {q:'«а будут грибки, будет и …»',opts:['кузов','обед','праздник','ужин'],a:0},
+ {q:'«заткни … за спину: лесничий ходит»',opts:['топор','нож','кнут','ружьё'],a:0},
+ {q:'«опять ты в нашем краю! Отколе … принес?»',opts:['бог','ветер','леший','чёрт'],a:0},
+ {q:'Кто отвечал поговоркою?',opts:['вожатый','хозяин','Савельич','ямщик'],a:0},
+ {q:'О чём на самом деле шёл разговор?',opts:['Яицкое войско','погода','цены на хлеб','дорога'],a:0},
+ {q:'После бунта какого года?',opts:['1772','1773','1762','1774'],a:0},
+ {q:'Умёт походил на разбойническую …',opts:['пристань','избушку','корчму','заставу'],a:0}
 ];
 const HATCH=(id,step)=>`<pattern id="${id}" width="8" height="${step}" patternUnits="userSpaceOnUse"><path class="hz" d="M0 1h8"/></pattern>`;
 const DIAG=id=>`<pattern id="${id}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><path class="hz" d="M0 1h6"/></pattern>`;
@@ -1156,7 +1160,7 @@ const SNOS_WORDS3=[['САМОЗВАНЕЦ','samozv'],['РАСКОЛЬНИК','ra
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 const NODES=[
  {id:'l1',x:50,kind:'level',place:'Симбирская деревня'},{id:'l2',x:70,kind:'level',place:'у кибитки'},{id:'chest',x:34,kind:'chest',title:'Сундук',place:'награда в пути'},
- {id:'l3',x:64,kind:'level',place:'голая степь'},{id:'l4',x:32,kind:'level',place:'в снежной мгле'},{id:'boss',x:52,kind:'boss',title:'Снежная ярмарка',place:'финал части'}
+ {id:'l3',x:64,kind:'level',place:'голая степь'},{id:'l4',x:32,kind:'level',place:'в снежной мгле'},{id:'boss',x:52,kind:'boss',title:'Постоялый двор',place:'финал части'}
 ];
 const NODES2=[
  {id:'l5',x:50,kind:'level',place:'постоялый двор'},{id:'l6',x:70,kind:'level',place:'у бревенчатого забора'},{id:'chest2',x:34,kind:'chest',title:'Сундук',place:'в избе Миронова'},
@@ -1214,7 +1218,7 @@ function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id
 const DEPTH={library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2};
 const ROOT_TITLES={library:'Библиотека',map:'Карта',cards:'Коллекция',profile:'Профиль'};
 function backTarget(){const sc=S.screen;if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
-function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Снежная ярмарка';case 'boss':return (S.boss&&S.boss.act===4)?'Военный совет':'Блиц-викторина';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Снежный снос';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Замок памяти';case 'result':return 'Итоги';default:return ''}}
+function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Воровской разговор';case 'result':return 'Итоги';default:return ''}}
 const CHEV='<svg viewBox="0 0 13 21" aria-hidden="true"><path d="M11 2L2.5 10.5L11 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function top(){
  const xpCls=S.flashXp?' bump':'';S.flashXp=false;
@@ -1225,7 +1229,7 @@ function top(){
   <h1 class="large">${ROOT_TITLES[S.screen]}</h1></header>`;
  }
  const bt=backTarget();const showBack=S.screen!=='result';
- return `<header class="nav"><div class="bar3">${showBack?`<button class="navback" data-back="1" aria-label="Назад">${CHEV}${ROOT_TITLES[bt]||'Ярмарка'}</button>`:'<span></span>'}
+ return `<header class="nav"><div class="bar3">${showBack?`<button class="navback" data-back="1" aria-label="Назад">${CHEV}${ROOT_TITLES[bt]||'Умёт'}</button>`:'<span></span>'}
  <div class="navtitle">${navTitle()}</div><div class="navright"><span class="xp${xpCls}">${S.xp} XP</span></div></div></header>`;
 }
 const TABICONS={
@@ -1369,7 +1373,7 @@ function vResult(){
  const L=LEVELS[S.level]||null;
  const title=(S.level==='chest'||S.level==='chest2'||S.level==='chest3'||S.level==='chest4'||S.level==='chest5')?'Сундук открыт':S.level==='boss5'?'Книга прочитана':S.level==='boss4'?'Акт IV пройден':S.level==='boss3'?'Акт III пройден':S.level==='boss2'?'Акт II пройден':S.level==='boss'?(S.fair.blitz===BOSS.length?'Акт пройден без ошибок':'Акт I пройден'):`Уровень «${L.title}» пройден`;
  const hook=S.level==='boss'?'Впереди Белогорская крепость. Акт II уже открыт на карте.':S.level==='boss2'?'Пётр выздоравливает, а над степью уже собирается гроза. Акт III «Пугачёвщина» уже открыт на карте.':S.level==='boss3'?'Крепость пала, но Пётр жив. Акт IV уже открыт на карте.':S.level==='boss4'?'Пётр едет выручать Машу. Акт V уже открыт на карте.':S.level==='boss5'?'«Капитанская дочка» пройдена целиком. Пётр сдержал отцовский наказ — и ты дочитал повесть до конца.':S.level==='chest5'?'Сад, где решилась судьба Петра.':S.level==='chest4'?'Оренбург в осаде, но Пётр добрался до своих.':S.level==='chest3'?'Старая крепостная пушка ещё послужит.':S.level==='chest'?'Кибитка готова к дальней дороге.':S.level==='chest2'?'Отцовская шпага: честь смолоду.':L.hook;
- return `<div class="card res"><div class="eyebrow">${S.level==='boss5'?`Финал: ${S.lockLast} очков`:S.level==='boss4'?`Совет: ${S.blitz4} из ${BOSS4.length}`:S.level==='boss'?'Снежная ярмарка пройдена':S.level==='boss2'?`Поединок: ${S.lockLast} очков`:'Награда'}</div><h2>${title}</h2><div class="big">+${S.gained} XP</div>
+ return `<div class="card res"><div class="eyebrow">${S.level==='boss5'?`Финал: ${S.lockLast} очков`:S.level==='boss4'?`Совет: ${S.blitz4} из ${BOSS4.length}`:S.level==='boss'?'Ночь на постоялом дворе позади':S.level==='boss2'?`Поединок: ${S.lockLast} очков`:'Награда'}</div><h2>${title}</h2><div class="big">+${S.gained} XP</div>
  ${S.earned?`<div class="pop">${cardHTML(S.earned)}</div><p class="meta">Новая карточка в коллекции</p>`:''}
  <p class="hook">${hook}</p></div>
  <button class="btn wide" data-go="map">На карту</button>`;
@@ -1377,32 +1381,33 @@ function vResult(){
 
 function vBoss(){
  const B=S.boss,QS=BQ(),q=QS[B.i],a4=B.act===4;
- return `<div class="sub"><button class="back" data-go="fair">← Ярмарка</button><span class="timer ${B.t<=5?'low':''}" id="tm">0:${String(B.t).padStart(2,'0')}</span></div>
- <div class="band"><canvas id="snow"></canvas><div class="eyebrow">${a4?'Финал акта IV':'Снежная ярмарка · Аттракцион'}</div><h2>${a4?'Военный совет':'Блиц-викторина'}</h2><p>${QS.length} ${a4?'вопросов':'вопроса'} по всему акту, 15 секунд на каждый. Без ошибок — редкая карточка.</p></div>
+ return `<div class="sub"><button class="back" data-go="fair">← Постоялый двор</button><span class="timer ${B.t<=5?'low':''}" id="tm">0:${String(B.t).padStart(2,'0')}</span></div>
+ <div class="band"><canvas id="snow"></canvas><div class="eyebrow">${a4?'Финал акта IV':'Постоялый двор · Испытание'}</div><h2>${a4?'Военный совет':'Разговор у печи'}</h2><p>${QS.length} ${a4?'вопросов':'вопроса'} по всему акту, 15 секунд на каждый. Без ошибок — редкая карточка.</p></div>
  <div class="dots">${QS.map((_,i)=>`<i class="${i<B.i?'on':i===B.i?'at':''}"></i>`).join('')}</div>
  <div class="card"><div class="q">${q.q}</div><div class="opts">${q.opts.map((o,i)=>{let c='';if(B.ans!==null){if(i===q.a)c='right';else if(i===B.ans)c='wrong'}return `<button class="opt ${c}" data-boss="${i}" ${B.ans!==null?'disabled':''}>${o}</button>`}).join('')}</div>
- ${B.ans!==null?`<div class="fb ${B.ans===q.a?'good':'bad'}"><strong>${B.ans===q.a?'Верно! +10 XP':B.ans===-1?'Время вышло':'Не так'}</strong><div class="row"><button class="btn" data-act="bossnext">${B.i===QS.length-1?(a4?'Итоги':'На ярмарку'):'Дальше'}</button></div></div>`:''}</div>`;
+ ${B.ans!==null?`<div class="fb ${B.ans===q.a?'good':'bad'}"><strong>${B.ans===q.a?'Верно! +10 XP':B.ans===-1?'Время вышло':'Не так'}</strong><div class="row"><button class="btn" data-act="bossnext">${B.i===QS.length-1?(a4?'Итоги':'На постоялый двор'):'Дальше'}</button></div></div>`:''}</div>`;
 }
 
 function vFair(){
  const F=S.fair;const all=F.blitz!==null&&F.lockOk&&F.snosOk;
  const A=[
-  {id:'blitz',ic:'?',name:'Блиц-викторина',d:'4 вопроса по всему акту, 15 секунд на каждый. Без ошибок — редкая карточка «Буран».',st:F.blitz===null?'Не пройдено':`${F.blitz} из ${BOSS.length}`,ok:F.blitz!==null},
-  {id:'lock',ic:ICONS.lock,name:'Замок памяти',d:'Стрелка бежит по кругу, вокруг — варианты ответа. Жми, когда стрелка на верном. Цель: 5000 очков за 30 секунд.',st:F.lock?`Рекорд ${F.lock}`:'Не пройдено',ok:F.lockOk},
-  {id:'snos',ic:ICONS.ball,name:'Снежный снос',d:'Отбивай снежок кибиткой и разбивай блоки. Золотые блоки прячут буквы слова из текста — собери его и объясни значение.',st:F.snos?`Рекорд ${F.snos}`:'Не пройдено',ok:F.snosOk}];
+  {id:'blitz',ic:'?',name:'Разговор у печи',d:'Хозяин и Савельич расспрашивают о пути: 4 вопроса по всему акту, 15 секунд на каждый. Без ошибок — редкая карточка «Буран».',st:F.blitz===null?'Не пройдено':`${F.blitz} из ${BOSS.length}`,ok:F.blitz!==null},
+  {id:'lock',ic:ICONS.lock,name:'Воровской разговор',d:'Вожатый и хозяин говорят иносказаниями. Стрелка бежит по кругу — допиши их поговорки, нажимая на верном слове. Цель: 5000 очков за 30 секунд.',st:F.lock?`Рекорд ${F.lock}`:'Не пройдено',ok:F.lockOk},
+  {id:'snos',ic:ICONS.ball,name:'Сквозь буран',d:'Пробейся к огоньку умёта: отбивай снежок кибиткой и разбивай сугробы. Золотые блоки прячут буквы слова из текста — собери его и объясни значение.',st:F.snos?`Рекорд ${F.snos}`:'Не пройдено',ok:F.snosOk}];
  return `<button class="back" data-go="map">← Карта</button>
- <div class="band"><canvas id="snow"></canvas><div class="eyebrow">Финал акта I</div><h2>Снежная ярмарка</h2><p>Три аттракциона по всему акту. Пройди каждый, чтобы закрыть акт и открыть дорогу дальше.</p></div>
+ <div class="band"><canvas id="snow"></canvas><div class="eyebrow">Финал акта I</div><h2>Ночь на постоялом дворе</h2><p>Вожатый вывел кибитку к умёту: «в стороне, в степи, далече от всякого селения». Три испытания по всему акту. Пройди каждое, чтобы закрыть акт и ехать дальше.</p></div>
  ${A.map(a=>`<div class="card attr ${a.ok?'ok':''}"><span class="disc">${a.ok?ICONS.check:a.ic}</span><div><h3>${a.name}</h3><p>${a.d}</p><div class="row"><span class="pill ${a.ok?'ok':''}">${a.st}</span><button class="btn ${a.ok?'ghost':''}" data-act="${a.id}" style="padding:9px 16px">${a.ok?'Ещё раз':'Играть'}</button></div></div></div>`).join('')}
- <button class="btn gold wide" data-act="closeact" ${all?'':'disabled'}>${all?'Закрыть акт I':'Пройди все три аттракциона'}</button>`;
+ <button class="btn gold wide" data-act="closeact" ${all?'':'disabled'}>${all?'Закрыть акт I':'Пройди все три испытания'}</button>`;
 }
 
 function vLock(){
  const c=S.lockCfg||{act:1,target:5000};const duel=c.act===2,a5=c.act===5;
- return `<div class="sub"><button class="back" data-go="${duel||a5?'map':'fair'}">← ${duel||a5?'Карта':'Ярмарка'}</button><span class="timer" id="lk-t">0:30</span></div>
+ return `<div class="sub"><button class="back" data-go="${duel||a5?'map':'fair'}">← ${duel||a5?'Карта':'Постоялый двор'}</button><span class="timer" id="lk-t">0:30</span></div>
  ${a5?`<div class="band"><div class="eyebrow">Финал книги</div><h2>Береги честь смолоду</h2><p>Вопросы по всей повести. Стрелка ходит по кругу, вокруг — ответы. Нажимай на верном. 5000 очков за 30 секунд закрывают книгу, 6000 — редкая карточка.</p></div>`:''}
+ ${!duel&&!a5?`<div class="band"><div class="eyebrow">Постоялый двор · Испытание</div><h2>Воровской разговор</h2><p>«Вожатый мой мигнул значительно и отвечал поговоркою». Допиши иносказания вожатого и хозяина: о чём они на самом деле, Пётр понял только потом.</p></div>`:''}
  ${duel?`<div class="band"><div class="eyebrow">Финал акта II</div><h2>Поединок на берегу</h2><p>Клинок ходит по кругу, вокруг — ответы. Делай выпад, когда остриё на верном. Цель — 5000 очков за 30 секунд.</p></div>`:''}
- <div class="card"><div class="gtype"><span class="tag">${a5?'Финал книги':duel?'Поединок':'Замок памяти'}</span><span class="meta" id="lk-s">0 очков · цель ${c.target}</span></div>
- <div class="q" id="lk-q">Готов? Вопросы — ${a5?'по всей повести':'по всему '+(duel?'второму':'первому')+' акту'}.</div>
+ <div class="card"><div class="gtype"><span class="tag">${a5?'Финал книги':duel?'Поединок':'Воровской разговор'}</span><span class="meta" id="lk-s">0 очков · цель ${c.target}</span></div>
+ <div class="q" id="lk-q">Готов? ${a5?'Вопросы — по всей повести':duel?'Вопросы — по всему второму акту':'Разговор вожатого с хозяином умёта, глава II'}.</div>
  <div class="stage"><canvas id="lk" style="aspect-ratio:1"></canvas></div>
  <button class="btn wide" id="lk-go">Начать</button>
  <p class="meta">Верный ответ — +1000. Ошибка — минус секунда. Золотая зона между ответами добавляет 1,5 секунды. Можно жать пробел.</p>
@@ -1412,7 +1417,7 @@ function vLock(){
 
 function vSnos(){
  const a3=S.snosCfg&&S.snosCfg.act===3;
- return `<div class="sub"><button class="back" data-go="${a3?'map':'fair'}">← ${a3?'Карта':'Ярмарка'}</button><span class="meta" id="sn-l"></span></div>
+ return `<div class="sub"><button class="back" data-go="${a3?'map':'fair'}">← ${a3?'Карта':'Постоялый двор'}</button><span class="meta" id="sn-l"></span></div>
  ${a3?'<div class="band"><div class="eyebrow">Финал акта III</div><h2>Оборона крепости</h2><p>Отбивай ядро и разбивай блоки. Золотые прячут буквы слова из третьего акта — собери его и объясни значение.</p></div>':''}
  <div class="card"><div class="gtype"><span class="tag">${a3?'Оборона крепости':'Снежный снос'}</span><span class="meta" id="sn-s">0 очков</span></div>
  <div class="letters" id="sn-w" aria-label="Собранные буквы"></div>
@@ -1453,7 +1458,7 @@ function startLock(){
   if(G.started&&!G.over){G.t-=dt;if(G.pause>0)G.pause-=dt;else G.ang+=(2.1+G.hits*.18)*dt;
    if(G.t<=0){G.t=0;end()}tEl.textContent='0:'+String(Math.ceil(G.t)).padStart(2,'0');tEl.classList.toggle('low',G.t<=5)}
   draw(now);if(!G.over)raf=requestAnimationFrame(step)}
- function press(){if(G.over)return;if(!G.started){G.started=true;btn.textContent=(S.lockCfg&&S.lockCfg.act===2)?'Выпад':'Взломать';newQ();return}if(G.pause>0)return;
+ function press(){if(G.over)return;if(!G.started){G.started=true;btn.textContent=(S.lockCfg&&S.lockCfg.act===2)?'Выпад':(S.lockCfg&&S.lockCfg.act===1)?'Разгадать':'Взломать';newQ();return}if(G.pause>0)return;
   const now=performance.now(),a=G.ang;
   if(G.bonus&&inside(a,G.bonus)){G.t+=1.5;G.bonus=null;G.pop={txt:'+1,5 с',col:C.gold,until:now+600};return}
   const hit=G.arcs.find(z=>inside(a,z));
@@ -1463,7 +1468,7 @@ function startLock(){
  function end(){G.over=true;btn.hidden=true;const ok=G.score>=cfg.target;S.lockLast=G.score;if(cfg.act===1){S.fair.lock=Math.max(S.fair.lock,G.score);if(ok)S.fair.lockOk=true}else{S.duelBest=Math.max(S.duelBest,G.score)}addXp(Math.round(G.score/100));save();
   if(cfg.act===5){S.final5=Math.max(S.final5||0,G.score);save();document.getElementById('lk-end').innerHTML=`<div class="fb ${ok?'good':'bad'}"><strong>${G.score} очков · ${G.hits} верных</strong><p>${ok?'Книга пройдена!'+(G.score>=6000?' За 6000 очков — редкая карточка «Честь смолоду».':' Набери 6000, чтобы получить редкую карточку.'):'Нужно 5000. Ответы — во всех пяти актах.'}</p><div class="row"><button class="btn ghost" data-act="final">Ещё раз</button>${ok?'<button class="btn" data-act="closeact5">Закрыть книгу</button>':''}</div></div>`;return}
   if(cfg.act===2){document.getElementById('lk-end').innerHTML=`<div class="fb ${ok?'good':'bad'}"><strong>${G.score} очков · ${G.hits} верных выпадов</strong><p>${ok?'Поединок выигран.'+(G.score>=6000?' За 6000 очков — редкая карточка.':' Набери 6000, чтобы получить редкую карточку.'):'Нужно 5000. Ответы — в уровнях второго акта.'}</p><div class="row"><button class="btn ghost" data-act="duel">Ещё раз</button>${ok?'<button class="btn" data-act="closeact2">Закрыть акт II</button>':''}</div></div>`;return}
-  document.getElementById('lk-end').innerHTML=`<div class="fb ${ok?'good':'bad'}"><strong>${G.score} очков · ${G.hits} верных</strong><p>${ok?'Замок взломан, аттракцион пройден. +'+Math.round(G.score/100)+' XP':'Нужно 5000. Ответы есть в уровнях акта: их можно перечитать на карте.'}</p><div class="row"><button class="btn ghost" data-act="lock">Ещё раз</button><button class="btn" data-go="fair">На ярмарку</button></div></div>`}
+  document.getElementById('lk-end').innerHTML=`<div class="fb ${ok?'good':'bad'}"><strong>${G.score} очков · ${G.hits} верных</strong><p>${ok?'Разговор разгадан, испытание пройдено. +'+Math.round(G.score/100)+' XP':'Нужно 5000. Разговор есть в главе II «Вожатый»: его можно перечитать на карте.'}</p><div class="row"><button class="btn ghost" data-act="lock">Ещё раз</button><button class="btn" data-go="fair">На постоялый двор</button></div></div>`}
  const key=e=>{if(e.code==='Space'){e.preventDefault();press()}};
  btn.addEventListener('click',press);cv.addEventListener('pointerdown',press);document.addEventListener('keydown',key);
  raf=requestAnimationFrame(step);
@@ -1512,9 +1517,9 @@ function startSnos(){
  function win(){G.over=true;G.score+=200;hud();const right=HINTS[hk][1];const opts=shuffle([right,...shuffle(Object.keys(HINTS).filter(k=>k!==hk)).slice(0,3).map(k=>HINTS[k][1])]);
   endEl.innerHTML=`<div class="fb good"><strong>Слово собрано: ${word}. +200 очков</strong><p>Что оно значит? Верный ответ даст ещё 150.</p><div class="opts">${opts.map(o=>`<button class="opt" data-snq="${o===right?1:0}">${o}</button>`).join('')}</div></div>`;
   endEl.querySelectorAll('[data-snq]').forEach(bt=>bt.addEventListener('click',()=>{const ok=bt.dataset.snq==='1';if(ok)G.score+=150;if(a3){S.snos3ok=true;S.snos3perfect=ok}else S.fair.snosOk=true;finish();addXp(Math.round(G.score/10));
-   endEl.innerHTML=`<div class="fb ${ok?'good':'bad'}"><strong>${ok?'Верно!':'Не совсем'} Итог: ${G.score} очков</strong><p>${HINTS[hk][0][0].toUpperCase()+HINTS[hk][0].slice(1)} — ${right} ${a3?'Крепость выстояла этот бой':'Аттракцион пройден'}, +${Math.round(G.score/10)} XP.</p><div class="row"><button class="btn ghost" data-act="${a3?'snos3':'snos'}">Ещё раз</button>${a3?'<button class="btn" data-act="closeact3">Закрыть акт III</button>':'<button class="btn" data-go="fair">На ярмарку</button>'}</div></div>`;hud()}));
+   endEl.innerHTML=`<div class="fb ${ok?'good':'bad'}"><strong>${ok?'Верно!':'Не совсем'} Итог: ${G.score} очков</strong><p>${HINTS[hk][0][0].toUpperCase()+HINTS[hk][0].slice(1)} — ${right} ${a3?'Крепость выстояла этот бой':'Испытание пройдено'}, +${Math.round(G.score/10)} XP.</p><div class="row"><button class="btn ghost" data-act="${a3?'snos3':'snos'}">Ещё раз</button>${a3?'<button class="btn" data-act="closeact3">Закрыть акт III</button>':'<button class="btn" data-go="fair">На постоялый двор</button>'}</div></div>`;hud()}));
   endEl.scrollIntoView({block:'nearest'})}
- function end(){G.over=true;finish();endEl.innerHTML=`<div class="fb bad"><strong>${a3?'Ядра':'Снежки'} кончились · ${G.score} очков</strong><p>Собери все золотые буквы, чтобы пройти ${a3?'оборону':'аттракцион'}.</p><div class="row"><button class="btn ghost" data-act="${a3?'snos3':'snos'}">Ещё раз</button>${a3?'':'<button class="btn" data-go="fair">На ярмарку</button>'}</div></div>`}
+ function end(){G.over=true;finish();endEl.innerHTML=`<div class="fb bad"><strong>${a3?'Ядра':'Снежки'} кончились · ${G.score} очков</strong><p>Собери все золотые буквы, чтобы пройти ${a3?'оборону':'испытание'}.</p><div class="row"><button class="btn ghost" data-act="${a3?'snos3':'snos'}">Ещё раз</button>${a3?'':'<button class="btn" data-go="fair">На постоялый двор</button>'}</div></div>`}
  function toX(e){const r=cv.getBoundingClientRect();return (e.clientX-r.left)*(W/r.width)}
  cv.addEventListener('pointermove',e=>{G.x=Math.max(G.pw/2,Math.min(W-G.pw/2,toX(e)))});
  cv.addEventListener('pointerdown',e=>{G.x=Math.max(G.pw/2,Math.min(W-G.pw/2,toX(e)));launch()});
