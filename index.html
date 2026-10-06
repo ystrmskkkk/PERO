@@ -310,7 +310,9 @@ button.stat:hover{border-color:var(--accent)}
 .grow{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:44px;padding:11px 16px;border-bottom:.5px solid var(--line);font:400 17px var(--f-sys)}
 .grow:last-child{border-bottom:0}
 .grow span:last-child{color:var(--muted);font-variant-numeric:tabular-nums}
-.grow.btnrow{width:100%;background:none;border:0;border-bottom:0;color:var(--bad);justify-content:center}
+.grow.tog{width:100%;background:none;border:0;font:400 17px var(--f-sys);color:inherit;cursor:pointer;text-align:left}
+.tog span:last-child{color:var(--accent)}
+.btnrow{width:100%;background:none;border:0;border-bottom:0;color:var(--bad);justify-content:center}
 .pcard .cicon{width:64px;height:64px;align-self:center;margin-top:18px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .pcard .cicon .dot{fill:var(--accent);stroke:none}
 .pcard.empty .cicon{stroke:var(--muted);opacity:.35}
@@ -1194,7 +1196,7 @@ let S={screen:'library',age:'Все',xp:0,streak:2,done:[],cards:[],
   level:null,gi:0,first:true,backPara:null,sel:null,answered:false,order:[],earned:null,gained:0,openHint:null,
   boss:null,flashXp:false,theme:'paper',dossier:[],justDone:null,act:1,duelBest:0,lockCfg:null,lockLast:0,fair:{blitz:null,lock:0,snos:0,lockOk:false,snosOk:false}};
 try{const saved=JSON.parse(localStorage.getItem('bq-proto')||'null');if(saved){Object.assign(S,saved,{screen:'library'});}}catch(e){}
-function save(){try{localStorage.setItem('bq-proto',JSON.stringify({xp:S.xp,streak:S.streak,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,act:S.act,duelBest:S.duelBest}))}catch(e){}}
+function save(){try{localStorage.setItem('bq-proto',JSON.stringify({xp:S.xp,streak:S.streak,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,act:S.act,duelBest:S.duelBest}))}catch(e){}}
 
 const app=document.getElementById('app');
 const darkMQ=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
@@ -1207,6 +1209,38 @@ let timerId=null, snowStop=null, gameStop=null;
 function clearTimers(){if(timerId){clearInterval(timerId);timerId=null}if(snowStop){snowStop();snowStop=null}if(gameStop){gameStop();gameStop=null}}
 function go(screen,patch){const from=S.screen;clearTimers();Object.assign(S,patch||{},{screen});render();window.scrollTo(0,0);
  const d=(DEPTH[screen]||0)-(DEPTH[from]||0);app.classList.remove('push','pop');if(d!==0&&!matchMedia('(prefers-reduced-motion: reduce)').matches){void app.offsetWidth;app.classList.add(d>0?'push':'pop')}}
+
+/* ---- SFX: синтезированные звуки интерфейса (Web Audio, без файлов) ---- */
+const SFX=(()=>{let ctx=null,master=null,noiseBuf=null;
+ function init(){if(ctx)return ctx;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;ctx=new AC();master=ctx.createGain();master.gain.value=0.9;master.connect(ctx.destination);
+  noiseBuf=ctx.createBuffer(1,ctx.sampleRate*0.6,ctx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;return ctx}
+ function tone(f,t0,dur,vol,type,f2){const o=ctx.createOscillator(),g=ctx.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t0);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t0+dur);
+  g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(vol,t0+0.008);g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);o.connect(g);g.connect(master);o.start(t0);o.stop(t0+dur+0.02)}
+ function bell(f,t0,dur,vol){tone(f,t0,dur,vol,'sine');tone(f*2.01,t0,dur*0.5,vol*0.25,'sine')}
+ function noise(t0,dur,vol,ftype,f1,f2,q){const src=ctx.createBufferSource();src.buffer=noiseBuf;const fl=ctx.createBiquadFilter();fl.type=ftype||'bandpass';fl.frequency.setValueAtTime(f1,t0);if(f2)fl.frequency.exponentialRampToValueAtTime(f2,t0+dur);fl.Q.value=q||1;
+  const g=ctx.createGain();g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(vol,t0+Math.min(0.02,dur/3));g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);src.connect(fl);fl.connect(g);g.connect(master);src.start(t0,Math.random()*0.3);src.stop(t0+dur+0.02)}
+ const P={
+  tap:t=>noise(t,0.035,0.05,'bandpass',2600,null,1.4),
+  ok:t=>{bell(659,t,0.32,0.11);bell(988,t+0.09,0.42,0.1)},
+  bad:t=>{tone(196,t,0.22,0.09,'triangle',147);noise(t,0.08,0.03,'lowpass',500)},
+  page:t=>noise(t,0.26,0.06,'bandpass',700,3200,0.8),
+  done:t=>{[523,659,784,1047].forEach((f,i)=>bell(f,t+i*0.09,0.5,0.09))},
+  card:t=>{[1568,2093,2637,3136].forEach((f,i)=>tone(f,t+i*0.05,0.35,0.035,'sine'));bell(784,t,0.6,0.06)},
+  ink:t=>{for(let i=0;i<7;i++)noise(t+i*0.07+Math.random()*0.03,0.03,0.035,'highpass',3800,null,0.7)},
+  hit:t=>{bell(880,t,0.18,0.08);bell(1320,t+0.05,0.22,0.06)},
+  miss:t=>tone(220,t,0.16,0.08,'triangle',170),
+  bounce:t=>tone(392,t,0.07,0.06,'sine',330),
+  crunch:t=>noise(t,0.07,0.07,'lowpass',1400,600,0.7),
+  gold:t=>{bell(1175,t,0.2,0.06)},
+  tick:t=>noise(t,0.02,0.03,'highpass',5000,null,0.7)
+ };
+ let last={};
+ return function(name){if(S.sound===false)return;const c=init();if(!c||!P[name])return;if(c.state==='suspended')c.resume();
+  const now=c.currentTime;if(last[name]&&now-last[name]<0.04)return;last[name]=now;try{P[name](now+0.01)}catch(e){}}
+})();
+window.__SFX=SFX;
+document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('button,a');if(!b||b.disabled)return;
+ const d=b.dataset;if(d.opt!==undefined||d.word!==undefined||d.pv!==undefined||d.boss!==undefined||d.snq!==undefined||b.id==='lk-go')return;SFX('tap')},true);
 function addXp(n){S.xp+=n;S.gained+=n;S.flashXp=true;save()}
 function isDone(id){return S.done.includes(id)}
 function actNodes(){return ACTS[S.act].nodes}
@@ -1249,6 +1283,8 @@ function vProfile(){
  <div class="ghead">Тема</div><div class="group"><div class="themes" role="group" aria-label="Тема оформления">
  ${[['paper','Бумага'],['night','Ночь'],['auto','Как в системе']].map(([k,n])=>`<button class="th" data-theme-set="${k}" aria-pressed="${S.theme===k}"><span class="sw ${k}"><i class="t"></i><i></i><i style="width:80%"></i><i class="r"></i></span>${n}</button>`).join('')}
  </div></div>
+ <div class="ghead">Звук</div><div class="group">
+ <button class="grow tog" data-act="sound" aria-pressed="${S.sound!==false}"><span>Звуки интерфейса</span><span>${S.sound!==false?'Включены':'Выключены'}</span></button></div>
  <div class="ghead">Чтение</div><div class="group">
  <div class="grow"><span>Сейчас читаю</span><span>Капитанская дочка</span></div>
  <div class="grow"><span>Оформление</span><span>Старинная карта</span></div></div>
@@ -1459,8 +1495,8 @@ function startLock(){
   const now=performance.now(),a=G.ang;
   if(G.bonus&&inside(a,G.bonus)){G.t+=1.5;G.bonus=null;G.pop={txt:'+1,5 с',col:C.gold,until:now+600};return}
   const hit=G.arcs.find(z=>inside(a,z));
-  if(hit&&hit.ok){G.score+=1000;G.hits++;G.pop={txt:'+1000',col:C.good,until:now+600};sEl.textContent=G.score+' очков · цель 5000';newQ()}
-  else if(hit){G.t-=1;G.pause=.6;G.flash={arc:hit,until:now+700};G.pop={txt:'−1 с',col:C.bad,until:now+600}}
+  if(hit&&hit.ok){SFX('hit');G.score+=1000;G.hits++;G.pop={txt:'+1000',col:C.good,until:now+600};sEl.textContent=G.score+' очков · цель 5000';newQ()}
+  else if(hit){SFX('miss');G.t-=1;G.pause=.6;G.flash={arc:hit,until:now+700};G.pop={txt:'−1 с',col:C.bad,until:now+600}}
   else{G.t-=.5;G.pause=.35;G.pop={txt:'мимо',col:C.bad,until:now+500}}}
  function end(){G.over=true;btn.hidden=true;const ok=G.score>=cfg.target;S.lockLast=G.score;if(cfg.act===1){S.fair.lock=Math.max(S.fair.lock,G.score);if(ok)S.fair.lockOk=true}else{S.duelBest=Math.max(S.duelBest,G.score)}addXp(Math.round(G.score/100));save();
   if(cfg.act===5){S.final5=Math.max(S.final5||0,G.score);save();document.getElementById('lk-end').innerHTML=`<div class="fb ${ok?'good':'bad'}"><strong>${G.score} очков · ${G.hits} верных</strong><p>${ok?'Книга пройдена!'+(G.score>=6000?' За 6000 очков — редкая карточка «Честь смолоду».':' Набери 6000, чтобы получить редкую карточку.'):'Нужно 5000. Ответы — во всех пяти актах.'}</p><div class="row"><button class="btn ghost" data-act="final">Ещё раз</button>${ok?'<button class="btn" data-act="closeact5">Закрыть книгу</button>':''}</div></div>`;return}
@@ -1502,10 +1538,10 @@ function startSnos(){
   if(!G.over){G.x=Math.max(G.pw/2,Math.min(W-G.pw/2,G.x+G.dir*360*dt));
    if(G.stuck){G.b.x=G.x;G.b.y=G.py-30-G.b.r}else{const b=G.b;const ox=b.x,oy=b.y;b.x+=b.vx*dt;b.y+=b.vy*dt;
     if(b.x<b.r){b.x=b.r;b.vx=Math.abs(b.vx)}if(b.x>W-b.r){b.x=W-b.r;b.vx=-Math.abs(b.vx)}if(b.y<b.r){b.y=b.r;b.vy=Math.abs(b.vy)}
-    if(b.vy>0&&b.y+b.r>=G.py-10&&b.y<G.py+8&&b.x>G.x-G.pw/2-b.r&&b.x<G.x+G.pw/2+b.r){const off=Math.max(-1,Math.min(1,(b.x-G.x)/(G.pw/2)));const a=off*1.05;const sp=Math.hypot(b.vx,b.vy);b.vx=sp*Math.sin(a);b.vy=-sp*Math.cos(a);b.y=G.py-10-b.r;G.chain=0;hud()}
+    if(b.vy>0&&b.y+b.r>=G.py-10&&b.y<G.py+8&&b.x>G.x-G.pw/2-b.r&&b.x<G.x+G.pw/2+b.r){const off=Math.max(-1,Math.min(1,(b.x-G.x)/(G.pw/2)));const a=off*1.05;const sp=Math.hypot(b.vx,b.vy);b.vx=sp*Math.sin(a);b.vy=-sp*Math.cos(a);b.y=G.py-10-b.r;G.chain=0;SFX('bounce');hud()}
     if(b.y>H+b.r){G.lives--;G.chain=0;G.stuck=true;hud();if(G.lives<=0)end(false)}
     for(const k of bricks){if(!k.alive)continue;const nx=Math.max(k.x,Math.min(b.x,k.x+bw)),ny=Math.max(k.y,Math.min(b.y,k.y+bh));if((b.x-nx)**2+(b.y-ny)**2>b.r*b.r)continue;
-     k.alive=false;if(ox<k.x||ox>k.x+bw)b.vx=-b.vx;else b.vy=-b.vy;G.chain++;const m=mult();
+     k.alive=false;SFX(k.type==='gold'?'gold':'crunch');if(ox<k.x||ox>k.x+bw)b.vx=-b.vx;else b.vy=-b.vy;G.chain++;const m=mult();
      if(k.type==='gold'){G.score+=25*m;G.found[k.li]=true}else if(k.type==='green'){G.score+=5*m;G.lives=Math.min(5,G.lives+1)}else G.score+=5*m;
      const sp=Math.min(460,Math.hypot(b.vx,b.vy)*1.012),cur=Math.hypot(b.vx,b.vy);b.vx*=sp/cur;b.vy*=sp/cur;hud();
      if(G.found.every(Boolean))win();break}}}
@@ -1559,7 +1595,7 @@ function finishLevel(id){
  S.justDone=id;
  const card=id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.lockLast>=6000?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?(S.lockLast>=6000?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):LEVELS[id].card;
  S.earned=card&&!S.cards.includes(card)?card:null;if(S.earned)S.cards.push(S.earned);
- save();go('result');
+ save();go('result');SFX(S.earned?'card':'done');
 }
 
 function bossTick(){
@@ -1588,13 +1624,14 @@ app.addEventListener('click',e=>{
   go('read',{level:id,gi:0,backPara:null,openHint:null,gained:0,first:true,answered:false,sel:null,order:[]});return}
  if(t.dataset.hint){const p=+t.closest('[data-pi]').dataset.pi;S.openHint=(S.openHint&&S.openHint.k===t.dataset.hint)?null:{k:t.dataset.hint,p};render();return}
  const L=LEVELS[S.level];const g=L&&L.games?L.games[S.gi]:null;
- if(t.dataset.opt!==undefined&&!S.answered){S.sel=+t.dataset.opt;S.answered=true;if(g.type==='hero')addXp(10);else if(S.sel===g.a)addXp(S.first?10:5);render();return}
- if(t.dataset.pv!==undefined&&!S.answered){S.pv[PTRAITS[S.pstep].k]=+t.dataset.pv;S.pstep++;if(S.pstep>=PTRAITS.length){S.answered=true;const ok=PTRAITS.filter(x=>S.pv[x.k]===0).map(x=>x.k);ok.forEach(k=>{if(!S.dossier.includes(k))S.dossier.push(k)});S.pscore=ok.length;addXp(ok.length*3);save()}render();return}
+ if(t.dataset.opt!==undefined&&!S.answered){S.sel=+t.dataset.opt;S.answered=true;if(g.type==='hero'){addXp(10);SFX('ok')}else if(S.sel===g.a){addXp(S.first?10:5);SFX('ok')}else SFX('bad');render();return}
+ if(t.dataset.pv!==undefined&&!S.answered){S.pv[PTRAITS[S.pstep].k]=+t.dataset.pv;S.pstep++;if(S.pstep>=PTRAITS.length){S.answered=true;const ok=PTRAITS.filter(x=>S.pv[x.k]===0).map(x=>x.k);ok.forEach(k=>{if(!S.dossier.includes(k))S.dossier.push(k)});S.pscore=ok.length;SFX(ok.length>=5?'done':'bad');addXp(ok.length*3);save()}render();return}
  if(t.dataset.clause!==undefined&&!S.answered){const i=+t.dataset.clause,k=g.clauses[i][1];if(k){if(!S.dossier.includes(k)){S.dossier.push(k);addXp(3)}S.sel=null;if(Object.keys(TRAITS).every(x=>S.dossier.includes(x)))S.answered=true}else S.sel=i;save();render();return}
- if(t.dataset.word!==undefined&&!S.answered){S.sel=+t.dataset.word;S.answered=true;if(S.sel===g.a)addXp(S.first?10:5);render();return}
- if(t.dataset.ord!==undefined&&!S.answered){S.order.push(+t.dataset.ord);if(S.order.length===g.items.length){S.answered=true;if(S.order.every((v,i)=>v===i))addXp(S.first?10:5)}render();return}
- if(t.dataset.boss!==undefined&&S.boss.ans===null){const B=S.boss;B.ans=+t.dataset.boss;if(B.ans===BQ()[B.i].a){B.score++;addXp(10)}render();return}
+ if(t.dataset.word!==undefined&&!S.answered){S.sel=+t.dataset.word;S.answered=true;if(S.sel===g.a){addXp(S.first?10:5);SFX('ok')}else SFX('bad');render();return}
+ if(t.dataset.ord!==undefined&&!S.answered){S.order.push(+t.dataset.ord);if(S.order.length===g.items.length){S.answered=true;if(S.order.every((v,i)=>v===i)){addXp(S.first?10:5);SFX('ok')}else SFX('bad')}render();return}
+ if(t.dataset.boss!==undefined&&S.boss.ans===null){const B=S.boss;B.ans=+t.dataset.boss;if(B.ans===BQ()[B.i].a){B.score++;addXp(10);SFX('ok')}else SFX('bad');render();return}
  const act=t.dataset.act;
+ if(act==='sound'){S.sound=S.sound===false;save();render();if(S.sound)SFX('ok');return}
  if(act==='closehint'){S.openHint=null;render();return}
  if(act==='pvback'){if(S.pstep>0){S.pstep--;delete S.pv[PTRAITS[S.pstep].k]}render();return}
  if(act==='startgames'){go('game',{gi:0,first:true,answered:false,sel:null,order:[]});return}
