@@ -475,8 +475,12 @@ body{padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-ar
 h1[tabindex='-1']:focus,h2[tabindex='-1']:focus{outline:none}
 
 /* polish: cartographic label knockout so names stay legible over the road and drawings */
-.node .lbl,.node .place{-webkit-text-stroke:5px var(--bg);paint-order:stroke fill;text-shadow:0 0 6px var(--bg)}
-.node .place{-webkit-text-stroke-width:4px}
+/* current node: a soft ring ripples outward from the disc; nothing paints over the label */
+.node.cur{gap:12px}
+.node.cur .disc{position:relative;animation:none;box-shadow:0 0 0 4px var(--bg),0 0 0 6px var(--accent)}
+.node.cur .disc::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid var(--accent);pointer-events:none;animation:ring 2.2s cubic-bezier(.16,1,.3,1) infinite}
+@keyframes ring{0%{transform:scale(1);opacity:.65}80%,100%{transform:scale(1.32);opacity:0}}
+@media (prefers-reduced-motion: reduce){.node.cur .disc::after{animation:none;opacity:0}}
 </style>
 </head>
 <body>
@@ -1454,6 +1458,16 @@ let lastFb='',lastScreen=null;
 function announce(t){const el=document.getElementById('sr');if(!el||!t)return;el.textContent='';setTimeout(()=>{el.textContent=t},60)}
 function a11yAfter(){const fb=app.querySelector('.fb,.ck .ckfb,.res');let t='';if(fb){const c=fb.cloneNode(true);c.querySelectorAll('button,.row').forEach(x=>x.remove());t=[...c.querySelectorAll('strong,p,h2,.big,.eyebrow')].map(x=>x.textContent.trim()).filter(Boolean).join('. ')||c.textContent.trim();t=t.replace(/\s+/g,' ').slice(0,220)}if(t&&t!==lastFb)announce(t);lastFb=t;
  if(S.screen!==lastScreen){lastScreen=S.screen;const h=app.querySelector('h1,h2');if(h){h.setAttribute('tabindex','-1');try{h.focus({preventScroll:true})}catch(e){}}}}
+/* the road breaks under place names, like a hand-drawn map, so text never merges with the dashes */
+function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.querySelector('svg.road');if(!sv)return;
+ const mr=m.getBoundingClientRect();if(!mr.width)return;const vb=sv.viewBox.baseVal,sx=vb.width/mr.width,sy=vb.height/mr.height,NS='http://www.w3.org/2000/svg';
+ let mk=sv.querySelector('mask');if(mk)mk.remove();mk=document.createElementNS(NS,'mask');mk.id='roadknock';mk.setAttribute('maskUnits','userSpaceOnUse');
+ const bg=document.createElementNS(NS,'rect');bg.setAttribute('x',0);bg.setAttribute('y',0);bg.setAttribute('width',vb.width);bg.setAttribute('height',vb.height);bg.setAttribute('fill','#fff');mk.appendChild(bg);
+ m.querySelectorAll('.node .lbl,.node .place').forEach(e=>{const r=e.getBoundingClientRect();if(!r.width)return;const px=5,py=2,k=document.createElementNS(NS,'rect');
+  k.setAttribute('x',(r.left-mr.left-px)*sx);k.setAttribute('y',(r.top-mr.top-py)*sy);k.setAttribute('width',(r.width+2*px)*sx);k.setAttribute('height',(r.height+2*py)*sy);k.setAttribute('fill','#000');mk.appendChild(k)});
+ sv.insertBefore(mk,sv.firstChild);const p=sv.querySelector('path');if(p)p.setAttribute('mask','url(#roadknock)')}
+window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
  const V={library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile}[S.screen];
  const body=V();
@@ -1464,6 +1478,7 @@ function render(){
  if(S.screen==='lock')gameStop=startLock();
  if(S.screen==='snos')gameStop=startSnos();
  if(S.screen==='read'&&S.backPara!==null){const el=document.getElementById('p'+S.backPara);if(el)el.scrollIntoView({block:'center'})}
+ if(S.screen==='map')knockRoad();
  a11yAfter();
 }
 
