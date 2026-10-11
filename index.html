@@ -534,6 +534,12 @@ h1[tabindex='-1']:focus,h2[tabindex='-1']:focus{outline:none}
  .pop{animation:fadein .2s ease}
  .bump{animation:rmflash .45s ease}
 }
+
+/* act switch: the road is drawn top-down together with the places, its gaps already in place */
+.map.measuring .node{animation:none!important}
+.map.stag svg.route{animation:roadin .5s var(--ease-out) both}
+@keyframes roadin{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion: reduce){.map.stag svg.route{animation:fadein .2s ease}}
 </style>
 </head>
 <body>
@@ -1267,7 +1273,7 @@ function vMap(){
  <div class="bar"><i class="${S.justDone&&NODES.some(n=>n.id===S.justDone)?'grow':''}" style="--p:${actPct()/100};--from:${Math.max(0,actPct()-100/NODES.length)/100}"></i></div><div class="meta" style="justify-content:center;font-style:italic">Пройдено ${NODES.filter(n=>isDone(n.id)).length} из ${NODES.length} мест на карте</div></div>
  ${S.justDone&&DECOS[S.justDone]&&NODES.find(n=>n.id===S.justDone)?`<p class="inkmsg">Карта дорисована: ${NODES.find(n=>n.id===S.justDone).place}</p>`:''}
  <div class="map${S.mapStag?' stag':''}" style="height:${H}px">
- ${NODES.map(n=>{const D=DECOS[n.id];if(!D)return '';const st=isDone(n.id)?(S.justDone===n.id?'inked fresh':'inked'):'sketch';if(D.img)return `<div class="deco raster ${st}${D.snow?' wide':''}${D.tall?' tall':''}" style="left:${D.x}%;top:${D.y}px" aria-hidden="true"><img decoding="async" src="${ART[D.img]}" alt=""></div>`;return `<div class="deco ${st}" style="left:${D.x}%;top:${D.y}px" aria-hidden="true"><svg viewBox="0 0 76 76">${D.svg.replace(/<(path|circle|rect|ellipse) /g,'<$1 pathLength="1" ')}</svg></div>`}).join('')}<svg class="road" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></svg>
+ ${NODES.map(n=>{const D=DECOS[n.id];if(!D)return '';const st=isDone(n.id)?(S.justDone===n.id?'inked fresh':'inked'):'sketch';if(D.img)return `<div class="deco raster ${st}${D.snow?' wide':''}${D.tall?' tall':''}" style="left:${D.x}%;top:${D.y}px" aria-hidden="true"><img decoding="async" src="${ART[D.img]}" alt=""></div>`;return `<div class="deco ${st}" style="left:${D.x}%;top:${D.y}px" aria-hidden="true"><svg viewBox="0 0 76 76">${D.svg.replace(/<(path|circle|rect|ellipse) /g,'<$1 pathLength="1" ')}</svg></div>`}).join('')}<svg class="road route" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></svg>
  <svg class="road" viewBox="0 0 350 ${H}" preserveAspectRatio="xMaxYMin meet" aria-hidden="true" style="pointer-events:none"><g fill="none" stroke="var(--ink)" stroke-width="1" opacity=".5">${S.act===1?'':'<path d="M300 250 l12 -20 l12 20 M314 264 l10 -16 l10 16"/><path d="M14 420 l12 -20 l12 20 M28 436 l10 -16 l10 16"/>'}<path d="M290 560 c14 -5 22 5 36 0 M290 566 c14 -5 22 5 36 0"/></g></svg>${S.act===1?`<img decoding="async" class="mtn" src="${MTN}" alt="" style="right:1%;top:230px;width:96px"><img decoding="async" class="mtn" src="${CLOUD}" alt="" style="left:0;top:378px;width:104px">`:''}
  ${NODES.map((n,i)=>{const L=LEVELS[n.id];const st=isDone(n.id)?'done':(i===cur?'cur':'');const lock=!unlocked(i);
   const inner=isDone(n.id)?ICONS.check:(n.kind==='chest'?ICONS.chest:n.kind==='boss'?ICONS.boss:L.n);
@@ -1517,12 +1523,12 @@ function placeSeg(){const sg=app.querySelector('.seg'),ind=sg&&sg.querySelector(
  if(S.segFrom&&S.segFrom!==tx&&!matchMedia('(prefers-reduced-motion: reduce)').matches){ind.style.transition='none';ind.style.transform=S.segFrom;void ind.offsetWidth;ind.style.transition='';ind.style.transform=tx}else ind.style.transform=tx}
 window.addEventListener('resize',()=>{if(S.screen==='map')placeSeg()});
 function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.querySelector('svg.road');if(!sv)return;
- const mr=m.getBoundingClientRect();if(!mr.width)return;const vb=sv.viewBox.baseVal,sx=vb.width/mr.width,sy=vb.height/mr.height,NS='http://www.w3.org/2000/svg';
+ m.classList.add('measuring');void m.offsetWidth;const mr=m.getBoundingClientRect();if(!mr.width){m.classList.remove('measuring');return}const vb=sv.viewBox.baseVal,sx=vb.width/mr.width,sy=vb.height/mr.height,NS='http://www.w3.org/2000/svg';
  let mk=sv.querySelector('mask');if(mk)mk.remove();mk=document.createElementNS(NS,'mask');mk.id='roadknock';mk.setAttribute('maskUnits','userSpaceOnUse');
  const bg=document.createElementNS(NS,'rect');bg.setAttribute('x',0);bg.setAttribute('y',0);bg.setAttribute('width',vb.width);bg.setAttribute('height',vb.height);bg.setAttribute('fill','#fff');mk.appendChild(bg);
  m.querySelectorAll('.node .lbl,.node .place').forEach(e=>{const r=e.getBoundingClientRect();if(!r.width)return;const px=5,py=2,k=document.createElementNS(NS,'rect');
   k.setAttribute('x',(r.left-mr.left-px)*sx);k.setAttribute('y',(r.top-mr.top-py)*sy);k.setAttribute('width',(r.width+2*px)*sx);k.setAttribute('height',(r.height+2*py)*sy);k.setAttribute('fill','#000');mk.appendChild(k)});
- sv.insertBefore(mk,sv.firstChild);const p=sv.querySelector('path');if(p)p.setAttribute('mask','url(#roadknock)')}
+ m.classList.remove('measuring');sv.insertBefore(mk,sv.firstChild);const p=sv.querySelector('path');if(p)p.setAttribute('mask','url(#roadknock)')}
 window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
@@ -1535,7 +1541,7 @@ function render(){
  if(S.screen==='lock')gameStop=startLock();
  if(S.screen==='snos')gameStop=startSnos();
  if(S.screen==='read'&&S.backPara!==null){const el=document.getElementById('p'+S.backPara);if(el)el.scrollIntoView({block:'center'})}
- if(S.screen==='map'){knockRoad();placeSeg();if(app.querySelector('.map.stag'))setTimeout(()=>{if(S.screen==='map')knockRoad()},480)}
+ if(S.screen==='map'){knockRoad();placeSeg();}
  a11yAfter();
 }
 
