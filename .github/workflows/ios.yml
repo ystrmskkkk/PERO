@@ -1,0 +1,22 @@
+name: iOS build check (simulator, unsigned)
+on:
+  push:
+    branches: [capacitor]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install
+      - run: npx cap add ios
+      - run: npx capacitor-assets generate --ios || echo "assets skipped"
+      - run: npx cap sync ios
+      - name: Build for iOS Simulator (no signing)
+        working-directory: ios/App
+        run: |
+          xcodebuild -scheme App -configuration Debug -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO build | tail -20
