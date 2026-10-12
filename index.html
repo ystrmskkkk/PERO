@@ -540,6 +540,19 @@ h1[tabindex='-1']:focus,h2[tabindex='-1']:focus{outline:none}
 .map.stag svg.route{animation:roadin .5s var(--ease-out) both}
 @keyframes roadin{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
 @media (prefers-reduced-motion: reduce){.map.stag svg.route{animation:fadein .2s ease}}
+
+/* legal docs */
+.grow.link{width:100%;background:none;border:0;border-bottom:.5px solid var(--line);color:var(--ink);text-align:left}
+.grow.link span:last-child{font-size:22px;line-height:1;color:var(--muted)}
+.grow.link:last-of-type{border-bottom:.5px solid var(--line)}
+.doc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px 26px;display:flex;flex-direction:column;gap:10px;font-family:var(--f-read)}
+.doc h2{font-size:26px;line-height:1.15}
+.doc h3{font-family:var(--f-display);font-size:19px;margin-top:10px}
+.doc p,.doc li{font-size:16px;line-height:1.6}
+.doc ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.doc .lead{font-style:italic;color:var(--ink)}
+.doc .docdate{font-size:var(--t-meta);color:var(--muted)}
+.doc a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -1188,10 +1201,10 @@ function unlocked(i){return i===0||isDone(actNodes()[i-1].id)}
 function progressPct(){return Math.round(S.done.length/ALLNODES.length*100)}
 function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 
-const DEPTH={library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2};
+const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2};
 const ROOT_TITLES={library:'Библиотека',map:'Карта',cards:'Коллекция',profile:'Профиль'};
-function backTarget(){const sc=S.screen;if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
-function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';default:return ''}}
+function backTarget(){const sc=S.screen;if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
+function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
 const CHEV='<svg viewBox="0 0 13 21" aria-hidden="true"><path d="M11 2L2.5 10.5L11 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function top(){
  const xpCls=S.flashXp?' bump':'';S.flashXp=false;
@@ -1213,6 +1226,56 @@ const TABICONS={
 };
 function tabbar(){return `<nav class="tabbar" aria-label="Разделы"><div class="in">${Object.keys(ROOT_TITLES).map(k=>`<button class="tab" data-tab="${k}" ${S.screen===k?'aria-current="page"':''}>${TABICONS[k]}<span>${ROOT_TITLES[k]}</span></button>`).join('')}</div></nav>`}
 
+
+const APP_VERSION='64';
+const DOC_DATE='13 октября 2026 г.';
+const CONTACT='<a href="https://github.com/ystrmskkkk/PERO/issues" target="_blank" rel="noopener">github.com/ystrmskkkk/PERO/issues</a>';
+const DOCS={
+ privacy:{title:'Конфиденциальность',h:'Политика конфиденциальности',body:`
+<p class="lead">Коротко: PERO не собирает и не передаёт ваши данные. Прогресс хранится только на вашем устройстве.</p>
+<h3>1. О приложении</h3>
+<p>PERO — бесплатное учебное приложение для чтения классической литературы, сейчас в стадии прототипа. В этой политике описано, какие данные появляются при его использовании и где они хранятся.</p>
+<h3>2. Что мы не делаем</h3>
+<ul><li>не просим регистрироваться, указывать имя, возраст, почту или телефон;</li><li>не используем аналитику, рекламу и трекеры, не ставим cookie для отслеживания;</li><li>не продаём и не передаём данные третьим лицам;</li><li>не просим доступ к камере, микрофону, контактам или геопозиции.</li></ul>
+<h3>3. Что хранится на устройстве</h3>
+<p>Чтобы вы могли продолжить с того же места, приложение сохраняет в памяти вашего браузера (localStorage):</p>
+<ul><li>опыт, серию дней, пройденные места на карте и открытые карточки;</li><li>ответы на проверки по ходу чтения и закладки в тексте;</li><li>настройки: тему, звук, полный или сокращённый текст.</li></ul>
+<p>Для работы без интернета браузер также сохраняет копию страницы и иллюстраций. Эти данные не покидают устройство и не отправляются нам.</p>
+<h3>4. Сторонние сервисы</h3>
+<p>Чтобы открыть приложение, браузер обращается к двум сервисам, которые получают обычные технические данные запроса: IP-адрес, тип браузера и время обращения.</p>
+<ul><li><b>GitHub Pages</b> — хостинг приложения. Обработка данных — по <a href="https://docs.github.com/ru/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">заявлению о конфиденциальности GitHub</a>.</li><li><b>Google Fonts</b> — загрузка шрифтов. Обработка данных — по <a href="https://policies.google.com/privacy?hl=ru" target="_blank" rel="noopener">политике конфиденциальности Google</a>.</li></ul>
+<h3>5. Дети</h3>
+<p>Приложение рассчитано в том числе на школьников. Мы намеренно не запрашиваем никаких сведений о пользователе, поэтому ребёнок может пользоваться PERO, не сообщая о себе ничего. Если появятся функции с учётной записью (например, отчёты для родителей), политика будет обновлена, а для детей потребуется согласие родителя.</p>
+<h3>6. Как удалить данные</h3>
+<ul><li>в приложении: Профиль → «Сбросить прогресс»;</li><li>полностью: удалить PERO с экрана «Домой» или очистить данные сайта в настройках браузера (на iPhone — в настройках Safari: «Дополнения» → «Данные сайтов»).</li></ul>
+<h3>7. Изменения и связь</h3>
+<p>Если политика изменится, новая редакция появится в этом разделе с новой датой. Вопросы и предложения — через ${CONTACT}.</p>`},
+ terms:{title:'Условия',h:'Условия использования',body:`
+<p class="lead">Пользуясь PERO, вы соглашаетесь с этими условиями. Если вы не согласны — просто не используйте приложение.</p>
+<h3>1. Что такое PERO</h3>
+<p>PERO — бесплатный учебный прототип: чтение классики по уровням с заданиями и мини-играми. Приложение развивается, состав функций и контента может меняться без предупреждения.</p>
+<h3>2. Как пользоваться</h3>
+<ul><li>для личного чтения и учёбы, дома или в классе;</li><li>не вмешиваться в работу приложения и не пытаться его взломать;</li><li>не выдавать приложение или его материалы за свои и не продавать их.</li></ul>
+<h3>3. Контент</h3>
+<p>Текст «Капитанской дочки» А. С. Пушкина находится в общественном достоянии. Пересказы, задания, пояснения, иллюстрации, дизайн и программный код созданы для PERO и принадлежат автору проекта. Их можно показывать и обсуждать в учебных целях; копировать или использовать коммерчески — только с разрешения.</p>
+<h3>4. Учебная оговорка</h3>
+<p>Пересказы и задания помогают понять книгу, но не заменяют её чтение и школьный учебник. Если вы нашли ошибку в тексте или ответе, напишите нам — исправим.</p>
+<h3>5. Без гарантий</h3>
+<p>Приложение предоставляется «как есть». Мы стараемся, чтобы всё работало, но не гарантируем отсутствие ошибок и постоянную доступность. Прогресс хранится только на устройстве и может пропасть при очистке данных браузера или смене телефона.</p>
+<h3>6. Ответственность</h3>
+<p>В пределах, допускаемых законом, автор не отвечает за косвенные последствия использования приложения, в том числе за потерю прогресса.</p>
+<h3>7. Изменения и связь</h3>
+<p>Условия могут обновляться — актуальная редакция всегда здесь. Связь: ${CONTACT}.</p>`},
+ credits:{title:'Авторские права',h:'Авторские права и лицензии',body:`
+<h3>Текст</h3>
+<p>А. С. Пушкин, «Капитанская дочка» (1836) — произведение в общественном достоянии. Сокращённая версия, пересказы, пояснения слов и задания написаны для PERO.</p>
+<h3>Иллюстрации и оформление</h3>
+<p>Виньетки уровней, рисунки на карте, портреты и иконки созданы для PERO. Звуки интерфейса синтезируются прямо в приложении.</p>
+<h3>Шрифты</h3>
+<ul><li><b>Old Standard TT</b> — Алексей Крюков, лицензия SIL Open Font License 1.1;</li><li><b>PT Serif</b> — ParaType, лицензия SIL Open Font License 1.1.</li></ul>
+<p>Шрифты загружаются через Google Fonts. Текст лицензии: <a href="https://openfontlicense.org" target="_blank" rel="noopener">openfontlicense.org</a>.</p>`}
+};
+function vDoc(){const D=DOCS[S.doc]||DOCS.privacy;return `<article class="doc"><h2>${D.h}</h2><p class="docdate">Редакция от ${DOC_DATE}</p>${D.body}</article>`}
 function vProfile(){
  const total=Object.keys(CARDS).length;
  return `<div class="ghead">Статистика</div><div class="group">
@@ -1229,6 +1292,11 @@ function vProfile(){
  <button class="grow tog" data-act="short" role="switch" aria-checked="${!!S.short}"><span>Сокращённый текст<small class="tsub">${S.short?'Ключевые отрывки и короткий пересказ':'Полный текст повести'}</small></span><span class="sw2 ${S.short?'on':''}" aria-hidden="true"><i></i></span></button>
  <div class="grow"><span>Сейчас читаю</span><span>Капитанская дочка</span></div>
  <div class="grow"><span>Оформление</span><span>Старинная карта</span></div></div>
+ <div class="ghead">О приложении</div><div class="group">
+ <button class="grow link" data-doc="privacy"><span>Политика конфиденциальности</span><span aria-hidden="true">›</span></button>
+ <button class="grow link" data-doc="terms"><span>Условия использования</span><span aria-hidden="true">›</span></button>
+ <button class="grow link" data-doc="credits"><span>Авторские права и лицензии</span><span aria-hidden="true">›</span></button>
+ <div class="grow"><span>Версия</span><span>${APP_VERSION}</span></div></div>
  <div class="group"><button class="grow btnrow" data-act="reset">Сбросить прогресс прототипа</button></div>
  <p class="foot">${S.short?'Сокращённая версия: отрывки из глав и пересказ между ними.':'Полный текст повести А. С. Пушкина.'}</p>`;
 }
@@ -1258,6 +1326,9 @@ function vLibrary(){
 Object.assign(ART,{v_l4:'./a/da8d525895.webp',v_l5:'./a/0a18c3918f.webp',v_l6:'./a/db963b69ba.webp',v_l7:'./a/8f978194af.webp',v_l8:'./a/6341775202.webp',v_l9:'./a/bb3afa26d4.webp',v_l10:'./a/98ae870a0a.webp',v_l11:'./a/d5837715fa.webp',v_l12:'./a/53b086b87a.webp',v_l13:'./a/ba06f3b0a6.webp',v_l14:'./a/de191f2aa1.webp',v_l15:'./a/691d1321aa.webp',v_l16:'./a/84b225597e.webp',v_l17:'./a/88ad2fea62.webp',v_l18:'./a/c94738b517.webp',v_l19:'./a/b0604a333c.webp',v_l20:'./a/802b019832.webp',d_l5:'./a/ae168d2847.webp',d_l6:'./a/7337303086.webp',d_chest2:'./a/00ffa681e2.webp',d_l7:'./a/b301a74e5c.webp',d_l8:'./a/b76f771d04.webp',d_l9:'./a/01106609ac.webp',d_l10:'./a/479fa13c2a.webp',d_chest3:'./a/8f0773a2e4.webp',d_l11:'./a/fd1e434a7f.webp',d_l12:'./a/6463f26928.webp',d_l13:'./a/ad186705ec.webp',d_l14:'./a/be5ffafe5f.webp',d_chest4:'./a/6c5562949c.webp',d_l15:'./a/293e166026.webp',d_l16:'./a/e3933f6250.webp',d_l17:'./a/4f89ebb6ab.webp',d_l18:'./a/ecb9fea374.webp',d_chest5:'./a/6ee00858a3.webp',d_l19:'./a/701ea6280a.webp',d_l20:'./a/c0aa626b7a.webp'});
 ['l4','l5','l6','l7','l8','l9','l10','l11','l12','l13','l14','l15','l16','l17','l18','l19','l20'].forEach(k=>{LEVELS[k].art='v_'+k});
 Object.assign(DECOS,{l5:{x:18,y:44,img:'d_l5'},l6:{x:87,y:108,img:'d_l6'},chest2:{x:12,y:252,img:'d_chest2'},l7:{x:86,y:384,img:'d_l7'},l8:{x:12,y:500,img:'d_l8'},l9:{x:18,y:44,img:'d_l9'},l10:{x:87,y:108,img:'d_l10'},chest3:{x:12,y:252,img:'d_chest3'},l11:{x:86,y:384,img:'d_l11'},l12:{x:12,y:500,img:'d_l12'},l13:{x:18,y:44,img:'d_l13'},l14:{x:87,y:108,img:'d_l14'},chest4:{x:12,y:252,img:'d_chest4'},l15:{x:86,y:384,img:'d_l15'},l16:{x:12,y:500,img:'d_l16'},l17:{x:18,y:44,img:'d_l17'},l18:{x:87,y:108,img:'d_l18'},chest5:{x:12,y:252,img:'d_chest5'},l19:{x:86,y:384,img:'d_l19'},l20:{x:12,y:500,img:'d_l20'}});
+/*BOSS-ENV-ART*/
+Object.assign(ART,{b_boss:'./a/b0673036c8.webp',b_boss2:'./a/c57b413878.webp',b_boss3:'./a/e1c1f6ae53.webp',b_boss4:'./a/03ca8ba6f9.webp',b_boss5:'./a/9c3e04b5e1.webp',e_mtn:'./a/f4ebece733.webp',e_wind:'./a/19bcfe47d8.webp',e_grass:'./a/888670b817.webp'});
+Object.assign(DECOS,{boss:{x:85,y:640,img:'b_boss'},boss2:{x:85,y:640,img:'b_boss2'},boss3:{x:85,y:640,img:'b_boss3'},boss4:{x:85,y:640,img:'b_boss4'},boss5:{x:85,y:640,img:'b_boss5'}});
 /*END-GEN-ART*/
 function vMap(){
  const NODES=actNodes(), A=ACTS[S.act];
@@ -1274,7 +1345,7 @@ function vMap(){
  ${S.justDone&&DECOS[S.justDone]&&NODES.find(n=>n.id===S.justDone)?`<p class="inkmsg">Карта дорисована: ${NODES.find(n=>n.id===S.justDone).place}</p>`:''}
  <div class="map${S.mapStag?' stag':''}" style="height:${H}px">
  ${NODES.map(n=>{const D=DECOS[n.id];if(!D)return '';const st=isDone(n.id)?(S.justDone===n.id?'inked fresh':'inked'):'sketch';if(D.img)return `<div class="deco raster ${st}${D.snow?' wide':''}${D.tall?' tall':''}" style="left:${D.x}%;top:${D.y}px" aria-hidden="true"><img decoding="async" src="${ART[D.img]}" alt=""></div>`;return `<div class="deco ${st}" style="left:${D.x}%;top:${D.y}px" aria-hidden="true"><svg viewBox="0 0 76 76">${D.svg.replace(/<(path|circle|rect|ellipse) /g,'<$1 pathLength="1" ')}</svg></div>`}).join('')}<svg class="road route" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></svg>
- <svg class="road" viewBox="0 0 350 ${H}" preserveAspectRatio="xMaxYMin meet" aria-hidden="true" style="pointer-events:none"><g fill="none" stroke="var(--ink)" stroke-width="1" opacity=".5">${S.act===1?'':'<path d="M300 250 l12 -20 l12 20 M314 264 l10 -16 l10 16"/><path d="M14 420 l12 -20 l12 20 M28 436 l10 -16 l10 16"/>'}<path d="M290 560 c14 -5 22 5 36 0 M290 566 c14 -5 22 5 36 0"/></g></svg>${S.act===1?`<img decoding="async" class="mtn" src="${MTN}" alt="" style="right:1%;top:230px;width:96px"><img decoding="async" class="mtn" src="${CLOUD}" alt="" style="left:0;top:378px;width:104px">`:''}
+ ${S.act===1?'':`<img decoding="async" class="mtn env" src="${ART.e_mtn}" alt="" style="right:0;top:226px;width:128px"><img decoding="async" class="mtn env" src="${ART.e_mtn}" alt="" style="left:-2%;top:404px;width:112px;transform:scaleX(-1)"><img decoding="async" class="mtn env" src="${ART.e_grass}" alt="" style="left:2%;top:600px;width:58px">`}<img decoding="async" class="mtn env" src="${ART.e_wind}" alt="" style="right:2%;top:536px;width:112px">${S.act===1?`<img decoding="async" class="mtn" src="${MTN}" alt="" style="right:1%;top:230px;width:96px"><img decoding="async" class="mtn" src="${CLOUD}" alt="" style="left:0;top:378px;width:104px">`:''}
  ${NODES.map((n,i)=>{const L=LEVELS[n.id];const st=isDone(n.id)?'done':(i===cur?'cur':'');const lock=!unlocked(i);
   const inner=isDone(n.id)?ICONS.check:(n.kind==='chest'?ICONS.chest:n.kind==='boss'?ICONS.boss:L.n);
   const kind=n.kind==='level'?'Уровень':n.kind==='chest'?'Награда':'Финал акта';
@@ -1532,7 +1603,7 @@ function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.q
 window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
- const V={library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile}[S.screen];
+ const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile}[S.screen];
  const body=V();
  const root=DEPTH[S.screen]===0;
  app.classList.toggle('has-tabs',root);
@@ -1566,6 +1637,7 @@ app.addEventListener('click',e=>{
  if(t.dataset.tab){if(S.screen!==t.dataset.tab)go(t.dataset.tab);return}
  if(t.dataset.back){go(backTarget());return}
  if(t.dataset.go){go(t.dataset.go);return}
+ if(t.dataset.doc){go('doc',{doc:t.dataset.doc});return}
  if(t.dataset.themeSet){S.theme=t.dataset.themeSet;save();applyTheme();render();return}
  if(t.dataset.age){S.age=t.dataset.age;render();return}
  if(t.dataset.actSw){if(!actOpen(t.dataset.actSw))return;if(+t.dataset.actSw===S.act)return;const ind=app.querySelector('.seg-ind');S.segFrom=ind?ind.style.transform:null;S.act=+t.dataset.actSw;S.mapStag=true;save();render();S.mapStag=false;S.segFrom=null;return}
