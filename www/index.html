@@ -13,6 +13,15 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <style>html{background:#E9DFC7}body{margin:0}img{max-width:100%}[hidden]{display:none!important}html,body{overscroll-behavior-y:none}</style>
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +52,51 @@
   --artf:invert(1) hue-rotate(180deg) brightness(.92) sepia(.25);
   color-scheme:dark;
 }
+.card.duel{gap:10px;padding-inline:10px}
+.dhud{position:absolute;left:0;right:0;top:0;display:flex;gap:14px;padding:7px 9px 14px;border-radius:8px 8px 0 0;background:linear-gradient(rgba(30,24,16,.42),rgba(30,24,16,0));pointer-events:none;z-index:1}
+.dpb{flex:1;display:flex;flex-direction:column;gap:3px;font:700 11px/1 var(--f-sys);letter-spacing:.02em;color:#F4ECDA;text-shadow:0 1px 1px rgba(0,0,0,.45)}
+.dpb.r{align-items:flex-end}
+.dbar{height:6px;width:100%;background:rgba(244,236,218,.28);border:1px solid rgba(30,24,16,.55);border-radius:2px;overflow:hidden;display:flex;justify-content:center;box-sizing:content-box}
+.dbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#B8321F,#E0B252,#B8321F);transition:width .12s}
+.dbar.blink i{animation:dblink .25s steps(2) infinite}
+@keyframes dblink{50%{opacity:.25}}
+.dstage{position:relative;width:100%;max-width:540px;margin:0 auto}
+.dstage canvas{display:block;width:100%;height:auto;aspect-ratio:3/2;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:8px;border:1px solid var(--line);touch-action:none;background:#C9C3B2}
+.dmsg{position:absolute;left:0;right:0;top:22%;text-align:center;font:700 clamp(15px,4.6vw,20px) var(--f-display);letter-spacing:.02em;color:#3A2A1C;text-shadow:0 1px 0 #F4ECDA,1px 0 0 #F4ECDA,-1px 0 0 #F4ECDA,0 -1px 0 #F4ECDA;opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;pointer-events:none}
+.dmsg.on{opacity:1;transform:none}.dmsg.gold{color:#7A5310}.dmsg.bad{color:#9E2B1F}.dmsg.blue{color:#2E4F7A}
+.dguide{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.dguide li{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:baseline;font:400 14px/1.35 var(--f-sys);color:var(--ink)}
+.dguide b{font-weight:600;white-space:nowrap}
+.dguide em.r{font-style:normal;color:var(--bad-ink);font-weight:600}
+.dtip{font:400 13px/1.45 var(--f-sys);color:var(--muted)}
+.dover{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:8px;background:rgba(30,24,16,.55);color:#F4ECDA;text-align:center;padding:12px;animation:dfade .2s ease-out}
+.dover[hidden]{display:none}
+.dmodal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(20,15,10,.55);animation:dfade .22s ease-out}
+.dbox{box-sizing:border-box;width:100%;max-width:400px;max-height:calc(100vh - 32px);overflow:auto;background:var(--surface);color:var(--ink);border:3px double var(--ink);border-radius:12px;padding:20px 18px 18px;display:flex;flex-direction:column;gap:10px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.35);animation:drise .28s cubic-bezier(.16,1,.3,1)}
+.dbox h2{font-size:28px;line-height:1.1}
+.dstat{font:400 15px var(--f-sys);color:var(--muted)}.dstat b{color:var(--ink);font-size:17px}
+.dnote{font:400 14px/1.4 var(--f-sys);color:var(--muted)}.dnote.rare{color:var(--gold-ink);font-weight:600}
+.dbox .hook{font-style:italic;font-size:15px;line-height:1.45}
+.dbox .row{display:flex;gap:8px;margin-top:4px}.dbox .row .btn{flex:1 1 auto;padding-inline:12px;white-space:nowrap}.dbox .row .btn.ghost{flex:0 1 auto}
+@keyframes drise{from{opacity:0;transform:translateY(14px) scale(.97)}}
+@media (prefers-reduced-motion:reduce){.dmodal,.dbox{animation:none}}
+html.duel-lock,html.duel-lock body{overflow:hidden;overscroll-behavior:none;touch-action:none}
+.dover strong{font:400 clamp(19px,5.6vw,24px) var(--f-display)}
+.dover span{font:400 13px var(--f-sys);opacity:.85}
+.dover .btn{margin-top:6px;min-width:150px}
+@keyframes dfade{from{opacity:0}}
+@media (prefers-reduced-motion:reduce){.dover{animation:none}}
+.dctl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.dk{min-height:64px;border-radius:12px;border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);font:600 13px var(--f-sys);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;touch-action:none;-webkit-user-select:none;user-select:none}
+.dk b{font-size:18px;line-height:1}
+.dk.hit{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.dk.down{transform:scale(.94);filter:brightness(.92)}
+.dlegend{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;font:400 12px var(--f-sys);color:var(--muted)}
+.dlegend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:0;border:1px solid var(--ink)}
+.dlegend i.w{background:#FFFFFF}.dlegend i.r{background:#E8442E}
+#du-end{display:flex;flex-direction:column;gap:8px}
+#du-end .hook{font-style:italic}
+@media (prefers-reduced-motion:reduce){.dmsg{transition:none}.dbar i{transition:none}.dbar.blink i{animation:none;opacity:.6}}
 html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:17px;line-height:1.5;padding-inline:16px;padding-block:0;-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-font-smoothing:antialiased}
 .app{max-width:460px;margin:0 auto;padding-block:0 40px;display:flex;flex-direction:column;gap:16px}
@@ -870,14 +924,14 @@ let S={book:'kd',actBy:{},screen:'library',age:'Все',xp:0,streak:0,lastDay:nu
   boss:null,flashXp:false,theme:'paper',dossier:[],justDone:null,act:1,duelBest:0,lockCfg:null,lockLast:0,fair:{blitz:null,lock:0,snos:0,lockOk:false,snosOk:false}};
 try{const saved=JSON.parse(localStorage.getItem('bq-proto')||'null');if(saved&&typeof saved==='object'){Object.assign(S,saved,{screen:'library'});}}catch(e){}
 (function(){const A=v=>Array.isArray(v)?v.filter(x=>typeof x==='string'):[],N=(v,d)=>Number.isFinite(v)?v:d,O=v=>v&&typeof v==='object'&&!Array.isArray(v)?v:{};
- S.done=A(S.done);S.cards=A(S.cards);S.dossier=A(S.dossier);S.xp=Math.max(0,N(S.xp,0));S.streak=Math.max(0,N(S.streak,0));S.act=N(+S.act,1);S.duelBest=N(S.duelBest,0);
+ S.done=A(S.done);S.cards=A(S.cards);S.dossier=A(S.dossier);S.xp=Math.max(0,N(S.xp,0));S.streak=Math.max(0,N(S.streak,0));S.act=N(+S.act,1);S.duelBest=N(S.duelBest,0);S.duelPerf=Math.max(0,N(S.duelPerf,0));S.duelClean=S.duelClean===true;
  S.bm=O(S.bm);S.ck=O(S.ck);const F=O(S.fair);S.fair={blitz:Number.isFinite(F.blitz)?F.blitz:null,lock:N(F.lock,0),snos:N(F.snos,0),lockOk:!!F.lockOk,snosOk:!!F.snosOk};
  if(!['paper','night','auto'].includes(S.theme))S.theme='paper'})();
 function dayNum(d){d=d||new Date();return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/86400000)}
 if(S.lastDay===undefined){S.streak=0;S.lastDay=null}
 (function(){const t=dayNum();if(S.lastDay!=null&&t-S.lastDay>1)S.streak=0})();
 function touchStreak(){const t=dayNum();if(S.lastDay===t)return;S.streak=(S.lastDay===t-1)?(S.streak||0)+1:1;S.lastDay=t;setTimeout(()=>NATIVE.remind(),0)}
-function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest}))}catch(e){}}
+function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest,duelPerf:S.duelPerf,duelClean:S.duelClean}))}catch(e){}}
 
 function bmKey(){return S.level+(S.short?':s':':f')}
 function ckOrder(k,i,n){let h=0;for(const c of k+i)h=(h*31+c.charCodeAt(0))>>>0;const a=[...Array(n).keys()];for(let j=n-1;j>0;j--){h=(h*1103515245+12345)>>>0;const r=h%(j+1);[a[j],a[r]]=[a[r],a[j]]}return a}
@@ -959,10 +1013,10 @@ function unlocked(i){return i===0||isDone(actNodes()[i-1].id)}
 function progressPct(){const ns=allNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 
-const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2};
+const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2};
 const ROOT_TITLES={library:'Библиотека',map:'Карта',cards:'Коллекция',profile:'Профиль'};
-function backTarget(){const sc=S.screen;if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
-function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
+function backTarget(){const sc=S.screen;if(sc==='duel')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
+function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
 const CHEV='<svg viewBox="0 0 13 21" aria-hidden="true"><path d="M11 2L2.5 10.5L11 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function top(){
  const xpCls=S.flashXp?' bump':'';S.flashXp=false;
@@ -985,7 +1039,7 @@ const TABICONS={
 function tabbar(){return `<nav class="tabbar" aria-label="Разделы"><div class="in">${Object.keys(ROOT_TITLES).map(k=>`<button class="tab" data-tab="${k}" ${S.screen===k?'aria-current="page"':''}>${TABICONS[k]}<span>${ROOT_TITLES[k]}</span></button>`).join('')}</div></nav>`}
 
 
-const APP_VERSION='64';
+const APP_VERSION='65';
 const DOC_DATE='13 октября 2026 г.';
 const CONTACT='<a href="https://github.com/ystrmskkkk/PERO/issues" target="_blank" rel="noopener">github.com/ystrmskkkk/PERO/issues</a>';
 const DOCS={
@@ -1180,7 +1234,7 @@ function vResult(){
  <button class="btn wide" data-go="map">На карту</button>`}}
  const title=(S.level==='chest'||S.level==='chest2'||S.level==='chest3'||S.level==='chest4'||S.level==='chest5')?'Сундук открыт':S.level==='boss5'?'Книга прочитана':S.level==='boss4'?'Акт IV пройден':S.level==='boss3'?'Акт III пройден':S.level==='boss2'?'Акт II пройден':S.level==='boss'?(S.fair.blitz===BOSS.length?'Акт пройден без ошибок':'Акт I пройден'):`Уровень «${L.title}» пройден`;
  const hook=S.level==='boss'?'Впереди Белогорская крепость. Акт II уже открыт на карте.':S.level==='boss2'?'Пётр выздоравливает, а над степью уже собирается гроза. Акт III «Пугачёвщина» уже открыт на карте.':S.level==='boss3'?'Крепость пала, но Пётр жив. Акт IV уже открыт на карте.':S.level==='boss4'?'Пётр едет выручать Машу. Акт V уже открыт на карте.':S.level==='boss5'?'«Капитанская дочка» пройдена целиком. Пётр сдержал отцовский наказ — и ты дочитал повесть до конца.':S.level==='chest5'?'Сад, где решилась судьба Петра.':S.level==='chest4'?'Оренбург в осаде, но Пётр добрался до своих.':S.level==='chest3'?'Старая крепостная пушка ещё послужит.':S.level==='chest'?'Кибитка готова к дальней дороге.':S.level==='chest2'?'Отцовская шпага: честь смолоду.':L.hook;
- return `<div class="card res"><div class="eyebrow">${S.level==='boss5'?`Финал: ${S.lockLast} очков`:S.level==='boss4'?`Совет: ${S.blitz4} из ${BOSS4.length}`:S.level==='boss'?'Ночь на постоялом дворе позади':S.level==='boss2'?`Поединок: ${S.lockLast} очков`:'Награда'}</div><h2>${title}</h2><div class="big">+${S.gained} XP</div>
+ return `<div class="card res"><div class="eyebrow">${S.level==='boss5'?`Финал: ${S.lockLast} очков`:S.level==='boss4'?`Совет: ${S.blitz4} из ${BOSS4.length}`:S.level==='boss'?'Ночь на постоялом дворе позади':S.level==='boss2'?(S.duelClean?'Чистый бой':`Идеальных парирований: ${S.duelPerf||0}`):'Награда'}</div><h2>${title}</h2><div class="big">+${S.gained} XP</div>
  ${S.earned?`<div class="pop">${cardHTML(S.earned)}</div><p class="meta">Новая карточка в коллекции</p>`:''}
  <p class="hook">${hook}</p></div>
  <button class="btn wide" data-go="map">На карту</button>`;
@@ -1227,6 +1281,146 @@ function vLock(){
  <button class="btn wide" id="lk-go">Начать</button>
  <p class="meta">Верный ответ — +1000. Ошибка — минус секунда. Золотая зона между ответами добавляет 1,5 секунды. Можно жать пробел.</p>
  <div id="lk-end"></div></div>`;
+}
+
+const DUELSPR={"bg":"./a/5dad2be795.png","p": "./a/e05b2e61a7.png", "s": "./a/f4fdbf9042.png", "cw": 112, "ch": 84, "n": ["idle", "windup", "lunge", "recover", "parry_hi", "parry_lo", "hit", "hop"], "sn": ["idle", "windup", "low", "stag", "lowwind", "thrust"], "tips": {"idle": [92, 32], "windup": [24, 17], "lunge": [99, 40], "recover": [77, 30], "parry_hi": [31, 13], "parry_lo": [70, 75], "hit": [100, 61], "hop": [64, 35]}, "stips": {"idle": [76, 35], "windup": [62, 17], "low": [74, 55], "stag": [45, 28], "lowwind": [87, 60], "thrust": [105, 36]}};
+/* ---- Финал акта II: «Поединок на берегу» — дуэль с парированием (порт прототипа main.gd) ---- */
+function vDuel(){
+ return `<div class="sub"><button class="back" data-go="map">← Карта</button><span></span></div>
+ <div class="band"><div class="eyebrow">Финал акта II</div><h2>Поединок на берегу</h2><p>«Мы пошли вдоль реки и стали за стогом». Сбей Швабрину равновесие точными парированиями и нанеси решающий удар.</p></div>
+ <div class="card duel">
+ <div class="dstage"><div class="dhud" aria-label="Равновесие"><div class="dpb"><span>Пётр</span><div class="dbar" id="du-p"><i></i></div></div><div class="dpb r"><span>Швабрин</span><div class="dbar" id="du-e"><i></i></div></div></div><canvas id="du" width="240" height="160" aria-label="Поединок: Пётр против Швабрина"></canvas><div class="dmsg" id="du-m" aria-live="polite"></div><div class="dover" id="du-over"><strong>Поединок у стога</strong><span>Свайпы — по полю, страница во время боя не прокручивается</span><button class="btn" id="du-start">Начать поединок</button></div></div>
+ <ul class="dguide">
+ <li><b>↑ свайп вверх</b><span>парировать удар сверху</span></li>
+ <li><b>↓ свайп вниз</b><span>парировать удар снизу</span></li>
+ <li><b>↔ свайп вбок</b><span>отскок — единственная защита от <em class="r">красного</em> укола</span></li>
+ <li><b>• тап</b><span>удар; сразу после идеального парирования — контрудар</span></li>
+ </ul>
+ <p class="dtip">Блик на клинке Швабрина — замах, а кольцо вокруг него сжимается к моменту удара. Свайпай, когда кольцо почти сомкнулось: точно в срок — искры и сбитое равновесие, раньше — простой блок. Если блик с кольцом погасли, это финт: не спеши. Бой нарастает: сначала простые удары, потом уколы, потом финты.</p>
+ <div id="du-end"></div>
+ <p class="meta" style="justify-content:center">На компьютере: ↑/W и ↓/S — парирование, пробел — отскок, клик или J — удар.</p></div>`;
+}
+let DUIMG=null;
+function duelImgs(){if(DUIMG)return DUIMG;const mk=src=>{const i=new Image();i.src=src;return i};DUIMG={p:mk(DUELSPR.p),s:mk(DUELSPR.s),bg:mk(DUELSPR.bg)};return DUIMG}
+function startDuel(){
+ const cv=document.getElementById('du');if(!cv)return null;const ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;
+ const IM=duelImgs();const CW=DUELSPR.cw,CH=DUELSPR.ch,FI={},FS={};DUELSPR.n.forEach((n,i)=>FI[n]=i);DUELSPR.sn.forEach((n,i)=>FS[n]=i);
+ const W=240,H=160,FEET=141,PX=92,EX=152;
+ // настройки из прототипа
+ const PERFECT=.20,BLOCKW=.45,WHIFF=.45,ATKLOCK=.35,DODGE=.38,DODGECD=.35,COUNTER=.75,MAXP=100;
+ const DMG_HIT=18,DMG_THRUST=22,DMG_BLOCK=10,PERF_E=13,COUNTER_E=9,POKE_E=5,P_NORMAL=.5,P_THRUST=.25;
+ const ST={IDLE:0,TELE:1,FEINT:2,STRIKE:3,RECOVER:4,STAG:5},K={NORMAL:0,THRUST:1,FEINT:2};
+ const mEl=document.getElementById('du-m'),overEl=document.getElementById('du-over'),eBar=document.querySelector('#du-e i'),pBar=document.querySelector('#du-p i'),eWrap=document.getElementById('du-e'),endEl=document.getElementById('du-end');
+ const R=(a,b)=>a+Math.random()*(b-a);
+ let G,raf=0,last=0,running=false;
+ function reset(){G={t:0,hitstop:0,shake:0,pp:0,ep:0,plh:-10,elh:-10,st:ST.IDLE,stt:0,stl:1.5,kind:K.NORMAL,high:true,flash:false,fcol:'#FFFFFF',combo:0,nrec:.45,eoff:0,
+  parryT:-10,parryHigh:true,pend:false,lock:0,dodgeU:-10,dodgeR:0,counterU:-10,poff:0,swing:0,hurtU:-10,fin:false,won:false,sparks:[],perf:0,msgT:0,maxpp:0,prog:0,phase:1,defer:0,deferUsed:false,strikeT:0,downT:-10,touching:false,help:(S.duelLoss||0)>=2}}
+ reset();
+ function enter(s,l){G.st=s;G.stt=0;G.stl=l}
+ function say(txt,cls,dur){mEl.textContent=txt;mEl.className='dmsg on '+(cls||'');G.msgT=dur||1}
+ function teleLen(a,b){return R(a,b)*(G.help?1.2:1)}
+ function startAttack(fromIdle){const r=Math.random();
+  if(G.phase===1)G.kind=K.NORMAL;else if(G.phase===2)G.kind=r<.7?K.NORMAL:K.THRUST;else G.kind=r<P_NORMAL?K.NORMAL:r<P_NORMAL+P_THRUST?K.THRUST:K.FEINT;
+  G.high=Math.random()<.5;G.deferUsed=false;
+  G.fcol=G.kind===K.THRUST?'#E8442E':'#FFFFFF';G.flash=true;if(fromIdle)G.combo=G.phase===3?Math.floor(Math.random()*2):0;enter(ST.TELE,teleLen(.6,.95))}
+ function phaseCheck(){G.prog=Math.max(G.prog,G.ep);
+  if(G.phase===1&&G.prog>=33){G.phase=2;say('Швабрин злится: теперь и уколы!','bad',1.6)}
+  else if(G.phase===2&&G.prog>=55){G.phase=3;say('Он хитрит: берегись финтов','bad',1.6)}}
+ function clash(){return [(PX+EX)/2-4,FEET-(G.high?44:20)]}
+ function sparks(x,y,n){for(let i=0;i<n;i++){const a=R(-Math.PI,Math.PI),v=R(25,70);G.sparks.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:R(.2,.45)})}}
+ function playerHit(a,txt){G.pp+=a*(G.help?.75:1);G.plh=G.t;G.shake=2;G.poff=-6;G.hurtU=G.t+.35;say(txt,'bad');SFX('crunch')}
+ function check(){G.maxpp=Math.max(G.maxpp,G.pp);if(G.ep>=MAXP&&G.st!==ST.STAG){G.ep=MAXP;G.flash=false;G.combo=0;G.eoff=0;enter(ST.STAG,2.5);say('Равновесие сломлено! Бей!','gold',2.5);SFX('ok')}
+  if(G.pp>=MAXP){G.pp=MAXP;finish(false)}}
+ function resolve(){
+  if(!G.pend&&G.touching&&!G.deferUsed&&G.t-G.downT<.3&&G.kind!==K.THRUST){G.deferUsed=true;G.defer=.15;G.strikeT=G.t;return}
+  if(!G.defer)G.strikeT=G.t;G.defer=0;G.nrec=.45;
+  if(G.t<G.dodgeU){if(G.kind===K.THRUST){G.ep+=10;G.elh=G.t;say('Ушёл от укола!','blue')}else say('Уклонение','blue',.6)}
+  else if(G.kind===K.THRUST){G.pend=false;playerHit(DMG_THRUST,'Укол не парируется — отскакивай!')}
+  else if(G.pend){G.pend=false;const dt=Math.max(0,G.strikeT-G.parryT);
+   if(G.parryHigh!==G.high){G.pp+=DMG_BLOCK+6;G.plh=G.t;G.poff=-6;G.shake=1;const c=clash();sparks(c[0],c[1],4);say('Не та сторона — еле отбился','bad',.8);SFX('hit')}
+   else if(dt<=PERFECT){G.ep+=PERF_E;G.elh=G.t;G.pp=Math.max(0,G.pp-5);G.hitstop=.09;phaseCheck();G.shake=2;const c=clash();sparks(c[0],c[1],22);G.counterU=G.t+COUNTER;G.nrec=.8;G.perf++;say('Идеальное парирование!','gold');SFX('gold')}
+   else{G.pp+=DMG_BLOCK;G.plh=G.t;G.poff=-5;const c=clash();sparks(c[0],c[1],5);say('Блок','',.6);SFX('hit')}}
+  else playerHit(DMG_HIT,'Пропущен удар');
+  check()}
+ function finish(win){G.fin=true;G.won=win;G.flash=false;running=false;lock(false);
+  if(win){G.hitstop=.18;G.shake=3;sparks(EX-4,FEET-34,40);say('Решающий удар!','gold',9999);SFX('card')}else{G.shake=3;say('Равновесие потеряно','bad',9999);SFX('bad')}
+  const clean=win&&G.maxpp<50&&!G.help;S.duelLoss=win?0:(S.duelLoss||0)+1;if(win){S.duelPerf=G.perf;S.duelClean=clean||!!S.duelClean;if(!isDone('boss2'))addXp(40);save()}
+  setTimeout(()=>{if(!document.getElementById('du'))return;
+   const note=clean?'Чистый бой — равновесие Петра ни разу не просело наполовину. Это редкая карточка «Поединок».':(G.help?'Редкую карточку дают за чистый бой без поблажек.':'Выиграй, не дав Швабрину сбить равновесие Петра наполовину, — получишь редкую карточку.');
+   if(win){endEl.innerHTML='';const md=document.createElement('div');md.className='dmodal';md.id='du-modal';md.setAttribute('role','dialog');md.setAttribute('aria-modal','true');md.setAttribute('aria-labelledby','du-mt');
+    md.innerHTML=`<div class="dbox"><div class="eyebrow">Финал акта II</div><h2 id="du-mt">Швабрин отступает</h2><div class="dstat">Идеальных парирований: <b>${G.perf}</b></div><p class="dnote${clean?' rare':''}">${note}</p><p class="hook">Ещё мгновение — и поединок был бы выигран. Но с пригорка донёсся крик Савельича: «Барин!..» Пётр оглянулся — и получил удар под правое плечо.</p><div class="row"><button class="btn ghost" id="du-go">Ещё раз</button><button class="btn" data-act="closeact2">Закрыть акт II</button></div></div>`;
+    document.body.appendChild(md);lock(true);md.querySelector('#du-go').addEventListener('click',()=>{md.remove();lock(false);begin()});md.querySelector('[data-act="closeact2"]').addEventListener('click',e=>{e.stopPropagation();md.remove();lock(false);S.level='boss2';finishLevel('boss2')});setTimeout(()=>{const b=md.querySelector('[data-act="closeact2"]');if(b)b.focus({preventScroll:true})},50)}
+   else{endEl.innerHTML=`<p class="dtip">Свайпай в тот миг, когда кольцо вокруг блика смыкается. Красный укол не парируется: от него только отскок вбок.</p>`;overEl.innerHTML=`<strong>Пётр потерял равновесие</strong><span>Идеальных парирований: ${G.perf}</span><button class="btn" id="du-again">Ещё раз</button>`;overEl.hidden=false;mEl.className='dmsg';G.msgT=0;const b=overEl.querySelector('#du-again');b.addEventListener('click',begin);b.focus({preventScroll:true})}},win?900:700)}
+ function parry(up,at){if(!running||G.pend||G.t<G.lock||G.t<G.dodgeU)return;G.parryT=at!=null?Math.max(at,G.t-.15):G.t;G.parryHigh=up;G.pend=true;if(G.defer>0)resolve()}
+ function dodge(){if(!running||G.t<G.dodgeR)return;G.dodgeU=G.t+DODGE;G.dodgeR=G.t+DODGE+DODGECD;G.pend=false}
+ function attack(){if(!running||G.t<G.lock||G.t<G.dodgeU)return;G.swing=1;G.lock=G.t+ATKLOCK;G.pend=false;
+  if(G.st===ST.STAG){finish(true);return}
+  if(G.t<G.counterU){G.counterU=-10;G.ep+=COUNTER_E;G.elh=G.t;sparks(EX-8,FEET-36,12);say('Контрудар!','gold');SFX('hit')}
+  else if(G.st===ST.IDLE||G.st===ST.RECOVER){G.ep+=POKE_E;G.elh=G.t;say('Швабрин отбил','',.6);if(G.st===ST.IDLE&&Math.random()<.5)G.stt=Math.max(G.stt,G.stl-.1)}
+  else say('Его замах не прервать','',.7);
+  check();phaseCheck()}
+ function update(dt){
+  if(G.hitstop>0){G.hitstop-=dt;return}
+  G.t+=dt;G.shake=Math.max(0,G.shake-dt*10);G.msgT-=dt;if(G.msgT<=0)mEl.classList.remove('on');
+  G.poff+=(0-G.poff)*Math.min(1,dt*8);G.swing=Math.max(0,G.swing-dt*4);
+  for(const s of G.sparks){s.vy+=110*dt;s.x+=s.vx*dt;s.y+=s.vy*dt;s.l-=dt}G.sparks=G.sparks.filter(s=>s.l>0);
+  if(G.fin||!running)return;
+  if(G.defer>0){G.defer-=dt;if(G.defer<=0){G.defer=.0001;resolve()}}
+  if(G.pend&&G.t-G.parryT>BLOCKW&&!G.defer){G.pend=false;G.lock=G.t+WHIFF;say('Рано!','',.6)}
+  if(G.t-G.plh>1.5)G.pp=Math.max(0,G.pp-6*dt);
+  if(G.t-G.elh>2&&G.st!==ST.STAG)G.ep=Math.max(0,G.ep-4*dt);
+  G.stt+=dt;const lungeL=G.kind===K.THRUST?18:13;
+  switch(G.st){
+   case ST.IDLE:G.eoff=0;if(G.stt>=G.stl)startAttack(true);break;
+   case ST.TELE:if(G.stt>=G.stl){if(G.kind===K.FEINT){G.flash=false;enter(ST.FEINT,R(.2,.35))}else{enter(ST.STRIKE,.12);resolve()}}break;
+   case ST.FEINT:if(G.stt>=G.stl){G.kind=K.NORMAL;G.high=Math.random()<.5;G.fcol='#FFFFFF';G.flash=true;G.deferUsed=false;enter(ST.TELE,teleLen(.5,.6))}break;
+   case ST.STRIKE:G.eoff=-lungeL*Math.min(1,G.stt/G.stl);if(G.stt>=G.stl){G.flash=false;enter(ST.RECOVER,G.nrec)}break;
+   case ST.RECOVER:G.eoff=-lungeL*(1-Math.min(1,G.stt/G.stl));if(G.stt>=G.stl){G.eoff=0;if(G.combo>0){G.combo--;startAttack(false)}else enter(ST.IDLE,R(.5,1.3))}break;
+   case ST.STAG:if(G.stt>=G.stl){G.ep=60;say('Швабрин восстановил равновесие','',1);enter(ST.IDLE,.4)}break}
+ }
+ // ---- отрисовка ----
+ const PAL={sky:'#EFE6D0',dot:'#CDBD9C',bank:'#C9BD95',bank2:'#A99D7B',water:'#C2C8BC',wave:'#9DAAA6',grass:'#B9A97A',gl:'#7E7A45',g2:'#8F8A52',spot:'#A3935F',hay:'#C9A75A',hay2:'#A7863E',pole:'#5C4128'};
+ const bg=IM.bg;
+ function spr(img,frame,ax,feet,flip){const sx=(flip?FS:FI)[frame]*CW;const x=Math.round(flip?ax-CW*.58:ax-CW*.42),y=Math.round(feet-CH+2);
+  if(flip){ctx.save();ctx.translate(x+CW,y);ctx.scale(-1,1);ctx.drawImage(img,sx,0,CW,CH,0,0,CW,CH);ctx.restore()}else ctx.drawImage(img,sx,0,CW,CH,x,y,CW,CH);return {x,y}}
+ function tip(frame,o,flip){const t=(flip?DUELSPR.stips:DUELSPR.tips)[frame];return [o.x+(flip?CW-1-t[0]:t[0]),o.y+t[1]]}
+ function shadow(x,w){ctx.fillStyle='rgba(40,30,18,.32)';ctx.beginPath();ctx.ellipse(Math.round(x),FEET,w,2,0,0,Math.PI*2);ctx.fill()}
+ function pframe(){if(G.fin&&!G.won)return 'hit';if(G.t<G.dodgeU)return 'hop';if(G.t<G.hurtU)return 'hit';if(G.pend)return G.parryHigh?'parry_hi':'parry_lo';if(G.swing>.35)return 'lunge';if(G.swing>0)return 'recover';return 'idle'}
+ function eframe(){if(G.fin&&G.won)return 'stag';switch(G.st){case ST.TELE:return G.kind===K.THRUST?'low':G.high?'windup':'lowwind';case ST.FEINT:return 'idle';case ST.STRIKE:return G.kind===K.THRUST?'thrust':'low';case ST.RECOVER:return G.stt<G.stl*.5?(G.kind===K.THRUST?'thrust':'low'):'idle';case ST.STAG:return 'stag';default:return 'idle'}}
+ function draw(){const sh=G.shake>0?[Math.round(R(-G.shake,G.shake)),Math.round(R(-G.shake,G.shake))]:[0,0];
+  ctx.setTransform(1,0,0,1,sh[0],sh[1]);ctx.drawImage(bg,0,0);
+  let px=PX+G.poff,py=FEET;if(G.t<G.dodgeU){const p=1-(G.dodgeU-G.t)/DODGE,s=Math.sin(p*Math.PI);px-=10*s;py-=7*s}
+  let ey=FEET;if(G.st===ST.STAG&&!G.fin)ey+=1;if(G.fin&&G.won)ey+=2;if(G.fin&&!G.won)py+=2;
+  shadow(px,13);shadow(EX+G.eoff,13);
+  const ef=eframe(),eo=spr(IM.s,ef,EX+G.eoff,ey,true);spr(IM.p,pframe(),px,py,false);
+  if(G.t<G.counterU&&!G.fin){ctx.fillStyle='#C9A13A';ctx.fillRect(Math.round(px)-9,FEET+3,18,1)}
+  if(G.flash){const tp=tip(ef,eo,true);
+   if(G.st===ST.TELE){const k=Math.max(0,1-G.stt/G.stl),rr=3+18*k;ctx.lineWidth=1;
+    ctx.strokeStyle='rgba(58,42,28,.75)';ctx.beginPath();ctx.arc(tp[0]+.5,tp[1]+.5,rr+1,0,Math.PI*2);ctx.stroke();
+    ctx.strokeStyle=G.fcol;ctx.beginPath();ctx.arc(tp[0]+.5,tp[1]+.5,rr,0,Math.PI*2);ctx.stroke()}const bloom=1+Math.max(0,.15-G.stt)*8,pulse=(.75+.25*Math.sin(G.t*40))*bloom;const c=G.fcol,l=Math.round(5*pulse);
+   ctx.globalAlpha=.35;ctx.fillStyle=c;ctx.beginPath();ctx.arc(tp[0]+.5,tp[1]+.5,3*pulse,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+   ctx.fillStyle='#3A2A1C';ctx.fillRect(tp[0]-l-1,tp[1]-1,l*2+3,3);ctx.fillRect(tp[0]-1,tp[1]-l-1,3,l*2+3);ctx.fillStyle=c;ctx.fillRect(tp[0]-l,tp[1],l*2+1,1);ctx.fillRect(tp[0],tp[1]-l,1,l*2+1);ctx.fillStyle=c==='#FFFFFF'?'#3A2A1C':'#7A1A10';ctx.fillRect(tp[0],tp[1],1,1)}
+  for(const s of G.sparks){ctx.globalAlpha=Math.min(1,s.l*3);ctx.fillStyle=s.l>.25?'#FFF2C8':'#E8B84A';ctx.fillRect(Math.round(s.x),Math.round(s.y),1,1);ctx.fillRect(Math.round(s.x-s.vx*.02),Math.round(s.y-s.vy*.02),1,1)}ctx.globalAlpha=1;
+  if(!running&&!G.fin){ctx.fillStyle='rgba(58,42,28,.12)';ctx.fillRect(0,0,W,H)}
+  ctx.setTransform(1,0,0,1,0,0);
+  eBar.style.width=Math.min(100,G.ep)+'%';pBar.style.width=Math.min(100,G.pp)+'%';eWrap.classList.toggle('blink',G.st===ST.STAG&&!G.fin)}
+ function step(now){const dt=last?Math.min(.05,(now-last)/1000):0;last=now;update(dt);draw();raf=requestAnimationFrame(step)}
+ function begin(){const st=cv.closest('.dstage');const r=st.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight)window.scrollBy(0,r.top-Math.max(8,(innerHeight-r.height)/2));lock(true);reset();running=true;mEl.className='dmsg';endEl.innerHTML='';overEl.hidden=true;overEl.innerHTML='';enter(ST.IDLE,1.5);say(G.help?'Швабрин устал: замахи медленнее':'К бою!','',1.4)}
+ // ввод
+ let ts=null,tf=false;
+ cv.addEventListener('pointerdown',e=>{ts=[e.clientX,e.clientY];tf=false;if(e.pointerType==='mouse'){attack();ts=null}else{G.downT=G.t;G.touching=true;try{cv.setPointerCapture(e.pointerId)}catch(_){}}});
+ cv.addEventListener('pointermove',e=>{if(!ts||tf)return;const dx=e.clientX-ts[0],dy=e.clientY-ts[1];if(Math.abs(dy)>16&&Math.abs(dy)>Math.abs(dx)){tf=true;G.touching=false;parry(dy<0,G.downT)}else if(Math.abs(dx)>22){tf=true;G.touching=false;dodge()}});
+ cv.addEventListener('pointerup',()=>{G.touching=false;if(ts&&!tf)attack();ts=null});cv.addEventListener('pointercancel',()=>{G.touching=false;ts=null});
+ const key=e=>{if(S.screen!=='duel')return;const k=e.key;
+  if(k==='ArrowUp'||k==='w'||k==='W'||k==='ц'){e.preventDefault();parry(true)}else if(k==='ArrowDown'||k==='s'||k==='S'||k==='ы'){e.preventDefault();parry(false)}
+  else if(k===' '||k==='Shift'){e.preventDefault();if(!running&&(!G.fin||!G.won))begin();else dodge()}else if(k==='j'||k==='J'||k==='о'||k==='x'||k==='Enter'){if(e.target.tagName!=='BUTTON'){e.preventDefault();attack()}}};
+ document.addEventListener('keydown',key);
+ document.getElementById('du-start').addEventListener('click',begin);
+ const tm=e=>{if(running)e.preventDefault()};document.addEventListener('touchmove',tm,{passive:false});
+ const lock=on=>document.documentElement.classList.toggle('duel-lock',on);
+ const go=()=>{raf=requestAnimationFrame(step)};{const L=[IM.p,IM.s,IM.bg].filter(i=>!i.complete);if(!L.length)go();else{let n=0;const ok=()=>{if(++n>=L.length)go()};L.forEach(i=>{i.addEventListener('load',ok);i.addEventListener('error',ok)})}}
+ window.__DUEL=()=>G;
+ return ()=>{cancelAnimationFrame(raf);document.removeEventListener('keydown',key);document.removeEventListener('touchmove',tm);lock(false);const md=document.getElementById('du-modal');if(md)md.remove()};
 }
 
 function vSnos(){
@@ -1367,7 +1561,7 @@ function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.q
 window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
- const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile}[S.screen];
+ const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,duel:vDuel}[S.screen];
  const body=V();
  const root=DEPTH[S.screen]===0;
  app.classList.toggle('has-tabs',root);
@@ -1375,6 +1569,7 @@ function render(){
  if(document.getElementById('snow'))snowStop=snow(document.getElementById('snow'));
  if(S.screen==='lock')gameStop=startLock();
  if(S.screen==='snos')gameStop=startSnos();
+ if(S.screen==='duel')gameStop=startDuel();
  if(S.screen==='read'&&S.backPara!==null){const el=document.getElementById('p'+S.backPara);if(el)el.scrollIntoView({block:'center'})}
  if(S.screen==='map'){knockRoad();placeSeg();}
  a11yAfter();
@@ -1387,7 +1582,7 @@ function finishLevel(id){
  S.justDone=id;
  {const A=BK().acts,k=Object.keys(A).find(k=>{const ns=A[k].nodes;return ns[ns.length-1].id===id});if(k&&A[+k+1])S.act=+k+1}
 const GC=BK().chests&&BK().chests[id],GF=BK().finals&&BK().finals[id];
- const card=GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.lockLast>=6000?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?(S.lockLast>=6000?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):LEVELS[id].card;
+ const card=GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.duelClean?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?(S.lockLast>=6000?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):LEVELS[id].card;
  S.earned=card&&!S.cards.includes(card)?card:null;if(S.earned)S.cards.push(S.earned);
  save();go('result');SFX(S.earned?'card':'done');
 }
@@ -1417,7 +1612,7 @@ app.addEventListener('click',e=>{
   if(id==='boss4'){S.level='boss4';S.gained=0;S.boss={i:0,t:15,ans:null,score:0,act:4};go('boss');bossTick();return}
   if(id==='chest3'){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
   if(id==='boss3'){S.level='boss3';S.gained=0;S.snosCfg={act:3};go('snos');return}
-  if(id==='boss2'){S.level='boss2';S.gained=0;S.lockCfg={pool:DUELQ,target:5000,act:2};go('lock');return}
+  if(id==='boss2'){S.level='boss2';S.gained=0;go('duel');return}
   if(id==='boss'){go('fair',{level:'boss',gained:0});return}
   S.pvKey=null;go('read',{level:id,gi:0,backPara:null,openHint:null,gained:0,first:true,answered:false,sel:null,order:[]});return}
  if(t.dataset.hint){const p=+t.closest('[data-pi]').dataset.pi;S.openHint=(S.openHint&&S.openHint.k===t.dataset.hint)?null:{k:t.dataset.hint,p};render();return}
@@ -1445,7 +1640,7 @@ app.addEventListener('click',e=>{
  if(act==='lock'){S.level='boss';S.lockCfg={pool:LOCKQ,target:5000,act:1};go('lock');return}
  if(act==='final'){S.level='boss5';S.lockCfg={pool:FINALQ,target:5000,act:5};go('lock');return}
  if(act==='closeact5'){S.level='boss5';finishLevel('boss5');return}
- if(act==='duel'){S.level='boss2';S.lockCfg={pool:DUELQ,target:5000,act:2};go('lock');return}
+ if(act==='duel'){S.level='boss2';go('duel');return}
  if(act==='closeact2'){S.level='boss2';finishLevel('boss2');return}
  if(act==='snos'){S.level='boss';S.snosCfg={act:1};go('snos');return}
  if(act==='snos3'){S.level='boss3';S.snosCfg={act:3};go('snos');return}
