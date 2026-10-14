@@ -23,6 +23,7 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1951,6 +1952,10 @@ applyTheme();
 let sw=null;
 document.addEventListener('touchstart',e=>{const t=e.touches[0];sw=(DEPTH[S.screen]>0&&S.screen!=='result'&&t.clientX<28)?{x:t.clientX,y:t.clientY}:null},{passive:true});
 document.addEventListener('touchend',e=>{if(!sw)return;const t=e.changedTouches[0];if(t.clientX-sw.x>80&&Math.abs(t.clientY-sw.y)<60)go(backTarget());sw=null},{passive:true});
+/* тестовые ссылки: #zalp — сразу к финалу III акта, #duel — к финалу II акта */
+(function devJump(){const d={zalp:{act:3,boss:'boss3',scr:'zalp'},duel:{act:2,boss:'boss2',scr:'duel'}}[(location.hash||'').slice(1)];if(!d)return;
+ if(S.book!=='kd')setBook('kd');const A=BOOKDATA.kd.acts;for(let k=1;k<=d.act;k++)for(const n of A[k].nodes)if(n.id!==d.boss&&!isDone(n.id))S.done.push(n.id);
+ S.act=d.act;save();try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}S.level=d.boss;S.gained=0;S.screen=d.scr})();
 render();
 })();
 </script>
