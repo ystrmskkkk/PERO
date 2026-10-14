@@ -27,6 +27,9 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1456,6 +1459,7 @@ function startDuel(){
  return ()=>{cancelAnimationFrame(raf);document.removeEventListener('keydown',key);document.removeEventListener('touchmove',tm);document.removeEventListener('wheel',tm);lock(false);const md=document.getElementById('du-modal');if(md)md.remove()};
 }
 
+const ZART={"bg": "./a/e40c73e013.png", "muzzle": [136.7391304347826, 38], "gap": [84, 188], "fg": "./a/12ebd87aa1.png", "fgY": 360, "logs": [{"x": 12, "top": 24}, {"x": 29, "top": 25}, {"x": 44, "top": 26}, {"x": 61, "top": 30}, {"x": 77, "top": 24}, {"x": 194, "top": 24}, {"x": 210, "top": 28}, {"x": 226, "top": 22}, {"x": 242, "top": 26}, {"x": 258, "top": 29}], "canX": [108, 164], "atlas": "./a/7249d35b1c.png", "spr": {"foot_a": [0, 0, 31, 43, 13.4], "foot_b": [33, 0, 30, 42, 11.8], "hg0": [65, 0, 23, 57, 13.0], "hg1": [90, 0, 22, 57, 12.2], "hg2": [114, 0, 24, 57, 13.2], "hg3": [140, 0, 25, 57, 13.8], "bw0": [167, 0, 26, 55, 9.9], "bw1": [195, 0, 30, 55, 13.0], "bw2": [227, 0, 26, 55, 9.7], "bw3": [255, 0, 30, 55, 13.2], "tw0": [287, 0, 24, 50, 9.5], "tw1": [313, 0, 23, 50, 9.4], "tw2": [338, 0, 23, 50, 8.9], "tw3": [363, 0, 23, 50, 9.2], "hd0": [388, 0, 35, 50, 18.8], "hd1": [425, 0, 38, 49, 23.3], "hd2": [465, 0, 38, 37, 20.6], "hd3": [505, 0, 40, 22, 18.9], "ladder": [547, 0, 65, 43, 37.3], "ram": [614, 0, 65, 53, 34.2], "wall_ladder": [681, 0, 32, 50, 11.3], "pug_a": [715, 0, 23, 58, 12.8], "pug_b": [740, 0, 29, 56, 17.4], "exp0": [771, 0, 18, 14, 8.5], "exp1": [791, 0, 35, 40, 17.8], "exp2": [828, 0, 50, 60, 24.8], "exp3": [880, 0, 44, 64, 21.5], "exp4": [926, 0, 47, 80, 22.4], "exp5": [975, 0, 52, 97, 22.2], "exp6": [1029, 0, 33, 75, 14.8], "walk0": [1064, 0, 30, 43, 13.3], "walk1": [1096, 0, 31, 42, 12.4], "walk2": [1129, 0, 30, 43, 11.8], "die0": [1161, 0, 33, 44, 23.0], "die1": [1196, 0, 33, 44, 22.6], "die2": [1231, 0, 29, 31, 16.2], "die3": [1262, 0, 37, 13, 25.3], "fire0": [1301, 0, 13, 20, 5.8], "fire1": [1316, 0, 17, 21, 8.4], "fire2": [1335, 0, 19, 25, 8.3], "fire3": [1356, 0, 19, 25, 8.3], "fire4": [1377, 0, 18, 25, 8.2], "fire5": [1397, 0, 13, 20, 6.0], "can0": [1412, 0, 90, 178, 45.0], "can1": [1504, 0, 90, 178, 45.0], "can2": [1596, 0, 90, 178, 45.0], "can3": [1688, 0, 90, 178, 45.0], "can4": [1780, 0, 90, 178, 45.0], "can5": [1872, 0, 90, 178, 45.0]}};
 /* ---- Финал акта III: «Последний залп» — оборона Белогорской крепости (порт прототипа Godot v2) ---- */
 const ZALP={
  INTRO:[
@@ -1524,7 +1528,7 @@ function startZalp(){
  // мир
  let st='title',wave=0,wall=WALL_MAX,gate=GATE_MAX,powder=POW0,ammo='ball',kills=0,shots=0,hits=0,t=0,waveT=0,held=0,emerg=false,snap=null,losses=0;
  let aim=-Math.PI/2,tgt={x:135,y:250},aiming=false,tid=null,mouse=false,reload=0,recoil=0,flash=0,emptyT=0,shake=0,msgT=0,paused=false;
- let balls=[],fx=[],tracers=[],fires=[],smk=[],corpses=[],spawnList=[],spawnT=0,endT=0,nextRam=8,nextBearer=20,en=[],deco=[],pug=null,finaleT=0,finWait=0;
+ let balls=[],fx=[],tracers=[],fires=[],smk=[],corpses=[],booms=[],canT=-1,spawnList=[],spawnT=0,endT=0,nextRam=8,nextBearer=20,en=[],deco=[],pug=null,finaleT=0,finWait=0;
  let dl=null,di=0,dch=0,dcb=null,raf=0,last=0;
  const rng=(()=>{let s=1773;return()=>{s=(s*16807)%2147483647;return s/2147483647}})();
  const tufts=Array.from({length:90},()=>({x:4+rng()*(W-8),y:78+rng()*(WALL_Y-88)}));
@@ -1545,105 +1549,79 @@ function startZalp(){
   else{e.y+=e.spd*e.buff*dt;if(e.kind==='ram')e.x+=Math.sign(GX-e.x)*Math.min(Math.abs(GX-e.x),10*dt);else e.x+=Math.sin(e.t*2.5+e.ph)*6*dt;
    if(e.y>=WALL_Y-4){e.y=WALL_Y-4;if(e.kind==='ladder'||e.kind==='ram'){e.atWall=true;e.tick=.6}else{reached(e);e.dead=true}}}
   if(dt>0){e.vx=(e.x-bx)/dt;e.vy=(e.y-by)/dt}}
- // ---- вид от лица канонира: перспективная проекция плоского поля ----
- // мир: x — поперёк (0..270), y — вдоль (−10 вдали … 392 у частокола). Экран: горизонт HZ, частокол YN.
- const HZ=150,YN=405,KZ=.0085;
+ // ---- вид от лица канонира с рисованными спрайтами (ZART) ----
+ // мир: x — поперёк (0..270), y — вдоль (−10 вдали … 392 у частокола). Экран: горизонт HZ, линия частокола YN.
+ const HZ=188,YN=378,KZ=.0085,FGY=ZART.fgY;
  const Kz=y=>1/(1+Math.max(-30,WALL_Y-y)*KZ);
  const proj=(x,y)=>{const k=Kz(y);return {x:135+(x-135)*k,y:HZ+(YN-HZ)*k,k}};
  const unproj=(x,y)=>{const k=Math.max(.17,Math.min(1,(y-HZ)/(YN-HZ)));return {x:135+(x-135)/k,y:WALL_Y-(1/k-1)/KZ}};
  const P=(x,y,w,h,c)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)))};
- function shade(hex,k){const n=parseInt(hex.slice(1),16);const r=(n>>16)*(1-k),gg=((n>>8)&255)*(1-k),b=(n&255)*(1-k);return `rgb(${r|0},${gg|0},${b|0})`}
  const circ=(x,y,r,c)=>{g.fillStyle=c;g.beginPath();g.arc(x,y,Math.max(.5,r),0,6.2832);g.fill()};
- // спрайты (символ → цвет; c/u — одежда конкретного врага)
- const SPAL={k:'#1e1a17',s:'#d9a87c',e:'#2b1d12',d:'#4a3424',b:'#2b1d12',w:'#7a5a36',l:'#b9c0c4',h:'#6e4326',H:'#4a2c18',r:'#c0392b',R:'#8a1c16',y:'#d4a640',f:'#e8742a',F:'#ffd36a',L:'#9a7444',n:'#5a4630',T:'#6e4a2c',W:'#ece8df',V:'#bdb6aa',X:'#b0241c'};
- const SPR={
-  foot:['...kkk.....','..kkkkk..l.','...sss...l.','...ses...w.','..ccccc..w.','.ccccccc.w.','.scccccsw..','..ccccc..w.','..cdddc..w.','..cc.cc..w.','..cc.cc..w.','..bb.bb..w.','.bbb.bbb.w.'],
-  torch:['.........FF.','...kkk...fF.','..kkkkk..ff.','...sss...w..','...ses...w..','..ccccc..w..','.ccccccc.w..','.scccccsw...','..ccccc.....','..cdddc.....','..cc.cc.....','..bb.bb.....','.bbb.bbb....'],
-  bearer:['..y.........','..wrrrrrrr..','..wrrrrrrR..','..wrrrrrR...','..wRR.......','..w.kkk.....','..wkkkkk....','..w.sss.....','..w.ses.....','..wccccc....','.swcccccc...','..wccccc....','..wcdddc....','..wcc.cc....','..wbb.bb....','..bbb.bbb...'],
-  horse:['.......kkk...........','......kkkkk..........','.......sss...........','.......ses.....l.....','......uuuuu...l......','.....uuuuuuu.l.......','.....suuuuuul........','......uuuuu.......h..','..hhhhhhhhhhhhhhhhhhh','.Hhhhhhhhhhhhhhhhhhh.','HH.hhhhhhhhhhhhhh.h..','H..hhhhhhhhhhhhh.....','...b.b.......b.b.....','...b.b.......b.b.....','..b...b.....b...b....','..b...b.....b...b....'],
-  ladder:['....kkk.........kkk...','...kkkkk.......kkkkk..','LLLLsssLLLLLLLLLsssLLL','L..Lses.L..L..L.sesL.L','LLLLLLLLLLLLLLLLLLLLLL','...ccccc.......ccccc..','..cccccccc....cccccccc','..ccccccc.....ccccccc.','...cdddc.......cdddc..','...cc.cc.......cc.cc..','...cc.cc.......cc.cc..','...bb.bb.......bb.bb..','..bbb.bbb.....bbb.bbb.'],
-  ram:['.nnnnnnnnnnnnnnnnnnnnnnnn.','nnnnnnnnnnnnnnnnnnnnnnnnnn','.n..kkk.....kkk.....kkk.n.','.n..sss.....sss.....sss.n.','.n..ses.....ses.....ses.n.','TTTTTTTTTTTTTTTTTTTTTTTTTT','TTTTTTTTTTTTTTTTTTTTTTTTTT','.n.ccccc...ccccc...ccccc..','.n.ccccc...ccccc...ccccc..','...cdddc...cdddc...cdddc..','...cc.cc...cc.cc...cc.cc..','...bb.bb...bb.bb...bb.bb..'],
-  pug:['......y..............','......wXXXX..........','......wXXX...........','......w.kkk..........','......wkkkkk.........','......w.sss..........','......w.ses..........','......XXXXXX......W..','.....sXXXXXXX....WW..','..WWWWWWWWWWWWWWWWWW.','.VWWWWWWWWWWWWWWWWW..','VV.WWWWWWWWWWWWWW.W..','V..WWWWWWWWWWWWW.....','...e.e.......e.e.....','...e.e.......e.e.....','..e...e.....e...e....']};
- const sprCache=new Map();
- function sprite(name,cloth,white){const key=name+cloth+(white?'w':'');let cv2=sprCache.get(key);if(cv2)return cv2;const rows=SPR[name];cv2=document.createElement('canvas');cv2.width=rows[0].length;cv2.height=rows.length;const c2=cv2.getContext('2d');
-  rows.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='.')return;c2.fillStyle=white?'#ffffff':(ch==='c'||ch==='u')?cloth:SPAL[ch];c2.fillRect(x,y,1,1)}));sprCache.set(key,cv2);return cv2}
- function blit(name,cloth,white,wx,wy,mul,bob){const p=proj(wx,wy),sc=p.k*(mul||3.4),im=sprite(name,cloth,white),w=im.width*sc,h=im.height*sc;
-  g.fillStyle='rgba(0,0,0,.22)';g.beginPath();g.ellipse(p.x,p.y,w*.42,Math.max(1,sc*.9),0,0,6.28);g.fill();
-  g.drawImage(im,Math.round(p.x-w/2),Math.round(p.y-h-(bob?sc:0)),Math.round(w),Math.round(h));return {p,sc,w,h}}
- function drawEnemy(e){const moving=!e.atWall&&!(e.stopY>0&&e.y>=e.stopY),bob=moving&&Math.floor(e.t*7)%2===1,fl=e.fl>0;
-  const name=e.kind==='foot'||e.kind==='torch'||e.kind==='bearer'||e.kind==='horse'||e.kind==='ram'?e.kind:e.kind==='ladder'?(e.atWall?null:'ladder'):'foot';
-  if(e.kind==='ladder'&&e.atWall){ladderAt.push(e);return}
-  const r=blit(name,e.cloth,fl,e.x,e.y,e.kind==='ram'?3:3.4,bob);
-  if(e.max>1&&e.hp<e.max&&!e.deco)for(let i=0;i<e.hp;i++)P(r.p.x-e.max*r.sc+i*r.sc*2,r.p.y-r.h-r.sc*3,Math.max(1,r.sc),Math.max(1,r.sc),'#f2d06b')}
+ const IMG={};for(const k of ['bg','fg','atlas']){const im=new Image();im.src=ZART[k];IMG[k]=im}
+ let whiteAtlas=null,fgCut=null,fgCutN=-1;
+ function ensureArt(){if(!IMG.atlas.complete||!IMG.fg.complete)return false;
+  if(!whiteAtlas){whiteAtlas=document.createElement('canvas');whiteAtlas.width=IMG.atlas.width;whiteAtlas.height=IMG.atlas.height;const w=whiteAtlas.getContext('2d');w.drawImage(IMG.atlas,0,0);w.globalCompositeOperation='source-in';w.fillStyle='#fff';w.fillRect(0,0,whiteAtlas.width,whiteAtlas.height)}
+  return true}
+ // частокол: выбитые брёвна вырезаются из картинки
+ function fgLayer(){const n=Math.floor((WALL_MAX-wall)/WALL_MAX*ZART.logs.length);if(fgCut&&n===fgCutN)return fgCut;fgCutN=n;
+  if(!fgCut){fgCut=document.createElement('canvas');fgCut.width=IMG.fg.width;fgCut.height=IMG.fg.height}const c=fgCut.getContext('2d');c.globalCompositeOperation='source-over';c.clearRect(0,0,fgCut.width,fgCut.height);c.drawImage(IMG.fg,0,0);
+  c.globalCompositeOperation='destination-out';const order=logs.map(i=>i%ZART.logs.length).filter((v,i,a)=>a.indexOf(v)===i);
+  for(let i=0;i<n;i++){const L=ZART.logs[order[i%order.length]];c.beginPath();c.moveTo(L.x-9,L.top-2);c.lineTo(L.x+9,L.top-2);c.lineTo(L.x+9,L.top+12);c.lineTo(L.x+5,L.top+9);c.lineTo(L.x+2,L.top+15);c.lineTo(L.x-2,L.top+10);c.lineTo(L.x-6,L.top+14);c.lineTo(L.x-9,L.top+11);c.closePath();c.fill()}
+  c.globalCompositeOperation='source-over';return fgCut}
+ function frameOf(e){const mv=!e.atWall&&!(e.stopY>0&&e.y>=e.stopY),ab=mv&&Math.floor(e.t*3.6)%2?'b':'a';
+  const cy=(p,f)=>p+(mv?Math.floor(e.t*f+e.ph)%4:0);switch(e.kind){case 'horse':return cy('hg',9);case 'torch':return cy('tw',6);case 'bearer':return cy('bw',5.5);case 'ladder':return 'ladder';case 'ram':return 'ram';default:return mv?'walk'+[0,1,2,1][Math.floor(e.t*6+e.ph)%4]:'foot_a'}}
+ function blitF(name,wx,wy,white,bob,mul){const f=ZART.spr[name];if(!f)return null;const p=proj(wx,wy),sc=p.k*(mul||1)*1.3,w=f[2]*sc,h=f[3]*sc,x=p.x-f[4]*sc,y=p.y-h-(bob?Math.max(1,sc):0);
+  g.fillStyle='rgba(20,14,8,.28)';g.beginPath();g.ellipse(p.x,p.y,Math.max(2,w*.34),Math.max(1,sc*2),0,0,6.28);g.fill();
+  g.drawImage(white?whiteAtlas:IMG.atlas,f[0],f[1],f[2],f[3],Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)));return {p,sc,w,h,x,y}}
+ function drawEnemy(e){if(e.kind==='ladder'&&e.atWall){ladderAt.push(e);return}
+  const mv=!e.atWall&&!(e.stopY>0&&e.y>=e.stopY),r=blitF(frameOf(e),e.x,e.y,e.fl>0,(e.kind==='ladder'||e.kind==='ram')&&mv&&Math.floor(e.t*4)%2===1);
+  if(r&&e.max>1&&e.hp<e.max&&!e.deco){const s=Math.max(1,Math.round(r.sc*2));for(let i=0;i<e.hp;i++)P(r.p.x-(e.max*s*1.5)/2+i*s*1.5,r.y-s*2.5,s,s,'#f2d06b')}}
  let ladderAt=[];
- // фон: небо, холмы, лагерь, степь в перспективе — рисуется один раз
- const bgc=document.createElement('canvas');bgc.width=W;bgc.height=H;{const b=bgc.getContext('2d');const B=(x,y,w,h,c)=>{b.fillStyle=c;b.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)))};
-  ['#2b2236','#3b2a3d','#4f3342','#653d45','#7d4947','#965647','#ad6348','#bf6f49','#cc7a4b','#d48650'].forEach((c,i)=>B(0,i*15,W,16,c));
-  b.fillStyle='#f2c46b';b.beginPath();b.arc(205,118,12,0,7);b.fill();
-  b.fillStyle='#4e3f36';b.beginPath();b.moveTo(0,HZ);[[0,138],[40,132],[80,140],[120,130],[170,137],[220,128],[270,135],[270,HZ]].forEach(([x,y])=>b.lineTo(x,y));b.fill();
-  for(const x of [30,46,64,180,214,232]){B(x,HZ-9,1,8,'#3a2a1c');B(x+1,HZ-9,3,2,'#9e2b1f')}
-  B(0,HZ,W,H-HZ,'#6f6340');const bands=['#6f6340','#766a44','#7d7047','#84764a','#8b7c4e','#918150'];
-  for(let i=0;i<6;i++){const y0=proj(0,-10+i*67).y,y1=proj(0,-10+(i+1)*67).y;B(0,y0,W,y1-y0+1,bands[i])}B(0,proj(0,392).y,W,H,'#918150');
-  b.fillStyle='#a08d60';b.beginPath();b.moveTo(133,HZ);b.lineTo(137,HZ);b.lineTo(135+52,H);b.lineTo(135-52,H);b.fill();
-  let sd=7;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
-  for(let i=0;i<150;i++){const wx=-200+rnd()*670,wy=-10+rnd()*400,p=proj(wx,wy);if(p.x<-4||p.x>W+4||Math.abs(p.x-135)<52*p.k+6)continue;const s=Math.max(1,Math.round(3*p.k));B(p.x,p.y-2*s,s,2*s,'#5f5634');B(p.x+s,p.y-3*s,s,3*s,'#6d6238');B(p.x+2*s,p.y-2*s,s,2*s,'#5f5634')}}
- function camp(){for(const [x,h] of [[52,26],[60,20],[196,30],[205,22]])for(let i=0;i<h;i+=3){g.fillStyle='rgba(120,110,105,.42)';g.fillRect(x+Math.sin(i*.4+t*1.5)*3,HZ-8-i,3,3)}}
- function palisade(){const broken=Math.floor((WALL_MAX-wall)/WALL_MAX*16),bset=new Set(logs.slice(0,broken).map(i=>i%20));
-  for(let i=0;i<20;i++){if(i>=8&&i<=11)continue;const x=i*14-4,col=i%2?'#7a5434':'#6e4a2c';let top=418+(i%3)*3;if(bset.has(i))top+=16;
-   P(x,top,13,H-top,col);if(!bset.has(i)){g.fillStyle=col;g.beginPath();g.moveTo(x,top);g.lineTo(x+6.5,top-10);g.lineTo(x+13,top);g.fill()}else{P(x+2,top-4,4,4,col);P(x+8,top-2,3,2,col)}
-   P(x+10,top,3,H-top,'#4f341f');P(x+2,top+12,6,1,'#5a3e25')}
-  P(0,452,W,6,'#4a3826');P(0,458,W,22,'#3d2e1f');
-  // ворота — тёмная полоса под стволом темнеет по урону
-  const gk=gate/GATE_MAX;P(108,440,54,40,shade('#5a3a22',.25+.45*(1-gk)));for(let x=114;x<160;x+=12)P(x,440,1,40,'#3d2716');if(gate<=2)P(133,440,2,40,'#1c120a')}
- function cannon(){const pt=proj(tgt.x,tgt.y),yaw=(pt.x-135)*.2,elev=Math.min(40,Math.max(0,(WALL_Y-tgt.y)*.07)),bx=135+yaw*.5,by=492+recoil*1.5,tipY=by-78-elev,tipX=bx+yaw*.6;
-  P(bx-34,by-24,68,30,'#5a3a22');P(bx-34,by-24,68,3,'#7a5434');P(bx-40,by-34,10,40,'#3a2614');P(bx+30,by-34,10,40,'#3a2614');
-  g.fillStyle='#2e2f33';g.beginPath();g.moveTo(bx-26,by-6);g.lineTo(bx+26,by-6);g.lineTo(tipX+12,tipY);g.lineTo(tipX-12,tipY);g.fill();
-  g.fillStyle='#4a4c52';g.beginPath();g.moveTo(bx-26,by-6);g.lineTo(bx-17,by-6);g.lineTo(tipX-7,tipY);g.lineTo(tipX-12,tipY);g.fill();
-  P(bx-24,by-40,48,4,'#3d3f44');P(tipX-13,tipY-4,26,6,'#3d3f44');P(tipX-13,tipY-4,26,2,'#5a5d63');g.fillStyle='#111';g.beginPath();g.ellipse(tipX,tipY-2,7,2.5,0,0,7);g.fill();
-  // руки Петра с пальником
-  P(bx+44,by-30,14,12,'#2f5a34');P(bx+44,by-30,14,3,'#d4a640');P(bx+42,by-36,8,7,'#e2b089');P(bx+46,by-56,2,22,'#7a5a36');const fl2=Math.floor(t*10)%2;P(bx+45,by-60-fl2,4,4,'#e8742a');P(bx+46,by-62-fl2,2,2,'#ffd36a');
-  if(flash>0){circ(tipX,tipY-6,14,'#ffd27a');circ(tipX,tipY-6,7,'#fff6d8')}
-  return {x:tipX,y:tipY}}
+// покадровые анимации из листов Gemini: длительности кадров в секундах
+const EXP_T=[.05,.07,.09,.11,.13,.13,.14],CAN_T=[.06,.09,.14,.16,.18],EXP_END=EXP_T.reduce((a,b)=>a+b),CAN_END=CAN_T.reduce((a,b)=>a+b),CAN_X=135,CAN_B=486;
+function frameAt(T,t){for(let i=0;i<T.length;i++){if(t<T[i])return i;t-=T[i]}return -1}
  function groundEllipse(x,y,r){const a=proj(x,y-r),b=proj(x,y+r),c=proj(x,y);return {cx:c.x,cy:(a.y+b.y)/2,rx:Math.max(7,r*c.k),ry:Math.max(3,(b.y-a.y)/2)}}
  function drawWorld(){const sx=Math.round(R(-shake,shake)),sy=Math.round(R(-shake,shake));g.setTransform(1,0,0,1,sx,sy);
-  g.drawImage(bgc,0,0);camp();
-  // зона картечи
+  if(!ensureArt()){g.fillStyle='#3a2c20';g.fillRect(0,0,W,H);g.setTransform(1,0,0,1,0,0);return}
+  g.drawImage(IMG.bg,0,0);
+  // дымы лагеря чуть шевелятся
+  for(const [x,h] of [[52,18],[100,14],[178,16]])for(let i=0;i<h;i+=3){g.fillStyle='rgba(120,110,105,.35)';g.fillRect(x+Math.sin(i*.4+t*1.5)*2.5,HZ-14-i,2,2)}
   if(combat()&&ammo==='grape'){const mz={x:PIV.x+Math.cos(aim)*BARREL,y:PIV.y+Math.sin(aim)*BARREL};g.strokeStyle='rgba(255,230,153,.16)';g.lineWidth=1;g.beginPath();
    for(let i=0;i<=24;i++){const a=-Math.PI+.15+(Math.PI-.3)*i/24,p=proj(mz.x+Math.cos(a)*GR,mz.y+Math.sin(a)*GR);i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y)}g.stroke()}
-  // прицел на земле
   if(combat()&&(aiming||mouse)){const ready=reload<=0&&powder>0,cc=ready?'rgba(255,235,179,.95)':'rgba(255,255,255,.4)';g.strokeStyle=cc;g.fillStyle=cc;g.lineWidth=1;
-   if(ammo==='ball'){const d=Math.hypot(tgt.x-PIV.x,tgt.y-PIV.y),r=Math.max(4,d*SCAT+3),e=groundEllipse(tgt.x,tgt.y,r),e2=groundEllipse(tgt.x,tgt.y,r*.35);
+   if(ammo==='ball'){const d=Math.hypot(tgt.x-PIV.x,tgt.y-PIV.y),r=Math.max(4,d*SCAT+3),e=groundEllipse(tgt.x,tgt.y,r);
     g.beginPath();g.ellipse(e.cx,e.cy,e.rx,e.ry,0,0,6.28);g.stroke();g.fillRect(Math.round(e.cx),Math.round(e.cy-e.ry-4),1,3);g.fillRect(Math.round(e.cx),Math.round(e.cy+e.ry+1),1,3);g.fillRect(Math.round(e.cx-e.rx-4),Math.round(e.cy),3,1);g.fillRect(Math.round(e.cx+e.rx+1),Math.round(e.cy),3,1);g.fillRect(Math.round(e.cx),Math.round(e.cy),1,1)}
    else{const mz={x:PIV.x+Math.cos(aim)*BARREL,y:PIV.y+Math.sin(aim)*BARREL};g.beginPath();const m0=proj(mz.x,mz.y);g.moveTo(m0.x,m0.y);
     for(let i=0;i<9;i++){const a=aim-GS+GS*2*i/8,p=proj(mz.x+Math.cos(a)*GR,mz.y+Math.sin(a)*GR);g.lineTo(p.x,p.y)}g.closePath();g.fillStyle=`rgba(255,217,128,${ready?.14:.06})`;g.fill();g.globalAlpha=.6;g.stroke();g.globalAlpha=1}}
   // враги и массовка — от дальних к ближним
   ladderAt=[];const all=en.concat(deco);if(pug)all.push({pug:1,y:pug.y});all.sort((a,b)=>a.y-b.y);
-  for(const e of all){if(e.pug){blit('pug','#b0241c',false,pug.x,pug.y,3.6,pug.y<PUG_STOP&&Math.floor(t*7)%2===1)}else drawEnemy(e)}
-  for(const c of corpses){const p=proj(c.x,c.y),sc=p.k*3.4;g.globalAlpha=Math.min(1,c.life*2);P(p.x-5*sc,p.y-2*sc,10*sc,2*sc,c.cloth);P(p.x-7*sc,p.y-2*sc,2*sc,2*sc,'#d9a87c');P(p.x+4*sc,p.y-1*sc,4*sc,1*sc,'#7a5a36');g.globalAlpha=1}
-  // ядра в полёте
+  for(const e of all){if(e.pug){blitF(pug.y<PUG_STOP&&Math.floor(t*3.6)%2?'pug_b':'pug_a',pug.x,pug.y,false,false,1.05)}else drawEnemy(e)}
+  // павшие — лежат и тают
+  for(const c of corpses){const age=c.max-c.life,n=Math.min(3,Math.floor(age/.13)),f=ZART.spr[c.p+n],p=proj(c.x,c.y),sc=p.k*1.3,w=f[2]*sc,h=f[3]*sc;g.save();g.globalAlpha=Math.min(1,c.life*1.6);g.translate(Math.round(p.x),Math.round(p.y));if(c.side<0)g.scale(-1,1);g.drawImage(IMG.atlas,f[0],f[1],f[2],f[3],Math.round(-f[4]*sc),Math.round(-h),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)));g.restore()}
   for(const b of balls){const k=b.t/b.dur,gx=b.fx+(b.tx-b.fx)*k,gy=b.fy+(b.ty-b.fy)*k,p=proj(gx,gy),hh=Math.sin(Math.PI*k)*(40+Math.hypot(b.tx-b.fx,b.ty-b.fy)*.35)*p.k;
    g.fillStyle='rgba(0,0,0,.28)';g.beginPath();g.ellipse(p.x,p.y,2.5*p.k+.8,1*p.k+.4,0,0,6.28);g.fill();circ(p.x,p.y-hh,(2.2+Math.sin(Math.PI*k)*1.5)*Math.max(.55,p.k)+.6,'#141414')}
   for(const tr of tracers){const a=proj(tr.ax,tr.ay),b=proj(tr.bx,tr.by);g.strokeStyle=`rgba(255,217,128,${tr.life/.09})`;g.lineWidth=1;g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()}
   for(const f of fx){const a=f.life/f.max;g.globalAlpha=a*.85;circ(f.x,f.y,(f.r+f.grow*(1-a))*f.k,f.c)}g.globalAlpha=1;
-  // передний план
-  palisade();
-  for(const f of fires)for(let k=0;k<4;k++){const x=f.x-18+k*12,h=16+Math.floor(t*14+k*3)%4*3;P(x,412-h,9,h,'#e8742a');P(x+2,416-h,5,h-6,'#ffd36a')}
-  for(const e of ladderAt){const x=Math.max(20,Math.min(W-20,e.x)),fl=e.fl>0?'#fff':null;P(x-14,372,4,70,fl||'#9a7444');P(x+10,372,4,70,fl||'#9a7444');for(let y=378;y<440;y+=13)P(x-14,y,28,3,fl||'#9a7444');
-   const cl=(Math.floor(e.t*3)%4)*3;P(x-7,384-cl,14,14,fl||e.skin);P(x-9,378-cl,18,7,fl||'#1e1a17');P(x-12,398-cl,24,16,fl||e.cloth);P(x-16,396-cl,6,6,fl||e.skin);P(x+10,396-cl,6,6,fl||e.skin);
-   if(e.hp<e.max)P(x-2,370-cl,3,3,'#f2d06b')}
-  cannon();
-  for(const s of smk){const a=s.life/s.max;g.globalAlpha=Math.min(.85,a*1.1);circ(s.x,s.y,s.r*(1.4-a*.4),s.c)}g.globalAlpha=1;
-  if(paused){g.fillStyle='rgba(0,0,0,.45)';g.fillRect(-8,-8,W+16,H+16)}
+  for(const b of booms){const n=frameAt(EXP_T,b.t);if(n<0)continue;const f=ZART.spr['exp'+n],p=proj(b.x,b.y),sc=Math.max(.75,p.k*1.3),w=f[2]*sc,h=f[3]*sc;g.drawImage(IMG.atlas,f[0],f[1],f[2],f[3],Math.round(p.x-f[4]*sc),Math.round(p.y-h+2*sc),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)))}
+  // передний план: частокол с пробоинами
+  g.drawImage(fgLayer(),0,FGY);
+  for(const f of fires){let L=ZART.logs[0];for(const l of ZART.logs)if(Math.abs(l.x-f.x)<Math.abs(L.x-f.x))L=l;for(let k=-1;k<=1;k++){const fr=ZART.spr['fire'+((Math.floor(t*10)+k*2+6)%6)],sc=k?.8:1.05,w=fr[2]*sc,h=fr[3]*sc,x=L.x+k*9,base=FGY+L.top+5+(k?2:0);g.drawImage(IMG.atlas,fr[0],fr[1],fr[2],fr[3],Math.round(x-fr[4]*sc),Math.round(base-h),Math.round(w),Math.round(h))}}
+  for(const e of ladderAt){const f=ZART.spr.wall_ladder,x=Math.max(18,Math.min(W-18,e.x)),cl=(Math.floor(e.t*3)%4),y=FGY+30-f[3]+cl;g.drawImage(e.fl>0?whiteAtlas:IMG.atlas,f[0],f[1],f[2],f[3],Math.round(x-f[2]/2),Math.round(y),f[2],f[3]);if(e.hp<e.max)P(x-1,y-4,2,2,'#f2d06b')}
+  // пушка (центральная часть сдвигается при отдаче)
+  const pt=proj(tgt.x,tgt.y),dx=Math.max(-2,Math.min(2,Math.round((pt.x-135)*.02))),dy=Math.round(recoil*.9),cn=canT<0?0:Math.max(0,frameAt(CAN_T,canT)+1),cf=ZART.spr['can'+cn];
+  g.drawImage(IMG.atlas,cf[0],cf[1],cf[2],cf[3],Math.round(CAN_X-cf[4]+dx),CAN_B-cf[3]+dy,cf[2],cf[3]);
+  // тлеющий пальник
+  const fl2=Math.floor(t*10)%2;P(223,FGY+19-fl2,3,3,'#e8742a');P(224,FGY+18-fl2,1,1,'#ffd36a');
+    if(paused){g.fillStyle='rgba(0,0,0,.45)';g.fillRect(-8,-8,W+16,H+16)}
   g.setTransform(1,0,0,1,0,0)}
  // ---- логика ----
  const combat=()=>st==='wave'||st==='banner';
  function say(txt,col,dur){msgEl.textContent=txt;msgEl.style.color=col||'';msgEl.classList.add('on');msgT=dur||1.4}
  function setTarget(x,y){tgt={x:Math.max(-60,Math.min(W+60,x)),y:Math.max(-5,Math.min(WALL_Y-8,y))};aim=Math.max(-Math.PI+.15,Math.min(-.15,Math.atan2(tgt.y-PIV.y,tgt.x-PIV.x)))}
  function puff(x,y,vx,vy,life,r,c,grow){const p=proj(x,y);fx.push({x:p.x,y:p.y,vx:vx*p.k,vy:vy*p.k,life,max:life,r,c,grow,k:Math.max(.7,p.k*2.2)})}
- function smoke(){const pt=proj(tgt.x,tgt.y),bx=135+(pt.x-135)*.1,by=395-Math.min(40,Math.max(0,(WALL_Y-tgt.y)*.07));for(let i=0;i<14;i++)smk.push({x:bx+R(-26,26),y:by+R(-24,14),vx:R(-14,14),vy:R(-22,-6),r:R(9,18),life:R(.45,.75),max:.75,c:['#d8d0bf','#cfc6b2','#e4dccb'][i%3]})}
  function fire(){if(reload>0)return;if(powder<=0){if(emptyT<=0){emptyT=.8;say('Пороху нет!','#E0584C',1.2);SFX('tick')}return}
   powder--;shots++;recoil=4;flash=.08;shake=Math.max(shake,1.2);const dx=Math.cos(aim),dy=Math.sin(aim),mz={x:PIV.x+dx*BARREL,y:PIV.y+dy*BARREL};
-  smoke();
+  canT=0;
   if(ammo==='ball'){reload=RB;const d=Math.hypot(tgt.x-mz.x,tgt.y-mz.y),a=Math.random()*6.28,s=Math.random()*d*SCAT;balls.push({fx:mz.x,fy:mz.y,tx:tgt.x+Math.cos(a)*s,ty:tgt.y+Math.sin(a)*s,t:0,dur:.28+d/240});SFX('boom')}
   else{reload=RG;SFX('grape');grape(mz)}
   if(powder===1)say('Последний заряд!','#E0B45A',2);else if(powder===0)say('Это был последний залп','#E0B45A',2.5)}
@@ -1654,10 +1632,9 @@ function startZalp(){
   if(any){hits++;SFX('crunch')}}
  function hurt(e,d){e.hp-=d;e.fl=.12;return e.hp<=0}
  function explode(x,y){shake=Math.max(shake,2.5);SFX('blast');
-  for(let i=0;i<10;i++){const a=Math.random()*6.28,v=R(10,45);puff(x,y,Math.cos(a)*v,Math.sin(a)*v,R(.4,.8),R(2,4),'#8c7a61',5)}
-  for(let i=0;i<4;i++){const a=Math.random()*6.28,v=R(5,20);puff(x,y,Math.cos(a)*v,Math.sin(a)*v,.18,3,'#ffcf6a',3)}
+  booms.push({x,y,t:0});
   let any=false;for(const e of en.slice()){if(e.dead)continue;const d=Math.hypot(e.x-x,e.y-6-y);if(d<=BLAST+rad(e)){any=true;if(hurt(e,d<=5+rad(e)*.5?2:1))kill(e)}}if(any)hits++}
- function kill(e){if(e.dead)return;e.dead=true;kills++;if(e.kind!=='ram'&&e.kind!=='ladder')corpses.push({x:e.x,y:e.y,cloth:e.cloth,life:1.4});for(let i=0;i<6;i++)puff(e.x,e.y-6,R(-25,25),R(-30,5),.5,2,'#6b543d',2);
+ function kill(e){if(e.dead)return;e.dead=true;kills++;if(e.kind!=='ram'&&e.kind!=='ladder')corpses.push({x:e.x,y:e.y,side:Math.random()<.5?-1:1,life:1.9,max:1.9,p:e.kind==='horse'?'hd':'die'});
   if(e.kind==='bearer'){for(const o of en)if(!o.dead&&o.kind!=='ram'&&!o.atWall&&Math.hypot(o.x-e.x,o.y-e.y)<70)o.flee=true;say('Бунчук пал — толпа дрогнула!','#E0B45A',2);SFX('gold')}}
  function reached(e){if(!combat())return;let d=1;if(e.kind==='horse')d=2;else if(e.kind==='torch'){d=3;fires.push({x:e.x,t:5});say('Частокол горит!','#E8742A',1.4)}damageWall(d,e.x)}
  function wallTick(e){if(!combat()||e.dead)return;if(e.kind==='ram'){gate--;shake=3.5;SFX('wood');for(let i=0;i<6;i++)puff(GX+R(-12,12),WALL_Y-8,R(-20,20),R(-30,-5),.5,1.5,'#7a5434',0);if(gate<=0){gate=0;breach('Ворота выбиты!')}}else damageWall(1,e.x)}
@@ -1697,7 +1674,7 @@ function startZalp(){
   md.querySelector('#z-again').addEventListener('click',()=>{md.remove();lockOn(false);restart(true)});
   md.querySelector('#z-close').addEventListener('click',()=>{md.remove();lockOn(false);S.level='boss3';finishLevel('boss3')});
   setTimeout(()=>{const b=md.querySelector('#z-close');if(b)b.focus({preventScroll:true})},50)}
- function restart(skipIntro){en=[];deco=[];pug=null;kills=0;shots=0;hits=0;held=0;wall=WALL_MAX;gate=GATE_MAX;powder=POW0;ammo='ball';fx=[];fires=[];smk=[];corpses=[];losses=0;updAmmo();
+ function restart(skipIntro){en=[];deco=[];pug=null;kills=0;shots=0;hits=0;held=0;wall=WALL_MAX;gate=GATE_MAX;powder=POW0;ammo='ball';fx=[];fires=[];smk=[];corpses=[];booms=[];canT=-1;losses=0;updAmmo();
   over.hidden=true;scrollIn();lockOn(true);if(skipIntro)startWave(0);else dialog(ZALP.INTRO,()=>startWave(0))}
  function updAmmo(){ammoB.querySelector('span').textContent=ammo==='ball'?'Ядро':'Картечь';ammoB.classList.toggle('grape',ammo==='grape')}
  function toggleAmmo(){ammo=ammo==='ball'?'grape':'ball';updAmmo();SFX('tap')}
@@ -1718,7 +1695,8 @@ function startZalp(){
   for(let i=balls.length-1;i>=0;i--){const b=balls[i];b.t+=dt;if(b.t>=b.dur){balls.splice(i,1);explode(b.tx,b.ty)}}
   for(let i=fx.length-1;i>=0;i--){const f=fx[i];f.life-=dt;if(f.life<=0){fx.splice(i,1);continue}f.x+=f.vx*dt;f.y+=f.vy*dt;f.vx*=.92;f.vy*=.92}
   for(let i=tracers.length-1;i>=0;i--){tracers[i].life-=dt;if(tracers[i].life<=0)tracers.splice(i,1)}
-  for(let i=smk.length-1;i>=0;i--){const q=smk[i];q.life-=dt;if(q.life<=0){smk.splice(i,1);continue}q.x+=q.vx*dt;q.y+=q.vy*dt}
+  for(let i=booms.length-1;i>=0;i--){booms[i].t+=dt;if(booms[i].t>=EXP_END)booms.splice(i,1)}
+  if(canT>=0){canT+=dt;if(canT>=CAN_END)canT=-1}
   for(let i=corpses.length-1;i>=0;i--){corpses[i].life-=dt;if(corpses[i].life<=0)corpses.splice(i,1)}
   // HUD
   const wTxt=`Волна ${wave+1}/3`;if(waveEl.textContent!==wTxt)waveEl.textContent=wTxt;
@@ -1740,7 +1718,7 @@ function startZalp(){
   if(e.pointerType==='mouse'){mouse=true;aimAt(p.x,p.y);fire();return}
   if(tid!==null)return;tid=e.pointerId;aiming=true;aimAt(p.x,p.y-TOFF);try{stage.setPointerCapture(e.pointerId)}catch(_){}});
  stage.addEventListener('pointermove',e=>{const p=toScr(e);if(e.pointerType==='mouse'){mouse=true;if(combat())aimAt(p.x,p.y);return}if(aiming&&e.pointerId===tid)aimAt(p.x,p.y-TOFF)});
- const up=e=>{if(e.pointerId!==tid)return;tid=null;const was=aiming;aiming=false;if(!was||!combat())return;const p=toScr(e);if(e.type==='pointerup'&&p.y<418)fire()};
+ const up=e=>{if(e.pointerId!==tid)return;tid=null;const was=aiming;aiming=false;if(!was||!combat())return;const p=toScr(e);if(e.type==='pointerup'&&p.y<ZART.fgY+30)fire()};
  stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
  ammoB.addEventListener('pointerdown',e=>e.stopPropagation());ammoB.addEventListener('click',e=>{e.stopPropagation();if(combat())toggleAmmo()});
  const key=e=>{if(S.screen!=='zalp')return;const k=e.key;
