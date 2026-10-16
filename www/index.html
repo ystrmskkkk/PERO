@@ -32,6 +32,7 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -102,6 +103,7 @@
 .zdlg.narr .zport{display:none}
 .ztx{display:flex;flex-direction:column;gap:4px;min-width:0}.ztx b{font:700 13px var(--f-sys)}.ztx p{font:400 14px/1.42 var(--f-read);margin:0}
 .znext{position:absolute;right:10px;bottom:5px;color:#E0B45A;font-size:11px;animation:dblink .7s steps(2) infinite}
+.card.honor{display:flex;flex-direction:column;gap:12px}.hstage{position:relative;display:flex;flex-direction:column;gap:10px;min-height:520px;padding:12px;border:3px double var(--ink);border-radius:8px;background:var(--surface)}.hhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;color:var(--muted);letter-spacing:.02em}.hpts{position:relative;font-size:14px;color:var(--ink);white-space:nowrap}.hpts b{font-family:var(--f-display);font-size:20px;color:var(--gold);margin-left:4px}#h-delta{position:absolute;right:0;top:-18px;font-style:normal;font-weight:700;font-size:14px;opacity:0}#h-delta.up{color:var(--good)}#h-delta.dn{color:var(--bad)}#h-delta.show{animation:hdelta 1.1s ease-out}@keyframes hdelta{0%{opacity:0;transform:translateY(6px)}20%{opacity:1;transform:translateY(0)}80%{opacity:1}100%{opacity:0;transform:translateY(-8px)}}.hart{display:flex;justify-content:center;border-bottom:1px solid var(--line);padding-bottom:6px}.hart img{display:block;width:100%;max-height:min(120px,16svh);object-fit:contain}.hart img{filter:var(--artf)}.hmeter{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px;font-size:13px;color:var(--muted)}.hbar{height:8px;border-radius:4px;background:var(--chip-bg);overflow:hidden}.hbar i{display:block;height:100%;width:20%;background:var(--gold);transition:width .45s ease-out,background .3s}.hbar i.hot{background:var(--accent)}.hline{min-height:110px}.hline b{display:block;font-family:var(--f-display);font-size:15px;color:var(--accent);margin-bottom:4px}.hline p{margin:0;font-family:var(--f-read);font-size:17px;line-height:1.45}.hline p.narr{font-style:italic;color:var(--muted)}.htime{height:4px;border-radius:2px;background:var(--chip-bg);overflow:hidden}.htime i{display:block;height:100%;width:100%;background:var(--ink)}.htime i.low{background:var(--accent)}.hopts{display:flex;flex-direction:column;gap:8px}.hopt{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;font-family:var(--f-read);font-size:15px;line-height:1.35;cursor:pointer;transition:border-color .15s,opacity .25s,transform .1s}.hopt:not(:disabled):active{transform:scale(.985)}.hopt:not(:disabled):hover{border-color:var(--ink)}.hopt .hk{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-family:var(--f-sys);background:var(--chip-bg);color:var(--chip-ink)}.hopt span:nth-child(2){flex:1;min-width:0}.hopt.on{border-color:var(--ink);background:var(--surface)}.hopt.off{opacity:.38}.htag{flex-basis:100%;display:block;margin-left:32px;font-style:normal;font-family:var(--f-sys);font-size:12px;font-weight:600;letter-spacing:.02em}.htag.T{color:var(--good)}.htag.B{color:var(--gold-ink)}.htag.F{color:var(--bad)}.htag.S{color:var(--muted);margin-left:0}.hnext{align-self:center;margin-top:auto}.hnext[hidden],.hstage [hidden]{display:none!important}@media (prefers-reduced-motion:reduce){#h-delta.show{animation:none;opacity:1}.hbar i{transition:none}}
 .zstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.zstats div{display:flex;flex-direction:column;gap:2px}.zstats b{font:700 20px var(--f-sys);color:var(--ink)}.zstats span{font:400 12px var(--f-sys);color:var(--muted)}
 .dover[hidden]{display:none}
 .dmodal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(20,15,10,.55);animation:dfade .22s ease-out}
@@ -964,7 +966,7 @@ function dayNum(d){d=d||new Date();return Math.floor((d.getTime()-d.getTimezoneO
 if(S.lastDay===undefined){S.streak=0;S.lastDay=null}
 (function(){const t=dayNum();if(S.lastDay!=null&&t-S.lastDay>1)S.streak=0})();
 function touchStreak(){const t=dayNum();if(S.lastDay===t)return;S.streak=(S.lastDay===t-1)?(S.streak||0)+1:1;S.lastDay=t;setTimeout(()=>NATIVE.remind(),0)}
-function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest,duelPerf:S.duelPerf,duelClean:S.duelClean,zalpBest:S.zalpBest}))}catch(e){}}
+function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest,duelPerf:S.duelPerf,duelClean:S.duelClean,zalpBest:S.zalpBest,honorLast:S.honorLast,honorBest:S.honorBest}))}catch(e){}}
 
 function bmKey(){return S.level+(S.short?':s':':f')}
 function ckOrder(k,i,n){let h=0;for(const c of k+i)h=(h*31+c.charCodeAt(0))>>>0;const a=[...Array(n).keys()];for(let j=n-1;j>0;j--){h=(h*1103515245+12345)>>>0;const r=h%(j+1);[a[j],a[r]]=[a[r],a[j]]}return a}
@@ -1051,10 +1053,10 @@ function unlocked(i){return i===0||isDone(actNodes()[i-1].id)}
 function progressPct(){const ns=allNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 
-const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2};
+const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2};
 const ROOT_TITLES={library:'Библиотека',map:'Карта',cards:'Коллекция',profile:'Профиль'};
-function backTarget(){const sc=S.screen;if(sc==='duel'||sc==='zalp')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
-function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'zalp':return 'Последний залп';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
+function backTarget(){const sc=S.screen;if(sc==='duel'||sc==='zalp'||sc==='honor')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
+function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'zalp':return 'Последний залп';case 'honor':return 'Честь смолоду';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
 const CHEV='<svg viewBox="0 0 13 21" aria-hidden="true"><path d="M11 2L2.5 10.5L11 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function top(){
  const xpCls=S.flashXp?' bump':'';S.flashXp=false;
@@ -1272,7 +1274,7 @@ function vResult(){
  <button class="btn wide" data-go="map">На карту</button>`}}
  const title=(S.level==='chest'||S.level==='chest2'||S.level==='chest3'||S.level==='chest4'||S.level==='chest5')?'Сундук открыт':S.level==='boss5'?'Книга прочитана':S.level==='boss4'?'Акт IV пройден':S.level==='boss3'?'Акт III пройден':S.level==='boss2'?'Акт II пройден':S.level==='boss'?(S.fair.blitz===BOSS.length?'Акт пройден без ошибок':'Акт I пройден'):`Уровень «${L.title}» пройден`;
  const hook=S.level==='boss'?'Впереди Белогорская крепость. Акт II уже открыт на карте.':S.level==='boss2'?'Пётр выздоравливает, а над степью уже собирается гроза. Акт III «Пугачёвщина» уже открыт на карте.':S.level==='boss3'?'Крепость пала, но Пётр жив. Акт IV уже открыт на карте.':S.level==='boss4'?'Пётр едет выручать Машу. Акт V уже открыт на карте.':S.level==='boss5'?'«Капитанская дочка» пройдена целиком. Пётр сдержал отцовский наказ — и ты дочитал повесть до конца.':S.level==='chest5'?'Сад, где решилась судьба Петра.':S.level==='chest4'?'Оренбург в осаде, но Пётр добрался до своих.':S.level==='chest3'?'Старая крепостная пушка ещё послужит.':S.level==='chest'?'Кибитка готова к дальней дороге.':S.level==='chest2'?'Отцовская шпага: честь смолоду.':L.hook;
- return `<div class="card res"><div class="eyebrow">${S.level==='boss5'?`Финал: ${S.lockLast} очков`:S.level==='boss4'?`Совет: ${S.blitz4} из ${BOSS4.length}`:S.level==='boss'?'Ночь на постоялом дворе позади':S.level==='boss2'?(S.duelClean?'Чистый бой':`Идеальных парирований: ${S.duelPerf||0}`):'Награда'}</div><h2>${title}</h2><div class="big">+${S.gained} XP</div>
+ return `<div class="card res"><div class="eyebrow">${S.level==='boss5'?`Честь: ${S.honorLast||0}`:S.level==='boss4'?`Совет: ${S.blitz4} из ${BOSS4.length}`:S.level==='boss'?'Ночь на постоялом дворе позади':S.level==='boss2'?(S.duelClean?'Чистый бой':`Идеальных парирований: ${S.duelPerf||0}`):'Награда'}</div><h2>${title}</h2><div class="big">+${S.gained} XP</div>
  ${S.earned?`<div class="pop">${cardHTML(S.earned)}</div><p class="meta">Новая карточка в коллекции</p>`:''}
  <p class="hook">${hook}</p></div>
  <button class="btn wide" data-go="map">На карту</button>`;
@@ -1496,6 +1498,143 @@ const ZALP={
   masha:['..aaaaaa..','.aaaaaaaa.','aassssssaa','asesssessa','assssssssa','a.sssmsss.','...ssss...','..WWWWWW..','.BBBWWBBB.','BBBBBBBBBB'],
   ivan:['..GGGGGG..','.GGGGGGGG.','.GssssssG.','.skkssess.','.ssssssss.','.sGGGGGGs.','..sGGGGs..','..UUUUUU..','.UUUyyUUU.','UUUUyyUUUU']}
 };
+/* ---- Финал книги: «Честь смолоду» — три разговора, где за слово можно поплатиться головой ---- */
+const HONOR={
+ FX:{T:{h:10,r:8},B:{h:15,r:22},F:{h:-15,r:-8},S:{h:0,r:12}},
+ TAG:{T:'Правда',B:'Правда в лицо',F:'Покривил душой',S:'Промолчал'},
+ CARD:120,TIME:15,
+ SCENES:[
+  {title:'Незваный гость',ch:'Глава VIII',art:'v_l13',who:'Пугачёв',meter:'Гнев Пугачёва',r0:20,lose:true,
+   silent:'Что молчишь, ваше благородие? Язык проглотил?',
+   intro:'Вечер после взятия крепости. Пугачёв зовёт Петра к себе. Гости разошлись — они остались вдвоём.',
+   outro:'Наутро Пугачёв отпустил Петра. Тот уехал в Оренбург — туда, куда велела присяга.',
+   turns:[
+    {q:'Что, ваше благородие? Струсил ты, признайся, когда молодцы мои накинули тебе верёвку на шею?',o:[
+     ['T','Признаюсь, струсил. Кто бы на моём месте не струсил.','То-то. А помиловал я тебя за доброе дело — за тулуп.'],
+     ['B','Струсил. Но будь моя воля — не стоял бы я сейчас перед тобой.','Ишь, колючий. Другой бы в ноги кланялся.'],
+     ['F','Ничуть, батюшка. Я знал, что ты милостив.','Врёшь. Небо тебе с овчинку показалось — я видел.']]},
+    {q:'А ведь я тебя признал ещё на постоялом дворе. Скажи по совести: веришь ли ты, что я великий государь?',o:[
+     ['T','Ты человек смышлёный: сам бы увидел, что я лукавлю, скажи я «верю».','Пугачёв помолчал. — Ну, пусть так. Говоришь ты честно.'],
+     ['B','Не верю. Ты Емельян Пугачёв, донской казак.','Глаза его сверкнули. — Тише, ваше благородие. За такие слова у меня вешают.'],
+     ['F','Верю, государь.','Не ври. По глазам вижу — не веришь.']]},
+    {q:'Послужи мне верой и правдой — пожалую тебя и в фельдмаршалы, и в князья. Как думаешь?',o:[
+     ['T','Не могу. Я присягал государыне императрице — тебе служить не могу.','Ишь какой… А ведь не боится.'],
+     ['B','Я природный дворянин. Самозванцу служить не стану ни за какие чины.','— Самозванцу?! — Пугачёв стукнул кулаком по столу. Потом вдруг усмехнулся.'],
+     ['F','Подумаю, батюшка. Дай только срок.','Знаю я ваши сроки. Сбежишь при первом случае.']]},
+    {q:'Ну, а отпущу тебя на все четыре стороны — обещаешься хоть не служить против меня?',o:[
+     ['T','Как же мне в этом обещаться? Велят идти против тебя — пойду. Голова моя в твоей власти.','Казнить так казнить, миловать так миловать. Ступай на все четыре стороны.'],
+     ['B','Не обещаю. Встретимся в бою — не пощажу.','Пугачёв долго смотрел на меня. — Смел ты. Ладно… Ступай, пока я добрый.'],
+     ['F','Обещаю, батюшка.','Посулы твои дёшевы. Ну да ступай.']]}]},
+  {title:'Мятежная слобода',ch:'Глава XI',art:'v_l17',who:'Пугачёв',meter:'Гнев Пугачёва',r0:40,lose:true,
+   silent:'Молчишь? Со мной в кибитке молчать не принято.',
+   intro:'Пётр снова в руках пугачёвцев. Самозванец сам везёт его в Белогорскую — кибитка мчится по зимней дороге.',
+   outro:'Пугачёв освободил Машу и дал им пропуск через свои заставы.',
+   turns:[
+    {q:'Ну, ваше благородие, зачем ты в Белогорскую рвался? Говори без утайки.',o:[
+     ['T','Там сирота, дочь капитана Миронова. Швабрин держит её взаперти.','Кто из моих людей смеет обижать сироту? Я его повешу!'],
+     ['B','Еду спасать невесту. А крепость ты отдал негодяю — Швабрину.','Пугачёв нахмурился. — Негодяю, говоришь? Посмотрим, кто из вас прав.'],
+     ['F','По службе, батюшка. Послали меня.','По какой такой службе? Не хитри со мной.']]},
+    {q:'Улица моя тесна; воли мне мало. Ребята мои умничают. А ты как думаешь — будет мне удача?',o:[
+     ['T','Не лучше ли тебе отстать от них самому, заранее, и прибегнуть к милосердию государыни?','Нет, поздно мне каяться. Для меня не будет помилования.'],
+     ['B','Не будет. Поймают тебя — и казнят.','Пугачёв горько усмехнулся. — Чему быть, того не миновать.'],
+     ['F','Будет, государь! Москва тебя ждёт.','Льстишь… А сам в это не веришь.']]},
+    {q:'Слушай сказку. Орёл живёт тридцать лет, а ворон — триста. Сказал орёл: чем триста лет питаться падалью, лучше раз напиться живой кровью, а там что Бог даст. Какова сказка?',o:[
+     ['T','Затейлива. Но жить убийством и разбоем — значит, по мне, клевать мертвечину.','Пугачёв посмотрел на меня с удивлением и ничего не ответил.'],
+     ['B','Твой орёл — тот же разбойник. Кровь-то он пьёт чужую.','— Ну и язык у тебя… — Пугачёв отвернулся и надолго замолчал.'],
+     ['F','Мудрая сказка. Ты и есть тот орёл, государь.','Мне-то орёл… А тебе бы всё поддакивать.']]}]},
+  {title:'Суд',ch:'Глава XIV',art:'v_l19',who:'Генерал',meter:'Подозрение суда',r0:30,lose:false,
+   silent:'Молчание — тоже ответ, прапорщик.',
+   intro:'Бунт подавлен. Петра арестовали: Швабрин донёс, что он служил самозванцу. Следственная комиссия ждёт ответа. Пётр решил молчать только об одном — о Маше.',
+   turns:[
+    {q:'Как ты оказался у самозванца в Бердской слободе, если служил в Оренбурге?',o:[
+     ['T','Скажу всё как было — кроме одного. Зачем я ездил, объяснить не могу.','Не можешь или не хочешь? Это подозрительно.'],
+     ['B','Это моё дело. Присяге я не изменял.','Комиссия переглянулась. — Дерзишь, прапорщик.'],
+     ['F','Я ездил выручать дочь капитана Миронова — спросите её.','Записать: вызвать девицу Миронову к допросу.']]},
+    {q:'Отчего же злодей тебя миловал и отпускал? Не служил ли ты ему?',o:[
+     ['T','Не служил. Я отказался ему прямо в глаза. А миловал… я однажды подарил ему тулуп.','Тулуп? Странное оправдание.'],
+     ['B','Не служил. А Швабрин лжёт на меня из злобы — спросите, отчего.','Это мы решим без тебя.'],
+     ['F','Он хотел меня переманить, а я обманывал его, чтобы выжить.','Так ты ещё и лгал? Хорош офицер.']]},
+    {q:'Последний раз: что скажешь в своё оправдание?',o:[
+     ['T','Совесть моя чиста. Больше мне сказать нечего.','Генерал покачал головой.'],
+     ['B','Судите как знаете. Оправдываться мне не в чем.','Упрямство тебе дорого обойдётся.'],
+     ['F','Пощадите! Молод я, ошибся, бес попутал.','Раскаяние запишем. Но правды мы так и не услышали.']]}]}]};
+function vHonor(){
+ return `<div class="sub"><button class="back" data-go="map">← Карта</button><span></span></div>
+ <div class="band"><div class="eyebrow">Финал книги</div><h2>Честь смолоду</h2><p>Три разговора, где за каждое слово можно поплатиться головой. Береги честь — но и голову.</p></div>
+ <div class="card honor"><div class="hstage" id="hs">
+  <div class="hhead"><span id="h-scene">Сцена 1 из 3</span><span class="hpts">Честь <b id="h-hon">0</b><i id="h-delta"></i></span></div>
+  <div class="hart"><img id="h-art" alt=""></div>
+  <div class="hmeter"><span id="h-mlab">Гнев Пугачёва</span><div class="hbar"><i id="h-rage"></i></div></div>
+  <div class="hline" aria-live="polite"><b id="h-who"></b><p id="h-text"></p></div>
+  <div class="htime"><i id="h-time"></i></div>
+  <div class="hopts" id="h-opts"></div>
+  <button class="btn hnext" id="h-next" type="button" hidden>Дальше</button>
+  <div class="dover" id="h-over"><strong>Честь смолоду</strong><span>Пугачёв · кибитка · суд</span><button class="btn" id="h-start">Начать</button></div>
+ </div>
+ <ul class="dguide">
+  <li><b>правда</b><span>бережёт честь, но злит собеседника</span></li>
+  <li><b>правда в лицо</b><span>чести больше, но и гнева тоже — рискуй с умом</span></li>
+  <li><b>лесть и ложь</b><span>гасят гнев, но отнимают честь</span></li>
+  <li><b>15 секунд</b><span>на ответ; промолчишь — это тоже ответ</span></li>
+ </ul>
+ <p class="dtip">Гнев дошёл до края — «Казнить так казнить»: сцену придётся повторить. Редкая карточка — тому, кто наберёт ${HONOR.CARD} чести.</p>
+ <p class="meta" style="justify-content:center">На компьютере: 1, 2, 3 — ответ, Enter — дальше.</p></div>`;
+}
+function startHonor(){
+ const $=id=>document.getElementById(id),SC=HONOR.SCENES;
+ let sc=0,ti=0,hon=0,rage=0,ph='title',left=HONOR.TIME,txt='',dch=0,raf=0,last=0,snap=0,stats={T:0,B:0,F:0,S:0},named=false,ord=[],dead=false,snapSt={T:0,B:0,F:0,S:0};
+ const lockOn=on=>{if(on){const el=$('hs'),nav=document.querySelector('.nav'),top=(nav?nav.getBoundingClientRect().bottom:0)+6,r=el.getBoundingClientRect();if(r.top<top||r.top>innerHeight*.35)window.scrollBy({top:r.top-top,behavior:'smooth'})}};
+ const R=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+ function say(who,t){$('h-who').textContent=who||'';$('h-who').hidden=!who;txt=t;dch=0;$('h-text').textContent='';$('h-text').classList.toggle('narr',!who)}
+ function meters(){$('h-hon').textContent=hon;$('h-rage').style.width=Math.max(0,Math.min(100,rage))+'%';$('h-rage').classList.toggle('hot',rage>=75)}
+ function delta(h,r){const d=$('h-delta');d.textContent=(h>0?'+':'')+h;d.className=h>0?'up':h<0?'dn':'';void d.offsetWidth;d.classList.add('show')}
+ function setScene(){const S0=SC[sc];$('h-scene').textContent=`Сцена ${sc+1} из 3 · ${S0.title}`;$('h-art').src=ART[S0.art]||'';$('h-mlab').textContent=S0.meter;rage=S0.r0;meters()}
+ function opts(list){const box=$('h-opts');box.innerHTML='';list.forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.className='hopt';b.innerHTML=`<span class="hk">${i+1}</span><span>${o[1]}</span>`;b.addEventListener('click',()=>pick(i));box.appendChild(b)})}
+ function intro(){ph='intro';setScene();snap=hon;snapSt={...stats};opts([]);$('h-time').parentNode.hidden=true;say('',SC[sc].intro);$('h-next').hidden=false;$('h-next').textContent='Начать разговор'}
+ function ask(){ph='ask';const T=SC[sc].turns[ti];say(SC[sc].who,T.q);ord=R(T.o.slice());opts(ord);left=HONOR.TIME;$('h-time').parentNode.hidden=false;$('h-next').hidden=true}
+ function pick(i){if(ph!=='ask')return;const o=i==null?['S','…',SC[sc].silent]:ord[i];const fx=HONOR.FX[o[0]];
+  stats[o[0]]++;hon+=fx.h;rage+=fx.r;if(sc===2&&ti===0&&o[0]==='F')named=true;
+  [...$('h-opts').children].forEach((b,k)=>{b.disabled=true;if(k===i){b.classList.add('on');b.insertAdjacentHTML('beforeend',`<em class="htag ${o[0]}">${HONOR.TAG[o[0]]} · ${fx.h>0?'+':''}${fx.h} чести</em>`)}else b.classList.add('off')});
+  if(i==null)$('h-opts').insertAdjacentHTML('beforeend',`<div class="htag S">${HONOR.TAG.S}</div>`);
+  delta(fx.h,fx.r);meters();SFX(o[0]==='F'?'bad':o[0]==='B'?'hit':o[0]==='T'?'ok':'tick');
+  ph='reply';$('h-time').parentNode.hidden=true;setTimeout(()=>{if(dead)return;say(SC[sc].who,o[2]);
+   if(SC[sc].lose&&rage>=100){ph='lose';$('h-next').hidden=false;$('h-next').textContent='Повторить сцену';SFX('bad');
+    $('h-over').innerHTML=`<strong>«Казнить так казнить»</strong><span>Пугачёв потерял терпение. Попробуй сказать правду иначе.</span><button class="btn" id="h-retry">Повторить сцену</button>`;
+    setTimeout(()=>{if(dead||ph!=='lose')return;$('h-over').hidden=false;$('h-retry').addEventListener('click',retry)},1300);return}
+   $('h-next').hidden=false;$('h-next').textContent='Дальше'},450)}
+ function retry(){hon=snap;stats={...snapSt};$('h-over').hidden=true;ti=0;intro()}
+ function next(){if(ph==='intro'){ti=0;ask();return}
+  if(ph==='lose'){retry();return}
+  if(ph==='reply'){ti++;if(ti<SC[sc].turns.length){ask();return}
+   ph='outro';opts([]);const out=sc<2?SC[sc].outro:(named?'Машу вызвали на допрос — именно этого Пётр боялся больше смерти. Приговор: смертная казнь, по милости государыни заменённая вечным поселением в Сибири.':'Пётр так и не назвал её имени. Приговор: смертная казнь, по милости государыни заменённая вечным поселением в Сибири.');
+   say('',out);$('h-next').textContent=sc<2?'Дальше':'Чем всё кончилось';SFX('tick');return}
+  if(ph==='outro'){if(sc<2){sc++;intro()}else finish()}}
+ function finish(){ph='end';lockOn(false);const card=hon>=HONOR.CARD;S.honorLast=hon;S.honorBest=Math.max(S.honorBest||0,hon);if(!isDone('boss5'))addXp(50);save();SFX(card?'gold':'ok');
+  const md=document.createElement('div');md.className='dmodal';md.id='h-modal';md.setAttribute('role','dialog');md.setAttribute('aria-modal','true');md.setAttribute('aria-labelledby','h-mt');
+  md.innerHTML=`<div class="dbox"><div class="eyebrow">Финал книги</div><h2 id="h-mt">Береги честь смолоду</h2>
+   <div class="zstats"><div><b>${hon}</b><span>чести</span></div><div><b>${stats.T+stats.B}</b><span>правдивых ответов</span></div><div><b>${stats.B}</b><span>в лицо</span></div></div>
+   <p class="dnote${card?' rare':''}">${card?`${hon} чести — ты не побоялся сказать правду в лицо. Это редкая карточка «Честь смолоду».`:`Набери ${HONOR.CARD} чести — получишь редкую карточку «Честь смолоду». Для этого придётся рисковать: говорить правду в лицо.`}</p>
+   <p class="hook">${named?'А Маша, вызванная на допрос, сама поехала в Царское Село':'Но Маша сама поехала в Царское Село'} — и рассказала императрице всю правду. Пётр был оправдан.</p>
+   <div class="row"><button class="btn ghost" id="h-again">Ещё раз</button><button class="btn" id="h-close">Закрыть книгу</button></div></div>`;
+  document.body.appendChild(md);
+  md.querySelector('#h-again').addEventListener('click',()=>{md.remove();restart()});
+  md.querySelector('#h-close').addEventListener('click',()=>{md.remove();S.level='boss5';finishLevel('boss5')});
+  setTimeout(()=>{const b=md.querySelector('#h-close');if(b)b.focus({preventScroll:true})},50)}
+ function restart(){sc=0;ti=0;hon=0;stats={T:0,B:0,F:0,S:0};named=false;$('h-over').hidden=true;lockOn(true);intro()}
+ function loop(now){const dt=last?Math.min(.05,(now-last)/1000):0;last=now;
+  if(dch<txt.length){dch=Math.min(txt.length,dch+52*dt);$('h-text').textContent=txt.slice(0,Math.floor(dch))}
+  if(ph==='ask'&&dch>=txt.length){left-=dt;$('h-time').style.width=Math.max(0,left/HONOR.TIME*100)+'%';$('h-time').classList.toggle('low',left<5);if(left<=0)pick(null)}
+  raf=requestAnimationFrame(loop)}
+ const onKey=e=>{if(S.screen!=='honor'||document.getElementById('h-modal'))return;if(ph==='ask'&&/^[123]$/.test(e.key)){pick(+e.key-1);e.preventDefault()}else if(e.key==='Enter'&&!$('h-next').hidden){next();e.preventDefault()}};
+ const onTap=e=>{if(e.target.closest('.hopt,button'))return;if(dch<txt.length){dch=txt.length;$('h-text').textContent=txt}};
+ $('h-start').addEventListener('click',()=>{$('h-over').hidden=true;lockOn(true);restart();SFX('tap')});
+ $('h-next').addEventListener('click',()=>{if(dch<txt.length){dch=txt.length;$('h-text').textContent=txt;return}next()});
+ $('hs').addEventListener('click',onTap);document.addEventListener('keydown',onKey);
+ setScene();say('','');$('h-time').parentNode.hidden=true;
+ raf=requestAnimationFrame(loop);
+ window.__HONOR=()=>({ph,sc,ti,hon,rage,left,stats,named,ord:ord.map(o=>o[0]),pick,next,typed:dch>=txt.length,skip:()=>{dch=txt.length;$('h-text').textContent=txt}});
+ return ()=>{dead=true;cancelAnimationFrame(raf);document.removeEventListener('keydown',onKey);lockOn(false);const m=document.getElementById('h-modal');if(m)m.remove()};
+}
 function vZalp(){
  return `<div class="sub"><button class="back" data-go="map">← Карта</button><span></span></div>
  <div class="band"><div class="eyebrow">Финал акта III</div><h2>Последний залп</h2><p>Пугачёв идёт на Белогорскую. Пушка одна, пороху мало — держи частокол, сколько сможешь.</p></div>
@@ -1890,7 +2029,7 @@ function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.q
 window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
- const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,duel:vDuel,zalp:vZalp}[S.screen];
+ const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,duel:vDuel,zalp:vZalp,honor:vHonor}[S.screen];
  const body=V();
  const root=DEPTH[S.screen]===0;
  app.classList.toggle('has-tabs',root);
@@ -1899,7 +2038,7 @@ function render(){
  if(S.screen==='lock')gameStop=startLock();
  if(S.screen==='snos')gameStop=startSnos();
  if(S.screen==='duel')gameStop=startDuel();
- if(S.screen==='zalp')gameStop=startZalp();
+ if(S.screen==='zalp')gameStop=startZalp();if(S.screen==='honor')gameStop=startHonor();
  if(S.screen==='read'&&S.backPara!==null){const el=document.getElementById('p'+S.backPara);if(el)el.scrollIntoView({block:'center'})}
  if(S.screen==='map'){knockRoad();placeSeg();}
  a11yAfter();
@@ -1912,7 +2051,7 @@ function finishLevel(id){
  S.justDone=id;
  {const A=BK().acts,k=Object.keys(A).find(k=>{const ns=A[k].nodes;return ns[ns.length-1].id===id});if(k&&A[+k+1])S.act=+k+1}
 const GC=BK().chests&&BK().chests[id],GF=BK().finals&&BK().finals[id];
- const card=GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.duelClean?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?(S.lockLast>=6000?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):LEVELS[id].card;
+ const card=GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.duelClean?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?((S.honorLast||0)>=HONOR.CARD?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):LEVELS[id].card;
  S.earned=card&&!S.cards.includes(card)?card:null;if(S.earned)S.cards.push(S.earned);
  save();go('result');SFX(S.earned?'card':'done');
 }
@@ -1937,7 +2076,7 @@ app.addEventListener('click',e=>{
   if(GF){S.level=id;S.gained=0;S.boss={i:0,t:GF.time||20,ans:null,score:0,gen:id};go('boss');bossTick();return}
   if(id==='chest'||id==='chest2'){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
   if(id==='chest5'){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
-  if(id==='boss5'){S.level='boss5';S.gained=0;S.lockCfg={pool:FINALQ,target:5000,act:5};go('lock');return}
+  if(id==='boss5'){S.level='boss5';S.gained=0;go('honor');return}
   if(id==='chest4'){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
   if(id==='boss4'){S.level='boss4';S.gained=0;S.boss={i:0,t:15,ans:null,score:0,act:4};go('boss');bossTick();return}
   if(id==='chest3'){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
@@ -1968,7 +2107,7 @@ app.addEventListener('click',e=>{
  if(act==='bossnext'){const B=S.boss;if(B.i<BQ().length-1){B.i++;B.t=B.gen?(BK().finals[B.gen].time||20):15;B.ans=null;go('boss');bossTick()}else if(B.gen){const F=BK().finals[B.gen],need=F.need||Math.ceil(BQ().length/2);if(B.score<need){B.fail=true;render();return}S.genScore=B.score;S.genTotal=BQ().length;save();finishLevel(B.gen)}else if(B.act===4){const need=Math.ceil(BQ().length/2);if(B.score<need){B.fail=true;render();return}S.blitz4=B.score;save();finishLevel('boss4')}else{S.fair.blitz=Math.max(S.fair.blitz||0,B.score);save();go('fair')}return}
  if(act==='blitz'){S.level='boss';S.boss={i:0,t:15,ans:null,score:0};go('boss');bossTick();return}
  if(act==='lock'){S.level='boss';S.lockCfg={pool:LOCKQ,target:5000,act:1};go('lock');return}
- if(act==='final'){S.level='boss5';S.lockCfg={pool:FINALQ,target:5000,act:5};go('lock');return}
+ if(act==='final'){S.level='boss5';S.gained=0;go('honor');return}
  if(act==='closeact5'){S.level='boss5';finishLevel('boss5');return}
  if(act==='duel'){S.level='boss2';go('duel');return}
  if(act==='closeact2'){S.level='boss2';finishLevel('boss2');return}
@@ -1985,7 +2124,7 @@ let sw=null;
 document.addEventListener('touchstart',e=>{const t=e.touches[0];sw=(DEPTH[S.screen]>0&&S.screen!=='result'&&t.clientX<28)?{x:t.clientX,y:t.clientY}:null},{passive:true});
 document.addEventListener('touchend',e=>{if(!sw)return;const t=e.changedTouches[0];if(t.clientX-sw.x>80&&Math.abs(t.clientY-sw.y)<60)go(backTarget());sw=null},{passive:true});
 /* тестовые ссылки: #zalp — сразу к финалу III акта, #duel — к финалу II акта */
-(function devJump(){const d={zalp:{act:3,boss:'boss3',scr:'zalp'},duel:{act:2,boss:'boss2',scr:'duel'}}[(location.hash||'').slice(1)];if(!d)return;
+(function devJump(){const d={honor:{act:5,boss:'boss5',scr:'honor'},zalp:{act:3,boss:'boss3',scr:'zalp'},duel:{act:2,boss:'boss2',scr:'duel'}}[(location.hash||'').slice(1)];if(!d)return;
  if(S.book!=='kd')setBook('kd');const A=BOOKDATA.kd.acts;for(let k=1;k<=d.act;k++)for(const n of A[k].nodes)if(n.id!==d.boss&&!isDone(n.id))S.done.push(n.id);
  S.act=d.act;save();try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}S.level=d.boss;S.gained=0;S.screen=d.scr})();
 render();
