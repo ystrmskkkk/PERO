@@ -33,6 +33,8 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -173,6 +175,11 @@ button.stat:hover{border-color:var(--accent)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .book{display:flex;flex-direction:column;gap:8px;min-width:0}
 .cover{aspect-ratio:3/4;max-width:100%;border-radius:6px 10px 10px 6px;padding:12px 10px;display:flex;flex-direction:column;justify-content:space-between;color:#F4F1E8;position:relative;overflow:hidden;box-shadow:inset 6px 0 0 rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.12)}
+.cover.has-art{background-size:cover;background-position:center;justify-content:flex-start;gap:4px;box-shadow:inset 6px 0 0 rgba(0,0,0,.22),0 3px 10px rgba(0,0,0,.22)}
+.cover.has-art::after{display:none}
+.cover.has-art>*{position:relative;z-index:1}
+.cover.has-art small:last-child{margin-top:auto}
+.now .cover.has-art b{display:none}
 .cover b{font-family:var(--f-display);font-weight:400;font-size:17px;line-height:1.15}
 .cover small{font-size:11px;opacity:.85;letter-spacing:.04em}
 .cover::after{content:"";position:absolute;inset:auto -20% -30% auto;width:90%;aspect-ratio:1;border-radius:50%;border:2px solid rgba(255,255,255,.18)}
@@ -1159,13 +1166,13 @@ function vLibrary(){
  const ages=['Все','7–9','10–13','14–17','18+'];
  const list=BOOKS.filter(b=>S.age==='Все'||b.age===S.age);
  return `<div class="eyebrow">Читаю сейчас</div>
- <div class="now"><div class="cover ${(BOOKS.find(b=>b.id===S.book)||BOOKS[0]).cls}" aria-hidden="true"><b style="font-size:12px">${BK().coverTitle||BK().title}</b></div>
+ <div class="now">${(()=>{const b=BOOKS.find(b=>b.id===S.book)||BOOKS[0],a=ART['cov_'+b.id];return `<div class="cover ${b.cls}${a?' has-art':''}" aria-hidden="true"${a?` style="background-image:url(${a})"`:''}><b style="font-size:12px">${BK().coverTitle||BK().title}</b></div>`})()}
  <div><h3 role="heading" aria-level="2" style="font-family:var(--f-display);font-size:20px">${BK().title}</h3><div class="meta">${BK().author} · ${Object.keys(BK().acts).length>1?`Акт ${BK().acts[S.act].n} из ${Object.keys(BK().acts).length}`:`${allNodes().filter(n=>isDone(n.id)).length} из ${allNodes().length} мест`}</div>
  <div class="bar"><i style="--p:${progressPct()/100}"></i></div>
  <button class="btn" data-go="map" style="padding:10px 16px">${allNodes().some(n=>isDone(n.id))?'Продолжить':'Начать'}</button></div></div>
  <div class="eyebrow">Каталог · выбери книгу</div>
  <div class="chips" role="group" aria-label="Возраст">${ages.map(a=>`<button class="chip" data-age="${a}" aria-pressed="${S.age===a}">${a}</button>`).join('')}</div>
- <div class="grid">${list.map(b=>`<div class="book"><div class="cover ${b.cls}"><small>${b.author}</small><b>${b.title}</b><small>${b.age}</small></div>
+ <div class="grid">${list.map(b=>`<div class="book"><div class="cover ${b.cls}${ART['cov_'+b.id]?' has-art':''}"${ART['cov_'+b.id]?` style="background-image:url(${ART['cov_'+b.id]})"`:''}><small>${b.author}</small><b>${b.title}</b><small>${b.age}</small></div>
  <h3 role="heading" aria-level="2">${b.title}</h3><div class="meta"><span>${b.levels} ${plural(b.levels,'уровень','уровня','уровней')}</span><span>≈${Math.round(b.mins/60)} ч</span></div>
  <div>${BOOKDATA[b.id]?(b.id===S.book?'<button class="btn ghost wide" data-go="map" style="padding:9px">Читать</button>':`<button class="btn ghost wide" data-book="${b.id}" style="padding:9px">Читать</button>`):'<span class="tag lock">Откроется позже</span>'}</div></div>`).join('')||'<p class="meta">Нет книг для этого возраста.</p>'}</div>
  <p class="foot">Прототип: ${BOOKS.filter(b=>BOOKDATA[b.id]).map(b=>`«${b.title}»`).join(' и ')} — целиком, с картой, заданиями и финалом.</p>`;
