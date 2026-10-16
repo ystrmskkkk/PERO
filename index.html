@@ -31,6 +31,7 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1473,8 +1474,8 @@ const ZALP={
  AFTER_1:[
   ['miron','Отбились! Да это были только передовые.'],
   ['ivan','Ваше благородие, вот порох из погреба. Больше там почитай что и нет.'],
-  ['grin','Глядите — пыль за холмом. Конные, и лестницы тащат!'],
-  ['miron','Конного с одного ядра не свалишь — бей дважды. Лестницы снимай, пока не полезли.']],
+  ['grin','Глядите — пыль за холмом. Конные, и с факелами!'],
+  ['miron','Конного с одного ядра не свалишь — бей дважды. Факельщиков к частоколу не подпускай.']],
  AFTER_2:[
   ['grin','Частокол трещит... Ещё один такой натиск — и не устоим.'],
   ['ivan','Последний бочонок, Иван Кузмич. Больше пороху нет.'],
@@ -1513,14 +1514,14 @@ function vZalp(){
   <li><b>картечь</b><span>веер у самого частокола — для тех, кто подошёл вплотную</span></li>
   <li><b>знаменосец</b><span>сбей бунчук — толпа рядом побежит</span></li>
  </ul>
- <p class="dtip">Порох кончается — береги заряды. Лестницы и таран ломают стену и ворота, пока живы. Третья волна бесконечна: держись, сколько хватит пороха.</p>
+ <p class="dtip">Порох кончается — береги заряды. Таран ломает ворота, пока жив, а факельщики поджигают частокол. Третья волна бесконечна: держись, сколько хватит пороха.</p>
  <p class="meta" style="justify-content:center">На компьютере: мышь — прицел, клик — выстрел, Q — заряд, пробел — огонь, Esc — пауза.</p></div>`;
 }
 function startZalp(){
  const cv=document.getElementById('zc');if(!cv)return null;const ctx=cv.getContext('2d');
  const W=270,H=480,WALL_Y=392,PIV={x:135,y:428},BARREL=18,GX1=117,GX2=152,GX=135,WALL_MAX=14,GATE_MAX=6,PUG_STOP=236;
- const RB=.85,RG=1.2,BLAST=12,SCAT=.035,GR=128,GS=.34,PEL=9,TOFF=34,POW0=20,GIFT=[16,18],MAXON=9;
- const WAVES=[{name:'Передовой отряд',list:{foot:6,bearer:1},iv:2,sp:1},{name:'Конница',list:{foot:6,horse:2,ladder:1,torch:1,bearer:1},iv:1.7,sp:1.1},{name:'Главный натиск',endless:true,sp:1.15}];
+ const RB=.85,RG=1.2,BLAST=16,SCAT=.025,GR=128,GS=.34,PEL=9,TOFF=34,POW0=20,GIFT=[16,18],MAXON=9;
+ const WAVES=[{name:'Передовой отряд',list:{foot:6,bearer:1},iv:2,sp:1},{name:'Конница',list:{foot:7,horse:2,torch:1,bearer:1},iv:1.7,sp:1.1},{name:'Главный натиск',endless:true,sp:1.15}];
  const off=document.createElement('canvas');off.width=W;off.height=H;const g=off.getContext('2d');
  const $=id=>document.getElementById(id);
  const hud=$('z-hud'),bot=$('z-bot'),dlg=$('z-dlg'),over=$('z-over'),msgEl=$('z-msg'),ammoB=$('z-ammo'),powEl=$('z-pow'),wallEl=$('z-wall'),gateEl=$('z-gate'),waveEl=$('z-wave'),subEl=$('z-sub'),whoEl=$('z-who'),lineEl=$('z-line'),nextEl=$('z-next'),portEl=$('z-port');
@@ -1542,7 +1543,9 @@ function startZalp(){
   else if(kind==='torch'){e.spd=R(30,36)}else if(kind==='bearer'){e.hp=2;e.spd=R(13,16);e.cloth='#8a2f2a'}
   else if(kind==='ladder'){e.hp=2;e.spd=R(12,15)}else if(kind==='ram'){e.hp=5;e.spd=8;e.x=GX+R(-6,6);e.y=-14}
   e.spd*=mul;e.max=e.hp;return e}
- const rad=e=>e.kind==='horse'?8:e.kind==='ladder'?9:e.kind==='ram'?12:5;
+ const rad=e=>e.kind==='horse'?12:e.kind==='ladder'?11:e.kind==='ram'?15:9;
+ // попадание по силуэту на экране: игрок целится в фигуру, а не в землю у её ног
+ function scrHit(e,x,y,pad){const f=ZART.spr[frameOf(e)];if(!f)return false;const pe=proj(e.x,e.y),p=proj(x,y),sc=pe.k*1.3,hw=f[2]*sc*.42+pad*pe.k,h=f[3]*sc;return Math.abs(p.x-pe.x)<=hw&&p.y>=pe.y-h-pad*pe.k*.4&&p.y<=pe.y+pad*pe.k*.5}
  function upEnemy(e,dt){e.t+=dt;e.fl=Math.max(0,e.fl-dt);const bx=e.x,by=e.y;
   if(e.deco){if(!(e.stopY>0&&e.y>=e.stopY)){e.y+=e.spd*dt;e.x+=Math.sin(e.t*2.5+e.ph)*6*dt}}
   else if(e.flee){e.y-=e.spd*1.5*dt;if(e.y<-24)e.dead=true}
@@ -1636,21 +1639,21 @@ function frameAt(T,t){for(let i=0;i<T.length;i++){if(t<T[i])return i;t-=T[i]}ret
   else{reload=RG;SFX('grape');grape(mz)}
   if(powder===1)say('Последний заряд!','#E0B45A',2);else if(powder===0)say('Это был последний залп','#E0B45A',2.5)}
  function grape(mz){let any=false;for(let p=0;p<PEL;p++){const a=aim+R(-GS,GS),dx=Math.cos(a),dy=Math.sin(a);let best=null,bs=GR*R(.85,1);
-   for(const e of en){if(e.dead)continue;const cx=e.x-mz.x,cy=e.y-6-mz.y,s=cx*dx+cy*dy;if(s<0||s>bs)continue;if(Math.abs(cx*dy-cy*dx)<=rad(e)+1){best=e;bs=s}}
+   for(const e of en){if(e.dead)continue;const cx=e.x-mz.x,cy=e.y-6-mz.y,s=cx*dx+cy*dy;if(s<0||s>bs)continue;if(Math.abs(cx*dy-cy*dx)<=rad(e)*1.4+3){best=e;bs=s}}
    const bx=mz.x+dx*bs,by=mz.y+dy*bs;tracers.push({ax:mz.x,ay:mz.y,bx,by,life:.09});
    if(best){any=true;puff(bx,by,R(-10,10),R(-14,0),.3,1.5,'#806650',1);if(hurt(best,1))kill(best)}}
   if(any){hits++;SFX('crunch')}}
  function hurt(e,d){e.hp-=d;e.fl=.12;return e.hp<=0}
  function explode(x,y){shake=Math.max(shake,2.5);SFX('blast');
   booms.push({x,y,t:0});
-  let any=false;for(const e of en.slice()){if(e.dead)continue;const d=Math.hypot(e.x-x,e.y-6-y);if(d<=BLAST+rad(e)){any=true;if(hurt(e,d<=5+rad(e)*.5?2:1))kill(e)}}if(any)hits++}
+  let any=false;for(const e of en.slice()){if(e.dead)continue;const d=Math.hypot(e.x-x,e.y-6-y);if(d<=BLAST+rad(e)||scrHit(e,x,y,BLAST*.5)){any=true;if(hurt(e,d<=5+rad(e)*.5||scrHit(e,x,y,0)?2:1))kill(e)}}if(any)hits++}
  function kill(e){if(e.dead)return;e.dead=true;kills++;if(e.kind!=='ram'&&e.kind!=='ladder')corpses.push({x:e.x,y:e.y,side:Math.random()<.5?-1:1,life:1.9,max:1.9,p:e.kind==='horse'?'hd':'die'});
   if(e.kind==='bearer'){for(const o of en)if(!o.dead&&o.kind!=='ram'&&!o.atWall&&Math.hypot(o.x-e.x,o.y-e.y)<70)o.flee=true;say('Бунчук пал — толпа дрогнула!','#E0B45A',2);SFX('gold')}}
  function reached(e){if(!combat())return;let d=1;if(e.kind==='horse')d=2;else if(e.kind==='torch'){d=3;fires.push({x:e.x,t:5});say('Частокол горит!','#E8742A',1.4)}damageWall(d,e.x)}
  function wallTick(e){if(!combat()||e.dead)return;if(e.kind==='ram'){gate--;shake=3.5;SFX('wood');for(let i=0;i<6;i++)puff(GX+R(-12,12),WALL_Y-8,R(-20,20),R(-30,-5),.5,1.5,'#7a5434',0);if(gate<=0){gate=0;breach('Ворота выбиты!')}}else damageWall(1,e.x)}
  function damageWall(d,x){wall-=d;shake=4;SFX('wood');for(let i=0;i<6;i++)puff(x,WALL_Y-6,R(-30,30),R(-40,-10),.5,1.5,'#7a5434',0);if(wall<=0){wall=0;breach('Частокол проломлен!')}}
  function breach(text){if(WAVES[wave].endless){startFinale();return}st='over';aiming=false;balls=[];spawnList=[];en=[];losses++;lockOn(false);SFX('bad');
-  over.innerHTML=`<strong>${text}</strong><span>Волна ${wave+1} из 3. ${losses>=2?'Иван Игнатьич нашёл в погребе ещё пороху: +10 зарядов.':'Береги порох и снимай лестницы, пока не полезли.'}</span><button class="btn" id="z-retry">Повторить волну</button>`;over.hidden=false;
+  over.innerHTML=`<strong>${text}</strong><span>Волна ${wave+1} из 3. ${losses>=2?'Иван Игнатьич нашёл в погребе ещё пороху: +10 зарядов.':'Береги порох и не подпускай факельщиков к частоколу.'}</span><button class="btn" id="z-retry">Повторить волну</button>`;over.hidden=false;
   over.querySelector('#z-retry').addEventListener('click',retry)}
  function retry(){powder=snap.powder+(losses>=2?10:0);wall=Math.max(snap.wall,8);gate=Math.max(snap.gate,4);kills=snap.kills;shots=snap.shots;hits=snap.hits;over.hidden=true;lockOn(true);startWave(wave)}
  function startWave(i){wave=i;snap={powder,wall,gate,kills,shots,hits};balls=[];spawnList=[];fires=[];emerg=false;waveT=0;finWait=0;const w=WAVES[i];
@@ -1661,7 +1664,7 @@ function frameAt(T,t){for(let i=0;i<T.length;i++){if(t<T[i])return i;t-=T[i]}ret
  function spawn(kind,mul){en.push(mk(kind,mul))}
  function upSpawning(dt){if(!spawnList.length)return;spawnT-=dt;if(spawnT>0||en.length>=MAXON)return;spawn(spawnList.pop(),WAVES[wave].sp);spawnT=WAVES[wave].iv*R(.6,1.3)}
  function upEndless(dt){endT+=dt;if(powder<=0)return;spawnT-=dt;
-  if(spawnT<=0&&en.length<MAXON){const r=Math.random();spawn(r<.22?'horse':r<.33?'torch':r<.42?'ladder':'foot',WAVES[wave].sp+Math.min(endT/120,.35));spawnT=Math.max(.85,1.9-endT/50)*R(.7,1.3)}
+  if(spawnT<=0&&en.length<MAXON){const r=Math.random();spawn(r<.22?'horse':r<.33?'torch':'foot',WAVES[wave].sp+Math.min(endT/120,.35));spawnT=Math.max(.85,1.9-endT/50)*R(.7,1.3)}
   if(endT>=nextRam){nextRam+=28;spawn('ram',1);say('Таран к воротам!','#E0584C',1.8)}
   if(endT>=nextBearer){nextBearer+=24;spawn('bearer',1.1)}}
  function cleared(){wall=Math.min(wall+3,WALL_MAX);gate=Math.min(gate+2,GATE_MAX);aiming=false;if(wave<GIFT.length)powder+=GIFT[wave];hud.hidden=true;bot.hidden=true;lockOn(false);
