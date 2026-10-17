@@ -36,6 +36,8 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -650,6 +652,7 @@ h1[tabindex='-1']:focus,h2[tabindex='-1']:focus{outline:none}
 .doc .lead{font-style:italic;color:var(--ink)}
 .doc .docdate{font-size:var(--t-meta);color:var(--muted)}
 .doc a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere}
+.slashwrap{position:fixed;inset:0;z-index:1000;background:#05070d}.slashwrap iframe{width:100%;height:100%;border:0;display:block}
 </style>
 </head>
 <body>
@@ -974,7 +977,7 @@ function dayNum(d){d=d||new Date();return Math.floor((d.getTime()-d.getTimezoneO
 if(S.lastDay===undefined){S.streak=0;S.lastDay=null}
 (function(){const t=dayNum();if(S.lastDay!=null&&t-S.lastDay>1)S.streak=0})();
 function touchStreak(){const t=dayNum();if(S.lastDay===t)return;S.streak=(S.lastDay===t-1)?(S.streak||0)+1:1;S.lastDay=t;setTimeout(()=>NATIVE.remind(),0)}
-function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest,duelPerf:S.duelPerf,duelClean:S.duelClean,zalpBest:S.zalpBest,honorLast:S.honorLast,honorBest:S.honorBest}))}catch(e){}}
+function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest,duelPerf:S.duelPerf,duelClean:S.duelClean,zalpBest:S.zalpBest,honorLast:S.honorLast,honorBest:S.honorBest,slashBest:S.slashBest}))}catch(e){}}
 
 function bmKey(){return S.level+(S.short?':s':':f')}
 function ckOrder(k,i,n){let h=0;for(const c of k+i)h=(h*31+c.charCodeAt(0))>>>0;const a=[...Array(n).keys()];for(let j=n-1;j>0;j--){h=(h*1103515245+12345)>>>0;const r=h%(j+1);[a[j],a[r]]=[a[r],a[j]]}return a}
@@ -1061,9 +1064,9 @@ function unlocked(i){return i===0||isDone(actNodes()[i-1].id)}
 function progressPct(){const ns=allNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 
-const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2};
+const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2,slash:2};
 const ROOT_TITLES={library:'Библиотека',map:'Карта',cards:'Коллекция',profile:'Профиль'};
-function backTarget(){const sc=S.screen;if(sc==='duel'||sc==='zalp'||sc==='honor')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
+function backTarget(){const sc=S.screen;if(sc==='duel'||sc==='zalp'||sc==='honor'||sc==='slash')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
 function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'zalp':return 'Последний залп';case 'honor':return 'Честь смолоду';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
 const CHEV='<svg viewBox="0 0 13 21" aria-hidden="true"><path d="M11 2L2.5 10.5L11 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function top(){
@@ -1566,6 +1569,12 @@ const HONOR={
      ['T','Совесть моя чиста. Больше мне сказать нечего.','Генерал покачал головой.'],
      ['B','Судите как знаете. Оправдываться мне не в чем.','Упрямство тебе дорого обойдётся.'],
      ['F','Пощадите! Молод я, ошибся, бес попутал.','Раскаяние запишем. Но правды мы так и не услышали.']]}]}]};
+function vSlash(){return `<div class="slashwrap"><iframe id="sl-frame" src="shinel/index.html?embed=1" title="Ночь мертвеца" allow="fullscreen; autoplay" allowfullscreen></iframe></div>`}
+function startSlash(){const fr=document.getElementById('sl-frame');try{fr.focus()}catch(e){}
+ const on=e=>{const d=e.data;if(!d||d.src!=='nm'||S.screen!=='slash')return;
+  if(d.type==='exit'){go('map');return}
+  if(d.type==='win'){S.genTotal=3;S.genScore=d.deaths===0?3:d.deaths<=2?2:1;S.slashBest=Math.max(S.slashBest||0,d.kills||0);addXp(40);save();finishLevel('shf')}};
+ addEventListener('message',on);return()=>removeEventListener('message',on)}
 function vHonor(){
  return `<div class="sub"><button class="back" data-go="map">← Карта</button><span></span></div>
  <div class="band"><div class="eyebrow">Финал книги</div><h2>Честь смолоду</h2><p>Три разговора, где за каждое слово можно поплатиться головой. Береги честь — но и голову.</p></div>
@@ -2037,7 +2046,7 @@ function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.q
 window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
- const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,duel:vDuel,zalp:vZalp,honor:vHonor}[S.screen];
+ const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,duel:vDuel,zalp:vZalp,honor:vHonor,slash:vSlash}[S.screen];
  const body=V();
  const root=DEPTH[S.screen]===0;
  app.classList.toggle('has-tabs',root);
@@ -2046,7 +2055,7 @@ function render(){
  if(S.screen==='lock')gameStop=startLock();
  if(S.screen==='snos')gameStop=startSnos();
  if(S.screen==='duel')gameStop=startDuel();
- if(S.screen==='zalp')gameStop=startZalp();if(S.screen==='honor')gameStop=startHonor();
+ if(S.screen==='zalp')gameStop=startZalp();if(S.screen==='honor')gameStop=startHonor();if(S.screen==='slash')gameStop=startSlash();
  if(S.screen==='read'&&S.backPara!==null){const el=document.getElementById('p'+S.backPara);if(el)el.scrollIntoView({block:'center'})}
  if(S.screen==='map'){knockRoad();placeSeg();}
  a11yAfter();
@@ -2081,6 +2090,7 @@ app.addEventListener('click',e=>{
  if(t.dataset.book){setBook(t.dataset.book);go('map');return}
  if(t.dataset.node){const id=t.dataset.node;const GC=BK().chests&&BK().chests[id],GF=BK().finals&&BK().finals[id];
   if(GC){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
+  if(GF&&id==='shf'&&BK().id==='sh'){S.level=id;S.gained=0;go('slash');return}
   if(GF){S.level=id;S.gained=0;S.boss={i:0,t:GF.time||20,ans:null,score:0,gen:id};go('boss');bossTick();return}
   if(id==='chest'||id==='chest2'){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
   if(id==='chest5'){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
@@ -2132,6 +2142,7 @@ let sw=null;
 document.addEventListener('touchstart',e=>{const t=e.touches[0];sw=(DEPTH[S.screen]>0&&S.screen!=='result'&&t.clientX<28)?{x:t.clientX,y:t.clientY}:null},{passive:true});
 document.addEventListener('touchend',e=>{if(!sw)return;const t=e.changedTouches[0];if(t.clientX-sw.x>80&&Math.abs(t.clientY-sw.y)<60)go(backTarget());sw=null},{passive:true});
 /* тестовые ссылки: #zalp — сразу к финалу III акта, #duel — к финалу II акта */
+(function devSlash(){if(location.hash!=='#slash')return;setBook('sh');S.level='shf';S.gained=0;go('slash')})();
 (function devJump(){const d={honor:{act:5,boss:'boss5',scr:'honor'},zalp:{act:3,boss:'boss3',scr:'zalp'},duel:{act:2,boss:'boss2',scr:'duel'}}[(location.hash||'').slice(1)];if(!d)return;
  if(S.book!=='kd')setBook('kd');const A=BOOKDATA.kd.acts;for(let k=1;k<=d.act;k++)for(const n of A[k].nodes)if(n.id!==d.boss&&!isDone(n.id))S.done.push(n.id);
  S.act=d.act;save();try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}S.level=d.boss;S.gained=0;S.screen=d.scr})();

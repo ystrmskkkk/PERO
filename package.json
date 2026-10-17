@@ -1,6 +1,6 @@
 {
   "name": "pero-app",
-  "version": "0.1.96",
+  "version": "0.1.98",
   "private": true,
   "description": "PERO — чтение классики по уровням. Нативная оболочка (Capacitor) для iOS и Android.",
   "scripts": {
