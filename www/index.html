@@ -40,6 +40,7 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1058,11 +1059,13 @@ function plural(n,a,b,c){const m=n%10,h=n%100;return m===1&&h!==11?a:m>=2&&m<=4&
 function addXp(n){if(n>0)touchStreak();S.xp+=n;S.gained+=n;S.flashXp=true;save()}
 function isDone(id){return S.done.includes(id)}
 const ACTBOSS={2:'boss',3:'boss2',4:'boss3',5:'boss4'};
-function actOpen(k){k=+k;const A=BK().acts;if(k===1||!A[k-1])return true;const ns=A[k-1].nodes;return isDone(ns[ns.length-1].id)}
+const ADM=(()=>{try{const o=JSON.parse(localStorage.getItem('bq-admin')||'{}');return o&&typeof o==='object'?o:{}}catch(e){return {}}})();
+function admSave(){try{localStorage.setItem('bq-admin',JSON.stringify(ADM))}catch(e){}}
+function actOpen(k){k=+k;if(ADM.on&&ADM.open)return true;const A=BK().acts;if(k===1||!A[k-1])return true;const ns=A[k-1].nodes;return isDone(ns[ns.length-1].id)}
 function setBook(id){if(!BOOKDATA[id]||S.book===id)return;S.actBy=S.actBy||{};S.actBy[S.book]=S.act;S.book=id;S.act=S.actBy[id]||1;fixAct();save()}
 function fixAct(){if(!BK().acts[S.act])S.act=1;if(!actOpen(S.act)){let k=1;while(BK().acts[k+1]&&actOpen(k+1))k++;S.act=k}}
 function actNodes(){return BK().acts[S.act].nodes}
-function unlocked(i){return i===0||isDone(actNodes()[i-1].id)}
+function unlocked(i){return (ADM.on&&ADM.open)||i===0||isDone(actNodes()[i-1].id)}
 function progressPct(){const ns=allNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 
@@ -1161,7 +1164,7 @@ function vProfile(){
  <button class="grow link" data-doc="privacy"><span>Политика конфиденциальности</span><span aria-hidden="true">›</span></button>
  <button class="grow link" data-doc="terms"><span>Условия использования</span><span aria-hidden="true">›</span></button>
  <button class="grow link" data-doc="credits"><span>Авторские права и лицензии</span><span aria-hidden="true">›</span></button>
- <div class="grow"><span>Версия</span><span>${APP_VERSION}</span></div></div>
+ <div class="grow" data-ver="1"><span>Версия</span><span>${APP_VERSION}</span></div></div>
  <div class="group"><button class="grow btnrow" data-act="reset">Сбросить прогресс прототипа</button></div>
  <p class="foot">${S.short?'Сокращённая версия: отрывки из глав и пересказ между ними.':BK().foot}</p>`;
 }
@@ -2148,6 +2151,83 @@ document.addEventListener('touchend',e=>{if(!sw)return;const t=e.changedTouches[
 (function devJump(){const d={honor:{act:5,boss:'boss5',scr:'honor'},zalp:{act:3,boss:'boss3',scr:'zalp'},duel:{act:2,boss:'boss2',scr:'duel'}}[(location.hash||'').slice(1)];if(!d)return;
  if(S.book!=='kd')setBook('kd');const A=BOOKDATA.kd.acts;for(let k=1;k<=d.act;k++)for(const n of A[k].nodes)if(n.id!==d.boss&&!isDone(n.id))S.done.push(n.id);
  S.act=d.act;save();try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}S.level=d.boss;S.gained=0;S.screen=d.scr})();
+
+/* ===== админка для тестов: 7 тапов по «Версия» в профиле или #admin ===== */
+(function admin(){
+ const st=document.createElement('style');st.textContent=`
+#adm-fab{position:fixed;right:10px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:9998;width:42px;height:42px;border-radius:50%;border:0;background:#2b2420;color:#f3e7cf;font:600 18px system-ui;box-shadow:0 4px 14px rgba(0,0,0,.35);opacity:.85}
+#adm{position:fixed;inset:0;z-index:9999;background:rgba(15,12,10,.6);display:flex;justify-content:center;align-items:flex-end}
+#adm .pn{width:100%;max-width:560px;max-height:88vh;overflow:auto;background:#1f1a16;color:#f1e6d2;border-radius:16px 16px 0 0;padding:14px 14px calc(18px + env(safe-area-inset-bottom));font:14px/1.35 system-ui,-apple-system,sans-serif}
+#adm h3{margin:14px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#c9a96e}
+#adm .top{display:flex;align-items:center;gap:8px;position:sticky;top:-14px;background:#1f1a16;padding:4px 0 8px;margin-top:-4px}
+#adm .top b{flex:1;font-size:16px}
+#adm button{font:inherit;color:inherit;background:#342b24;border:1px solid #4a3e34;border-radius:9px;padding:8px 10px;cursor:pointer}
+#adm button:active{background:#4a3e34}
+#adm .row{display:flex;flex-wrap:wrap;gap:6px}
+#adm .nd{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid #2e2620}
+#adm .nd span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#adm .nd span i{font-style:normal;color:#8f7f6c;font-size:12px;margin-right:4px}
+#adm .nd button{padding:5px 8px;font-size:13px}
+#adm .ok{color:#8fd18b}
+#adm .tg{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left}
+#adm .tg em{font-style:normal;color:#8f7f6c}
+#adm .tg.on em{color:#8fd18b}
+#adm .bk{display:flex;gap:6px;margin-bottom:6px}#adm .bk button[aria-pressed=true]{background:#c9a96e;color:#1f1a16;border-color:#c9a96e}
+#adm .x{background:transparent;border:0;font-size:20px;padding:2px 8px}
+#adm .warn{border-color:#7a3b32;color:#f0a99c}`;
+ document.head.appendChild(st);
+ let tab=S.book,taps=0,tapT=0;
+ function fire(ds){const b=document.createElement('button');Object.assign(b.dataset,ds);b.hidden=true;app.appendChild(b);b.click();b.remove()}
+ function actOf(b,id){const A=BOOKDATA[b].acts;for(const k in A)if(A[k].nodes.some(n=>n.id===id))return +k;return 1}
+ function prep(b,id){close();if(S.book!==b)setBook(b);S.act=actOf(b,id);save()}
+ function openNode(b,id){prep(b,id);go('map');fire({node:id})}
+ function refresh(){save();fixAct();if(['map','library','profile','cards'].includes(S.screen))render();draw()}
+ const GAMES=[['Дуэль (II акт)','kd','boss2'],['Залп (III акт)','kd','boss3'],['Совет-блиц (IV)','kd','boss4'],['Честь (V акт)','kd','boss5'],['Ярмарка (I акт)','kd','boss'],['Ночь мертвеца','sh','shf']];
+ function draw(){
+  let el=document.getElementById('adm');if(!el)return;
+  const B=BOOKDATA[tab]||BOOKDATA.kd,A=B.acts;
+  const books=Object.keys(BOOKDATA).map(b=>`<button data-a="tab" data-b="${b}" aria-pressed="${b===tab}">${(BOOKS.find(x=>x.id===b)||{title:b}).title}</button>`).join('');
+  const acts=Object.keys(A).map(k=>`<h3>Акт ${k}${A[k].title?' · '+A[k].title:''} <button data-a="actdone" data-k="${k}" style="float:right;padding:3px 8px;font-size:12px">пройти акт</button></h3>`+A[k].nodes.map(n=>{const L=LEVELS[n.id],d=isDone(n.id);
+   return `<div class="nd"><span>${d?'<b class="ok">✓</b> ':''}<i>${n.id}</i>${(L&&L.title)||n.title||''}</span>${L&&L.games&&L.games.length?`<button data-a="tests" data-id="${n.id}">тесты</button>`:''}<button data-a="open" data-id="${n.id}">▶</button><button data-a="done" data-id="${n.id}">${d?'↺':'✓'}</button></div>`}).join('')).join('');
+  el.querySelector('.pn').innerHTML=`<div class="top"><b>⚙ Админка</b><button class="x" data-a="close" aria-label="Закрыть">✕</button></div>
+  <button class="tg ${ADM.open?'on':''}" data-a="open-all"><span>Открыть все уровни и акты<br><small style="color:#8f7f6c">прогресс не трогает</small></span><em>${ADM.open?'вкл':'выкл'}</em></button>
+  <h3>Мини-игры сразу</h3><div class="row">${GAMES.map(g=>`<button data-a="game" data-b="${g[1]}" data-id="${g[2]}">${g[0]}</button>`).join('')}<button data-a="lock">Замок</button><button data-a="snos">Снос</button></div>
+  <h3>Прогресс</h3><div class="row"><button data-a="xp">+100 XP</button><button data-a="cards">Все карточки</button><button data-a="nocards">Убрать карточки</button><button data-a="all">Пройти всю книгу</button><button data-a="book0">Сбросить книгу</button><button class="warn" data-a="reset">Полный сброс</button></div>
+  <p style="color:#8f7f6c;margin:6px 0 0">XP ${S.xp} · карточек ${S.cards.length}/${Object.keys(CARDS).length} · пройдено ${S.done.length}</p>
+  <h3>Книга</h3><div class="bk">${books}</div>${acts}
+  <h3>Админка</h3><div class="row"><button data-a="fab">${ADM.fab===false?'Показать':'Скрыть'} кнопку ⚙</button><button class="warn" data-a="off">Выключить админку</button></div>`;
+ }
+ function open(){ADM.on=true;admSave();tab=S.book;let el=document.getElementById('adm');if(!el){el=document.createElement('div');el.id='adm';el.innerHTML='<div class="pn" role="dialog" aria-label="Админка"></div>';document.body.appendChild(el);
+  el.addEventListener('click',e=>{if(e.target===el){close();return}const t=e.target.closest('button[data-a]');if(t)act(t.dataset.a,t.dataset)})}
+  draw();fab()}
+ function close(){const el=document.getElementById('adm');if(el)el.remove()}
+ function fab(){let f=document.getElementById('adm-fab');const want=ADM.on&&ADM.fab!==false;if(!want){if(f)f.remove();return}
+  if(!f){f=document.createElement('button');f.id='adm-fab';f.textContent='⚙';f.setAttribute('aria-label','Админка');f.onclick=open;document.body.appendChild(f)}}
+ function act(a,d){
+  if(a==='close')return close();
+  if(a==='tab'){tab=d.b;return draw()}
+  if(a==='open-all'){ADM.open=!ADM.open;admSave();return refresh()}
+  if(a==='open')return openNode(tab,d.id);
+  if(a==='tests'){openNode(tab,d.id);fire({act:'startgames'});return}
+  if(a==='game')return openNode(d.b,d.id);
+  if(a==='lock'){prep('kd','boss');S.level='boss';S.lockCfg={pool:LOCKQ,target:5000,act:1};go('lock');return}
+  if(a==='snos'){prep('kd','boss');S.level='boss';S.snosCfg={act:1};go('snos');return}
+  if(a==='done'){const i=S.done.indexOf(d.id);if(i>=0)S.done.splice(i,1);else S.done.push(d.id);return refresh()}
+  if(a==='actdone'){for(const n of BOOKDATA[tab].acts[d.k].nodes)if(!isDone(n.id))S.done.push(n.id);return refresh()}
+  if(a==='all'){const A=BOOKDATA[tab].acts;for(const k in A)for(const n of A[k].nodes)if(!isDone(n.id))S.done.push(n.id);return refresh()}
+  if(a==='book0'){const ids=new Set();const A=BOOKDATA[tab].acts;for(const k in A)for(const n of A[k].nodes)ids.add(n.id);S.done=S.done.filter(x=>!ids.has(x));if(S.book===tab)S.act=1;S.actBy=S.actBy||{};S.actBy[tab]=1;return refresh()}
+  if(a==='xp'){S.xp+=100;return refresh()}
+  if(a==='cards'){S.cards=Object.keys(CARDS);return refresh()}
+  if(a==='nocards'){S.cards=[];return refresh()}
+  if(a==='reset'){close();fire({act:'reset'});return}
+  if(a==='fab'){ADM.fab=ADM.fab===false;admSave();fab();return draw()}
+  if(a==='off'){ADM.on=false;ADM.open=false;admSave();close();fab();save();fixAct();render();return}
+ }
+ app.addEventListener('click',e=>{if(!e.target.closest('[data-ver]'))return;const now=Date.now();taps=now-tapT<600?taps+1:1;tapT=now;if(taps>=7){taps=0;open()}});
+ window.addEventListener('hashchange',()=>{if(location.hash==='#admin')open()});
+ if(location.hash==='#admin'){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}setTimeout(open,50)}
+ fab();window.__ADMIN=open;
+})();
 render();
 })();
 </script>
