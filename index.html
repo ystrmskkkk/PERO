@@ -41,6 +41,15 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -965,7 +974,8 @@ const ICONS={
  boss:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h12l-2 4 2 4H5"/></svg>',
  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>',
  ball:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="3"/><rect x="4" y="17" width="16" height="3" rx="1.5"/></svg>',
- check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>'
+ check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>',
+ game:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 8v8M9 13l3 3 3-3"/></svg>'
 };
 
 let S={book:'kd',actBy:{},screen:'library',age:'Все',xp:0,streak:0,lastDay:null,done:[],cards:[],
@@ -980,7 +990,7 @@ function dayNum(d){d=d||new Date();return Math.floor((d.getTime()-d.getTimezoneO
 if(S.lastDay===undefined){S.streak=0;S.lastDay=null}
 (function(){const t=dayNum();if(S.lastDay!=null&&t-S.lastDay>1)S.streak=0})();
 function touchStreak(){const t=dayNum();if(S.lastDay===t)return;S.streak=(S.lastDay===t-1)?(S.streak||0)+1:1;S.lastDay=t;setTimeout(()=>NATIVE.remind(),0)}
-function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest,duelPerf:S.duelPerf,duelClean:S.duelClean,zalpBest:S.zalpBest,honorLast:S.honorLast,honorBest:S.honorBest,slashBest:S.slashBest}))}catch(e){}}
+function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest,duelPerf:S.duelPerf,duelClean:S.duelClean,zalpBest:S.zalpBest,honorLast:S.honorLast,honorBest:S.honorBest,slashBest:S.slashBest,pbStars:S.pbStars,pbPerfect:S.pbPerfect}))}catch(e){}}
 
 function bmKey(){return S.level+(S.short?':s':':f')}
 function ckOrder(k,i,n){let h=0;for(const c of k+i)h=(h*31+c.charCodeAt(0))>>>0;const a=[...Array(n).keys()];for(let j=n-1;j>0;j--){h=(h*1103515245+12345)>>>0;const r=h%(j+1);[a[j],a[r]]=[a[r],a[j]]}return a}
@@ -1069,9 +1079,9 @@ function unlocked(i){return (ADM.on&&ADM.open)||i===0||isDone(actNodes()[i-1].id
 function progressPct(){const ns=allNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 
-const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2,slash:2};
+const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2,slash:2,pobeg:2};
 const ROOT_TITLES={library:'Библиотека',map:'Карта',cards:'Коллекция',profile:'Профиль'};
-function backTarget(){const sc=S.screen;if(sc==='duel'||sc==='zalp'||sc==='honor'||sc==='slash')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
+function backTarget(){const sc=S.screen;if(sc==='duel'||sc==='zalp'||sc==='honor'||sc==='slash'||sc==='pobeg')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
 function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'zalp':return 'Последний залп';case 'honor':return 'Честь смолоду';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
 const CHEV='<svg viewBox="0 0 13 21" aria-hidden="true"><path d="M11 2L2.5 10.5L11 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function top(){
@@ -1208,8 +1218,8 @@ function vMap(){
  ${NODES.map(n=>{const D=DECOS[n.id];if(!D)return '';const st=isDone(n.id)?(S.justDone===n.id?'inked fresh':'inked'):'sketch';if(D.img)return `<div class="deco raster ${st}${D.snow?' wide':''}${D.tall?' tall':''}" style="left:${D.x}%;top:${D.y}px" aria-hidden="true"><img decoding="async" src="${ART[D.img]}" alt=""></div>`;return `<div class="deco ${st}" style="left:${D.x}%;top:${D.y}px" aria-hidden="true"><svg viewBox="0 0 76 76">${D.svg.replace(/<(path|circle|rect|ellipse) /g,'<$1 pathLength="1" ')}</svg></div>`}).join('')}<svg class="road route" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-dasharray="6 5"/></svg>
  ${BK().env==='kd'?kdEnv():(BK().envImgs||[]).map(e=>`<img decoding="async" class="mtn env" src="${ART[e.img]}" alt="" style="${e.style}">`).join('')}
  ${NODES.map((n,i)=>{const L=LEVELS[n.id];const st=isDone(n.id)?'done':(i===cur?'cur':'');const lock=!unlocked(i);
-  const inner=isDone(n.id)?ICONS.check:(n.kind==='chest'?ICONS.chest:n.kind==='boss'?ICONS.boss:L.n);
-  const kind=n.kind==='level'?'Уровень':n.kind==='chest'?'Награда':'Финал акта';
+  const inner=isDone(n.id)?ICONS.check:(n.kind==='chest'?ICONS.chest:n.kind==='boss'?ICONS.boss:n.kind==='game'?ICONS.game:L.n);
+  const kind=n.kind==='level'?'Уровень':n.kind==='chest'?'Награда':n.kind==='game'?'Головоломка':'Финал акта';
   return `<button class="node ${st}" style="left:${n.x}%;top:${i*rowH+60}px;--n:${i}" data-node="${n.id}" ${lock?'disabled':''} aria-label="${L?L.title:n.title}${lock?', закрыто':''}"><span class="disc">${inner}</span><span class="kind">${kind}</span><span class="lbl">${L?L.title:n.title}</span><span class="place">${n.place}</span></button>`}).join('')}
  </div>`;
 }
@@ -1288,9 +1298,9 @@ function vResult(){
  ${S.earned?`<div class="pop">${cardHTML(S.earned)}</div><p class="meta">Новая карточка в коллекции</p>`:''}
  <p class="hook">${X.hook||''}</p></div>
  <button class="btn wide" data-go="map">На карту</button>`}}
- const title=(S.level==='chest'||S.level==='chest2'||S.level==='chest3'||S.level==='chest4'||S.level==='chest5')?'Сундук открыт':S.level==='boss5'?'Книга прочитана':S.level==='boss4'?'Акт IV пройден':S.level==='boss3'?'Акт III пройден':S.level==='boss2'?'Акт II пройден':S.level==='boss'?(S.fair.blitz===BOSS.length?'Акт пройден без ошибок':'Акт I пройден'):`Уровень «${L.title}» пройден`;
- const hook=S.level==='boss'?'Впереди Белогорская крепость. Акт II уже открыт на карте.':S.level==='boss2'?'Пётр выздоравливает, а над степью уже собирается гроза. Акт III «Пугачёвщина» уже открыт на карте.':S.level==='boss3'?'Крепость пала, но Пётр жив. Акт IV уже открыт на карте.':S.level==='boss4'?'Пётр едет выручать Машу. Акт V уже открыт на карте.':S.level==='boss5'?'«Капитанская дочка» пройдена целиком. Пётр сдержал отцовский наказ — и ты дочитал повесть до конца.':S.level==='chest5'?'Сад, где решилась судьба Петра.':S.level==='chest4'?'Оренбург в осаде, но Пётр добрался до своих.':S.level==='chest3'?'Старая крепостная пушка ещё послужит.':S.level==='chest'?'Кибитка готова к дальней дороге.':S.level==='chest2'?'Отцовская шпага: честь смолоду.':L.hook;
- return `<div class="card res"><div class="eyebrow">${S.level==='boss5'?`Честь: ${S.honorLast||0}`:S.level==='boss4'?`Совет: ${S.blitz4} из ${BOSS4.length}`:S.level==='boss'?'Ночь на постоялом дворе позади':S.level==='boss2'?(S.duelClean?'Чистый бой':`Идеальных парирований: ${S.duelPerf||0}`):'Награда'}</div><h2>${title}</h2><div class="big">+${S.gained} XP</div>
+ const title=(S.level==='chest'||S.level==='chest2'||S.level==='chest3'||S.level==='chest4'||S.level==='chest5')?'Сундук открыт':S.level==='pb5'?'Маша на свободе':S.level==='boss5'?'Книга прочитана':S.level==='boss4'?'Акт IV пройден':S.level==='boss3'?'Акт III пройден':S.level==='boss2'?'Акт II пройден':S.level==='boss'?(S.fair.blitz===BOSS.length?'Акт пройден без ошибок':'Акт I пройден'):`Уровень «${L.title}» пройден`;
+ const hook=S.level==='pb5'?'Кибитка с Марьей Ивановной выехала из Белогорской. Впереди гусарский отряд — дальше по карте.':S.level==='boss'?'Впереди Белогорская крепость. Акт II уже открыт на карте.':S.level==='boss2'?'Пётр выздоравливает, а над степью уже собирается гроза. Акт III «Пугачёвщина» уже открыт на карте.':S.level==='boss3'?'Крепость пала, но Пётр жив. Акт IV уже открыт на карте.':S.level==='boss4'?'Пётр едет выручать Машу. Акт V уже открыт на карте.':S.level==='boss5'?'«Капитанская дочка» пройдена целиком. Пётр сдержал отцовский наказ — и ты дочитал повесть до конца.':S.level==='chest5'?'Сад, где решилась судьба Петра.':S.level==='chest4'?'Оренбург в осаде, но Пётр добрался до своих.':S.level==='chest3'?'Старая крепостная пушка ещё послужит.':S.level==='chest'?'Кибитка готова к дальней дороге.':S.level==='chest2'?'Отцовская шпага: честь смолоду.':L.hook;
+ return `<div class="card res"><div class="eyebrow">${S.level==='pb5'?`Звёзд: ${S.pbStars||0} из 36`:S.level==='boss5'?`Честь: ${S.honorLast||0}`:S.level==='boss4'?`Совет: ${S.blitz4} из ${BOSS4.length}`:S.level==='boss'?'Ночь на постоялом дворе позади':S.level==='boss2'?(S.duelClean?'Чистый бой':`Идеальных парирований: ${S.duelPerf||0}`):'Награда'}</div><h2>${title}</h2><div class="big">+${S.gained} XP</div>
  ${S.earned?`<div class="pop">${cardHTML(S.earned)}</div><p class="meta">Новая карточка в коллекции</p>`:''}
  <p class="hook">${hook}</p></div>
  <button class="btn wide" data-go="map">На карту</button>`;
@@ -1574,6 +1584,12 @@ const HONOR={
      ['T','Совесть моя чиста. Больше мне сказать нечего.','Генерал покачал головой.'],
      ['B','Судите как знаете. Оправдываться мне не в чем.','Упрямство тебе дорого обойдётся.'],
      ['F','Пощадите! Молод я, ошибся, бес попутал.','Раскаяние запишем. Но правды мы так и не услышали.']]}]}]};
+function vPobeg(){return `<div class="slashwrap"><iframe id="pb-frame" src="pobeg/index.html?embed=1" title="Побег из Белогорской" allow="autoplay"></iframe></div>`}
+function startPobeg(){const fr=document.getElementById('pb-frame');try{fr.focus()}catch(e){}
+ const on=e=>{const d=e.data;if(!d||d.src!=='pb'||S.screen!=='pobeg')return;
+  if(d.type==='exit'){go('map');return}
+  if(d.type==='win'){S.pbStars=d.stars||0;S.pbMist=d.mistakes||0;if(S.pbStars>=36)S.pbPerfect=true;if(!isDone('pb5'))addXp(40);save();finishLevel('pb5')}};
+ addEventListener('message',on);return()=>removeEventListener('message',on)}
 function vSlash(){return `<div class="slashwrap"><iframe id="sl-frame" src="shinel/index.html?embed=1" title="Ночь мертвеца" allow="fullscreen; autoplay" allowfullscreen></iframe></div>`}
 function startSlash(){const fr=document.getElementById('sl-frame');try{fr.focus()}catch(e){}
  const on=e=>{const d=e.data;if(!d||d.src!=='nm'||S.screen!=='slash')return;
@@ -2051,7 +2067,7 @@ function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.q
 window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
- const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,duel:vDuel,zalp:vZalp,honor:vHonor,slash:vSlash}[S.screen];
+ const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,duel:vDuel,zalp:vZalp,honor:vHonor,slash:vSlash,pobeg:vPobeg}[S.screen];
  const body=V();
  const root=DEPTH[S.screen]===0;
  app.classList.toggle('has-tabs',root);
@@ -2060,7 +2076,7 @@ function render(){
  if(S.screen==='lock')gameStop=startLock();
  if(S.screen==='snos')gameStop=startSnos();
  if(S.screen==='duel')gameStop=startDuel();
- if(S.screen==='zalp')gameStop=startZalp();if(S.screen==='honor')gameStop=startHonor();if(S.screen==='slash')gameStop=startSlash();
+ if(S.screen==='zalp')gameStop=startZalp();if(S.screen==='honor')gameStop=startHonor();if(S.screen==='slash')gameStop=startSlash();if(S.screen==='pobeg')gameStop=startPobeg();
  if(S.screen==='read'&&S.backPara!==null){const el=document.getElementById('p'+S.backPara);if(el)el.scrollIntoView({block:'center'})}
  if(S.screen==='map'){knockRoad();placeSeg();}
  a11yAfter();
@@ -2073,7 +2089,7 @@ function finishLevel(id){
  S.justDone=id;
  {const A=BK().acts,k=Object.keys(A).find(k=>{const ns=A[k].nodes;return ns[ns.length-1].id===id});if(k&&A[+k+1])S.act=+k+1}
 const GC=BK().chests&&BK().chests[id],GF=BK().finals&&BK().finals[id];
- const card=GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.duelClean?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?((S.honorLast||0)>=HONOR.CARD?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):LEVELS[id].card;
+ const card=GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.duelClean?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?((S.honorLast||0)>=HONOR.CARD?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):id==='pb5'?(S.pbStars>=36?'pobeg':null):LEVELS[id].card;
  S.earned=card&&!S.cards.includes(card)?card:null;if(S.earned)S.cards.push(S.earned);
  save();go('result');SFX(S.earned?'card':'done');
 }
@@ -2105,6 +2121,7 @@ app.addEventListener('click',e=>{
   if(id==='chest3'){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
   if(id==='boss3'){S.level='boss3';S.gained=0;go('zalp');return}
   if(id==='boss2'){S.level='boss2';S.gained=0;go('duel');return}
+  if(id==='pb5'){S.level='pb5';S.gained=0;go('pobeg');return}
   if(id==='boss'){go('fair',{level:'boss',gained:0});return}
   S.pvKey=null;go('read',{level:id,gi:0,backPara:null,openHint:null,gained:0,first:true,answered:false,sel:null,order:[]});return}
  if(t.dataset.hint){const p=+t.closest('[data-pi]').dataset.pi;S.openHint=(S.openHint&&S.openHint.k===t.dataset.hint)?null:{k:t.dataset.hint,p};render();return}
@@ -2182,7 +2199,7 @@ document.addEventListener('touchend',e=>{if(!sw)return;const t=e.changedTouches[
  function prep(b,id){close();if(S.book!==b)setBook(b);S.act=actOf(b,id);save()}
  function openNode(b,id){prep(b,id);go('map');fire({node:id})}
  function refresh(){save();fixAct();if(['map','library','profile','cards'].includes(S.screen))render();draw()}
- const GAMES=[['Дуэль (II акт)','kd','boss2'],['Залп (III акт)','kd','boss3'],['Совет-блиц (IV)','kd','boss4'],['Честь (V акт)','kd','boss5'],['Ярмарка (I акт)','kd','boss'],['Ночь мертвеца','sh','shf']];
+ const GAMES=[['Дуэль (II акт)','kd','boss2'],['Залп (III акт)','kd','boss3'],['Совет-блиц (IV)','kd','boss4'],['Честь (V акт)','kd','boss5'],['Ярмарка (I акт)','kd','boss'],['Ночь мертвеца','sh','shf'],['Побег (V)','kd','pb5']];
  function draw(){
   let el=document.getElementById('adm');if(!el)return;
   const B=BOOKDATA[tab]||BOOKDATA.kd,A=B.acts;
