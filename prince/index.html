@@ -361,6 +361,7 @@ function buildPlanet(){
       g.restore();
     }
     for(let i=0;i<2100;i++){const th=r()*TAU,q=surf(th,-r()*280);g.fillStyle=`rgba(${P.speck},${.025+r()*.05})`;g.fillRect(q.x,q.y,1.1,1.1);}
+    if(SCN().surface)SCN().surface(g,r);
     g.restore();
     SCN().build(g,r);
     // a few boulders so the far side is never empty
@@ -428,7 +429,7 @@ function fog(list,dt,par){
   }
 }
 function drawTufts(t){
-  ctx.lineCap='round';const col=SCN().tuftCol||['#39342a','#2a271f'];
+  ctx.lineCap='round';const col=SCN().tuftCol||['#39342a','#2a271f'],ear=SCN().ear;
   for(const tf of tufts){
     if(Math.abs(wrapPI(tf.th-ROT))>1.05)continue;
     at(tf.th,0,()=>{
@@ -436,6 +437,7 @@ function drawTufts(t){
         const x=(i-(tf.n-1)/2)*2.6,lean=(i-(tf.n-1)/2)*.18+Math.sin(t*1.4+tf.p+i)*(.12+A.wind*.1)+A.wind*.3,h=tf.h*(.7+.3*Math.sin(i*2.3+tf.p));
         ctx.strokeStyle=col[i%2];ctx.lineWidth=1.2;
         ctx.beginPath();ctx.moveTo(x,0);ctx.quadraticCurveTo(x+lean*h*.4,-h*.6,x+lean*h,-h);ctx.stroke();
+        if(ear){ctx.save();ctx.translate(x+lean*h,-h);ctx.rotate(lean*.9);ctx.fillStyle=`rgba(${ear},${.85})`;ctx.beginPath();ctx.ellipse(0,-3,1.6,4,0,0,7);ctx.fill();if(S.L>.01){ctx.fillStyle=`rgba(255,214,140,${.35*S.L})`;ctx.beginPath();ctx.ellipse(0,-3,2.6,5.4,0,0,7);ctx.fill();}ctx.restore();}
       }
     });
   }
@@ -468,7 +470,7 @@ function drawThrone(t){
     [-58,58].forEach(x=>{ctx.fillRect(x-7,-118,14,80);ctx.beginPath();ctx.ellipse(x,-42,10,5,0,0,7);ctx.fill();});
     // seat and cushion
     ctx.fillRect(-80,-132,160,18);
-    ctx.fillStyle='#2a1513';ctx.beginPath();ctx.moveTo(-70,-132);ctx.quadraticCurveTo(0,-146,70,-132);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#2c1430';ctx.beginPath();ctx.moveTo(-70,-132);ctx.quadraticCurveTo(0,-146,70,-132);ctx.closePath();ctx.fill();
     ctx.fillStyle=D;
     // arms ending in scrolls
     [[-1],[1]].forEach(([s])=>{
@@ -481,7 +483,7 @@ function drawThrone(t){
     [[-72,-306],[72,-306],[0,-392]].forEach(([x,y],i)=>{const rr=i==2?10:7;ctx.beginPath();ctx.arc(x,y,rr,0,7);ctx.fill();ctx.beginPath();ctx.moveTo(x-2,y-rr);ctx.lineTo(x,y-rr-(i==2?16:10));ctx.lineTo(x+2,y-rr);ctx.fill();});
     // worn velvet
     const vp=new Path2D('M-52 -142 L-52 -290 Q-52 -310 -36 -318 Q-16 -328 0 -348 Q16 -328 36 -318 Q52 -310 52 -290 L52 -142 Z');
-    const v=ctx.createLinearGradient(-50,-330,40,-140);v.addColorStop(0,'#46221e');v.addColorStop(.5,'#2e1715');v.addColorStop(1,'#170c0b');
+    const v=ctx.createLinearGradient(-50,-330,40,-140);v.addColorStop(0,'#4a2246');v.addColorStop(.5,'#2f1630');v.addColorStop(1,'#170b18');
     ctx.fillStyle=v;ctx.fill(vp);
     ctx.save();ctx.clip(vp);
     ctx.strokeStyle='rgba(0,0,0,.28)';ctx.lineWidth=1;[-26,0,26].forEach(x=>{ctx.beginPath();ctx.moveTo(x,-140);ctx.lineTo(x,-340);ctx.stroke();});
@@ -849,8 +851,8 @@ function lampLight(t){
 }
 function dayFlicker(t){
   // on this planet evening comes every minute
-  const ph=(t%11)/11,a=Math.max(0,Math.sin(ph*Math.PI*2))**6*.09*(1-S.L*.6);
-  if(a>.002){ctx.fillStyle=`rgba(150,140,168,${a})`;ctx.fillRect(0,0,W,H);}
+  const ph=(t%11)/11,a=Math.max(0,Math.sin(ph*Math.PI*2))**6*.12*(1-S.L*.6);
+  if(a>.002){const d=ctx.createLinearGradient(0,0,0,H);d.addColorStop(0,`rgba(150,160,200,${a*.7})`);d.addColorStop(1,`rgba(240,180,120,${a*1.4})`);ctx.fillStyle=d;ctx.fillRect(0,0,W,H);}
 }
 
 /* ================= episode III: star counter ================= */
@@ -1096,22 +1098,24 @@ const EXIT=obj({id:'exit',th:0.72,at:0.67,hitH:40,r:90,mark:0,on:()=>!!S.f.exit}
 
 const SCENES={
 1:{num:1,roman:'I',key:'king',title:'Король',sub:'Власть, которой некем управлять',startTh:0.05,
-  sky:{stops:['#070a14','#0e1626','#162033','#1b2537'],wash:'48,66,100',haze:'112,134,170'},
+  sky:{stops:['#0a0612','#170d22','#22142f','#281935'],wash:'84,52,104',haze:'176,128,186'},
   planet:{stops:['#3d362e','#28241f','#141210','#080707'],speck:'210,196,170',strata:'150,134,110'},
-  tufts:22,clear:[0.05,-0.42],lit:()=>S.stage>=3,
+  tufts:14,clear:Array.from({length:22},(_,i)=>-1.62+i*.14),dust:'gold',lit:()=>S.stage>=3,
+  surface(g,r){kingSurface(g,r);},
   intro:[N('Эта планета была так мала, что тень от трона накрывала половину её.'),N('Принц поправил шарф. Здесь было очень тихо.'),N('Планета круглая: если долго идти в одну сторону, вернёшься туда же. Чтобы идти, держи палец на земле.')],
   memory:{n:'I',title:'Деревянная корона',text:'Её вырезал друг. Король помнил золото и власть, но забыл того, кто бежал с ним к реке.'},
   after:[N('Над троном впервые за много лет зажглась звезда.'),N('У края планеты замерцал слабый свет. Пора идти дальше.')],
   exitLines:[N('Принц оглянулся на маленького короля под звездой и шагнул к краю.')],
   build(g,r){
-    for(let th=-0.6;th<-0.08;th+=0.032){if(r()<.22)continue;atG(g,th+(r()-.5)*.006,-1,c=>{c.rotate((r()-.5)*.06);const w=17+r()*5,h=4+r()*2;c.fillStyle='#2a2621';c.fillRect(-w/2,-h,w,h);c.fillStyle='rgba(190,182,164,.14)';c.fillRect(-w/2,-h,w,1);if(r()<.4){c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=.8;c.beginPath();c.moveTo(-w/2+r()*w,-h);c.lineTo(-w/2+r()*w,0);c.stroke();}});}
+    for(let th=-0.6;th<-0.08;th+=0.032){if(r()<.22)continue;atG(g,th+(r()-.5)*.006,-1,c=>{c.rotate((r()-.5)*.06);const w=17+r()*5,h=4+r()*2;c.fillStyle='#2b1429';c.fillRect(-w/2,-h,w,h);c.fillStyle='rgba(226,182,104,.32)';c.fillRect(-w/2,-h,w,1);if(r()<.4){c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=.8;c.beginPath();c.moveTo(-w/2+r()*w,-h);c.lineTo(-w/2+r()*w,0);c.stroke();}});}
     atG(g,-0.64,0,c=>{c.fillStyle='#17161a';c.fillRect(-20,-8,40,8);c.beginPath();c.moveTo(-14,-8);c.lineTo(-14,-58);c.lineTo(-8,-64);c.lineTo(-2,-56);c.lineTo(4,-70);c.lineTo(9,-60);c.lineTo(14,-63);c.lineTo(14,-8);c.fill();c.strokeStyle='rgba(0,0,0,.45)';c.lineWidth=1;[-7,0,7].forEach(x=>{c.beginPath();c.moveTo(x,-10);c.lineTo(x,-56);c.stroke();});c.strokeStyle='rgba(176,190,214,.3)';c.lineWidth=1.2;c.beginPath();c.moveTo(-14,-8);c.lineTo(-14,-58);c.lineTo(-8,-64);c.lineTo(-2,-56);c.lineTo(4,-70);c.stroke();});
     atG(g,-0.69,0,c=>{c.fillStyle='#17161a';c.beginPath();c.ellipse(0,-9,16,9,-.2,0,7);c.fill();});
     atG(g,0.31,0,c=>{c.fillStyle='#18171a';c.fillRect(-22,-22,40,22);c.fillStyle='#211f22';c.beginPath();c.ellipse(18,-11,6,11,0,0,7);c.fill();c.strokeStyle='rgba(0,0,0,.4)';c.lineWidth=1;[-15,-8,-1].forEach(y=>{c.beginPath();c.moveTo(-22,y);c.lineTo(17,y);c.stroke();});c.strokeStyle='rgba(176,190,214,.26)';c.lineWidth=1.2;c.beginPath();c.moveTo(-22,-22);c.lineTo(18,-22);c.stroke();});
-    pebbles(g,r,102,[-0.42,0.55]);
+    pebbles(g,r,102,Array.from({length:23},(_,i)=>-1.62+i*.14));
+    kingRim(g);
   },
   back(t){drawThrone(t);drawKing(t);drawRock(t);drawBanner(t);drawKingFar(t);},
-  light(t){drawStarAndLight(t);},
+  light(t){kingSheen(t);drawStarAndLight(t);},
   inv(){const f=S.f,a=[];if(f.key&&!f.opened)a.push('маленький ключ');if(f.opened&&S.stage===2)a.push('деревянная корона');return a;},
   objs:[
     obj({id:'king',th:-0.25,at:-0.16,hitH:60,r:85,mark:162,show:()=>S.stage!==1}),
@@ -1152,9 +1156,10 @@ const SCENES={
   }},
 
 2:{num:2,roman:'II',key:'lamp',title:'Фонарщик',sub:'Привычка, у которой кончился смысл',startTh:-0.32,
-  sky:{stops:['#06090f','#0d1420','#18202e','#232a36'],wash:'52,62,92',haze:'120,130,160'},
-  planet:{stops:['#373c45','#25292f','#121417','#07080a'],speck:'190,198,210',strata:'130,140,156'},
-  tufts:10,clear:[-0.32,-0.5,0.08,0.4,0.56,-0.07],lit:()=>S.stage>=2,
+  sky:{stops:['#08080d','#141420','#221f2a','#302734'],wash:'92,74,70',haze:'200,160,110'},
+  planet:{stops:['#433824','#2c2517','#15110a','#070604'],speck:'226,196,130',strata:'180,150,90'},
+  surface(g,r){lampSurface(g,r);},dust:'gold',
+  tufts:4,clear:[-0.32,-0.5,0.08,0.4,0.56,-0.07],lit:()=>S.stage>=2,
   intro:[N('На этой планете вечер наступал каждую минуту.'),N('У погасшего фонаря кто-то спал, обняв лестницу.')],
   memory:{n:'II',title:'Фонарь для того, кто возвращается',text:'Свет зажигали для одного человека. Человек ушёл, а привычка осталась — и стала единственным, что хранит память о нём.'},
   after:[N('Фонарь горел ровно. Вечер за вечером, но теперь — не напрасно.'),N('У края планеты замерцал слабый свет. Пора идти дальше.')],
@@ -1221,6 +1226,7 @@ const SCENES={
   sky:{stops:['#060a12','#0c1624','#132235','#1a2b40'],wash:'60,84,120',haze:'140,170,205'},
   planet:{stops:['#3e4b57','#2a343e','#141a20','#08090c'],speck:'220,232,245',strata:'170,190,210',craters:40},
   tufts:0,dust:'snow',lit:()=>S.stage>=3,
+  surface(g,r){countSurface(g,r);},
   intro:[N('Здесь было так холодно, что даже свет звёзд, казалось, звенел.'),N('За огромным столом сидел человек и что-то считал.')],
   memory:{n:'III',title:'Звезда по имени Пуговица',text:'Владеть звездой нельзя. Можно только однажды показать её кому-то — и помнить, как вы смотрели вместе.'},
   after:[N('Счётчик впервые за много лет поднял голову и посмотрел на небо.'),N('У края планеты замерцал слабый свет. Пора идти дальше.')],
@@ -1270,9 +1276,10 @@ const SCENES={
   }},
 
 4:{num:4,roman:'IV',key:'fox',title:'Лис',sub:'Время, которое мы отдаём друг другу',startTh:-0.2,
-  sky:{stops:['#08080f','#141522','#2a2430','#3a2c2c'],wash:'80,64,84',haze:'170,130,110'},
-  planet:{stops:['#34362a','#24261d','#12130e','#070806'],speck:'196,198,160',strata:'140,140,104',craters:30},
-  tufts:46,tuftH:1.3,tuftCol:['#3b3f2b','#2a2d1f'],clear:[-0.2,-0.05,0.63,-0.62,-0.36,0.3],lit:()=>S.stage>=2,
+  sky:{stops:['#0d0a10','#22161e','#432826','#663a2a'],wash:'130,84,64',haze:'230,160,100'},
+  planet:{stops:['#4a3a22','#302616','#16110a','#070504'],speck:'230,196,130',strata:'190,150,90',craters:14},
+  surface(g,r){foxSurface(g,r);},dust:'gold',
+  tufts:58,tuftH:1.45,tuftCol:['#8a7236','#6b5626'],ear:'184,152,76',clear:[-0.2,-0.05,0.63,-0.62,-0.36,0.3],lit:()=>S.stage>=2,
   intro:[N('На этой планете росла трава. Немного, но росла.'),N('Где-то за кустом мелькнул рыжий хвост.')],
   memory:{n:'IV',title:'Колокольчик в траве',text:'Приручить — значит стать чьим-то ожиданием. Время, отданное другому, не пропадает.'},
   after:[N('Пшеница светилась, как будто в ней запуталось солнце.'),N('У края планеты замерцал слабый свет. Пора идти дальше.')],
@@ -1332,14 +1339,16 @@ const SCENES={
   }},
 
 5:{num:5,roman:'V',key:'rose',title:'Роза',sub:'Любовь, ответственность и возвращение',startTh:-0.08,
-  sky:{stops:['#07070e','#121222','#1e1d2c','#2a2530'],wash:'70,62,90',haze:'160,140,130'},
-  planet:{stops:['#4a3f31','#302920','#16120e','#080706'],speck:'226,206,170',strata:'170,148,112',craters:26},
+  sky:{stops:['#0b0910','#1c1422','#33202c','#4c2c32'],wash:'120,74,90',haze:'226,150,140'},
+  planet:{stops:['#3e3a2a','#29271c','#14130d','#070706'],speck:'226,206,170',strata:'170,148,112',craters:20},
+  surface(g,r){roseSurface(g,r);},
   tufts:6,tuftCol:['#4a4030','#3a3226'],clear:[0.1,-0.58,-0.44,-0.3,0.42,0.58,-0.08,-0.1],lit:()=>S.stage>=3,
   intro:[N('Это была его планета. Маленькая, пустая, родная.'),N('Под стеклянным колпаком ждала роза.')],
   memory:{n:'V',title:'Роза под стеклом',text:'Он отвечает за неё — не потому, что она лучше всех роз на свете, а потому, что это его роза.'},
   build(g,r){
     for(let i=0;i<30;i++){const d=6+r()*60,a0=-Math.PI/2+(r()-.5)*1.8;g.strokeStyle=`rgba(226,206,170,${.03+r()*.04})`;g.lineWidth=1.2;g.beginPath();g.arc(CX,CY,R-d,a0,a0+.05+r()*.12);g.stroke();}
     pebbles(g,r,66,[0.1,-0.58,-0.44,-0.3,0.42,0.58,-0.1]);
+    roseFlowers(g,r);
   },
   back(t){drawRosePlanet(t);drawScreen(t);},
   light(t){roseLight(t);},
@@ -1437,6 +1446,148 @@ function roseFinal(){
     {choice:[{label:'Снять стеклянный колпак',key:'rose',set:'open',then:[N('Принц осторожно снял колпак.'),Rs('Здесь ветер... Но ты рядом. Значит, не страшно.')]},
              {label:'Оставить колпак и сесть рядом',key:'rose',set:'stay',then:[N('Принц оставил колпак и сел рядом, прислонившись к стеклу.'),Rs('Хорошо. Только не уходи далеко. Посиди так.')]}]},
     N('Над маленькой планетой загорелась звезда.')];
+}
+
+
+/* ================= planet I: the king's mantle ================= */
+// «мантия короля заняла всю планету»: purple velvet covers the near side, the far side (dried pond) stays bare
+const MANTLE=[-1.62,1.46];
+const inMantle=th=>{th=wrapPI(th);return th>MANTLE[0]&&th<MANTLE[1];};
+function mantleEdge(a,dir){const pts=[];for(let d=0;d<=R;d+=12){const k=d/R;pts.push([a+dir*(Math.sin(d*.021)*.035+k*k*.25),d]);}return pts;}
+function kingSurface(g,r){
+  const [a0,a1]=MANTLE;
+  const e0=mantleEdge(a0,1),e1=mantleEdge(a1,-1);
+  const path=new Path2D();
+  e0.slice().reverse().forEach(([th,d],i)=>{const q=surf(th,-d);i?path.lineTo(q.x,q.y):path.moveTo(q.x,q.y);});
+  for(let th=a0;th<=a1;th+=.01){const q=surf(th,0);path.lineTo(q.x,q.y);}
+  e1.forEach(([th,d])=>{const q=surf(th,-d);path.lineTo(q.x,q.y);});
+  path.closePath();
+  g.save();
+  const vg=g.createRadialGradient(CX,CY,R*.15,CX,CY,R);
+  vg.addColorStop(0,'#0c050b');vg.addColorStop(.6,'#1c0b1a');vg.addColorStop(.9,'#2e1329');vg.addColorStop(.975,'#3f1d39');vg.addColorStop(1,'#55304f');
+  g.fillStyle=vg;g.fill(path);g.clip(path);
+  // pleats running from the rim to the core, like cloth thrown over a ball
+  for(let i=0;i<120;i++){
+    const th=a0+(a1-a0)*r(),len=90+r()*460,drift=(r()-.5)*.22,dark=r()<.66;
+    g.strokeStyle=dark?`rgba(6,0,6,${.08+r()*.16})`:`rgba(200,130,186,${.018+r()*.035})`;
+    g.lineWidth=dark?10+r()*26:3+r()*9;g.lineCap='round';g.beginPath();
+    for(let d=0;d<=len;d+=14){const q=surf(th+drift*(d/len)*(d/len),-d-2);d?g.lineTo(q.x,q.y):g.moveTo(q.x,q.y);}
+    g.stroke();
+  }
+  // velvet nap: soft sheen right under the rim
+  const nap=g.createRadialGradient(CX,CY,R-46,CX,CY,R);nap.addColorStop(0,'rgba(230,150,215,0)');nap.addColorStop(1,'rgba(220,150,205,.09)');
+  g.fillStyle=nap;g.fill(path);
+  // gold embroidery: double border and a row of small crowns
+  const gold='rgba(206,164,92,';
+  g.lineWidth=1.6;g.strokeStyle=gold+'.55)';g.beginPath();g.arc(CX,CY,R-11,a0-Math.PI/2,a1-Math.PI/2);g.stroke();
+  g.lineWidth=.9;g.strokeStyle=gold+'.35)';g.beginPath();g.arc(CX,CY,R-17,a0-Math.PI/2,a1-Math.PI/2);g.stroke();
+  g.setLineDash([2,5]);g.lineWidth=1.2;g.strokeStyle=gold+'.3)';g.beginPath();g.arc(CX,CY,R-58,a0-Math.PI/2,a1-Math.PI/2);g.stroke();g.setLineDash([]);
+  for(let th=a0+.06;th<a1-.04;th+=.075){
+    atG(g,th,-38,c=>{c.strokeStyle=gold+'.42)';c.fillStyle=gold+'.42)';c.lineWidth=1.1;
+      c.beginPath();c.moveTo(-6,3);c.lineTo(-7,-4);c.lineTo(-3,0);c.lineTo(0,-7);c.lineTo(3,0);c.lineTo(7,-4);c.lineTo(6,3);c.closePath();c.stroke();
+      c.beginPath();c.arc(0,-8.5,1.1,0,7);c.arc(-7,-5.5,.9,0,7);c.arc(7,-5.5,.9,0,7);c.fill();});
+  }
+  for(let th=a0+.1;th<a1;th+=.15){const q=surf(th,-92-r()*120);g.fillStyle=gold+'.22)';g.beginPath();g.arc(q.x,q.y,1.4,0,7);g.fill();}
+  g.restore();
+  // ermine hems along both cut edges of the mantle
+  [e0,e1].forEach((E,side)=>{
+    g.save();g.lineCap='round';g.lineJoin='round';
+    const line=()=>{g.beginPath();E.forEach(([th,d],i)=>{if(d>340)return;const q=surf(th,-d);i?g.lineTo(q.x,q.y):g.moveTo(q.x,q.y);});};
+    g.strokeStyle='rgba(0,0,0,.4)';g.lineWidth=22;line();g.stroke();
+    g.strokeStyle='#a9a092';g.lineWidth=15;line();g.stroke();
+    g.strokeStyle='rgba(236,230,218,.28)';g.lineWidth=4;line();g.stroke();
+    E.forEach(([th,d],i)=>{if(d>330||i%3)return;atG(g,th+(side?-1:1)*.004*(i%4?1:-1),-d,c=>{c.fillStyle='#120d10';c.beginPath();c.ellipse(0,0,1.6,4,0,0,7);c.fill();c.beginPath();c.moveTo(-1.4,-2);c.lineTo(0,-6);c.lineTo(1.4,-2);c.fill();});});
+    g.restore();
+  });
+  // bare far side: the dried pond the king and Louis once fished in
+  g.save();
+  const pc=surf(-2.0,-34);g.translate(pc.x,pc.y);g.rotate(-2.0);
+  const pg=g.createRadialGradient(0,0,4,0,0,150);pg.addColorStop(0,'rgba(6,5,4,.75)');pg.addColorStop(.8,'rgba(6,5,4,.45)');pg.addColorStop(1,'rgba(6,5,4,0)');
+  g.fillStyle=pg;g.beginPath();g.ellipse(0,0,150,38,0,0,7);g.fill();
+  g.strokeStyle='rgba(196,182,156,.18)';g.lineWidth=1.4;g.beginPath();g.ellipse(0,0,128,30,0,Math.PI*1.05,Math.PI*1.95);g.stroke();
+  g.strokeStyle='rgba(196,182,156,.24)';g.lineWidth=1;
+  for(let i=0;i<26;i++){let x=(r()-.5)*200,y=(r()-.5)*40;g.beginPath();g.moveTo(x,y);for(let k=0;k<4;k++){x+=(r()-.5)*30;y+=(r()-.5)*10;g.lineTo(x,y);}g.stroke();}
+  g.restore();
+}
+function kingRim(g){
+  // the mantle has thickness: a soft velvet lip over the surface, fur tufts where it ends
+  const [a0,a1]=MANTLE;
+  for(let th=a0;th<a1;th+=.004)atG(g,th,0,c=>{c.fillStyle='#331430';c.fillRect(-2.6,-3,5.2,3.2);c.fillStyle='rgba(220,160,205,.16)';c.fillRect(-2.6,-3.2,5.2,1);});
+  [a0,a1].forEach(a=>atG(g,a,0,c=>{c.fillStyle='#b3aa9b';c.beginPath();c.ellipse(0,-3.5,11,6,0,Math.PI,0);c.fill();c.fillStyle='rgba(255,252,244,.4)';c.beginPath();c.ellipse(-3,-7,8,2.5,0,0,7);c.fill();
+    c.fillStyle='#120d10';[-8,0,7].forEach(x=>{c.beginPath();c.ellipse(x,-3,1.6,3.4,0,0,7);c.fill();});}));
+}
+function kingSheen(t){
+  // when the star is lit, warm glints run across the velvet
+  const L=S.L;if(L<.02)return;
+  ctx.save();ctx.globalCompositeOperation='screen';
+  for(let k=0;k<2;k++){
+    const c=-0.42+Math.sin(t*.35+k*2.4)*1.05,ang=c-ROT-Math.PI/2;
+    if(!inMantle(c))continue;
+    const g=ctx.createRadialGradient(surf(c,-20).x,surf(c,-20).y,0,surf(c,-20).x,surf(c,-20).y,150);
+    g.addColorStop(0,`rgba(255,196,120,${.16*L})`);g.addColorStop(1,'rgba(255,196,120,0)');
+    ctx.strokeStyle=g;ctx.lineWidth=38;ctx.beginPath();ctx.arc(CX,CY,R-24,ang-.13,ang+.13);ctx.stroke();
+  }
+  ctx.restore();
+}
+
+
+/* ================= planet II: the lamplighter's clock ================= */
+function lampSurface(g,r){
+  const br='rgba(214,180,110,';
+  // brass plates with seams and rivets
+  for(let a=-Math.PI;a<Math.PI;a+=.17){
+    g.strokeStyle='rgba(0,0,0,.35)';g.lineWidth=2;g.beginPath();const p0=surf(a,-4),p1=surf(a,-300);g.moveTo(p0.x,p0.y);g.lineTo(p1.x,p1.y);g.stroke();
+    g.strokeStyle=br+'.08)';g.lineWidth=1;g.beginPath();const q0=surf(a+.004,-4),q1=surf(a+.004,-300);g.moveTo(q0.x,q0.y);g.lineTo(q1.x,q1.y);g.stroke();
+    [40,110,190].forEach(d=>{[-.012,.012].forEach(o=>{const q=surf(a+o,-d);g.fillStyle='rgba(0,0,0,.4)';g.beginPath();g.arc(q.x,q.y,2.4,0,7);g.fill();g.fillStyle=br+'.3)';g.beginPath();g.arc(q.x-.6,q.y-.6,1.1,0,7);g.fill();});});
+  }
+  // the dial: minute ticks and roman hours under the rim
+  for(let i=0;i<240;i++){const a=i/240*TAU-Math.PI,big=i%20===0,mid=i%4===0;
+    const p0=surf(a,-8),p1=surf(a,big?-34:mid?-20:-14);g.strokeStyle=br+(big?'.55)':mid?'.34)':'.18)');g.lineWidth=big?2.4:1.1;g.beginPath();g.moveTo(p0.x,p0.y);g.lineTo(p1.x,p1.y);g.stroke();}
+  g.strokeStyle=br+'.35)';g.lineWidth=1.3;g.beginPath();g.arc(CX,CY,R-40,0,TAU);g.stroke();
+  const RN=['XII','I','II','III','IV','V','VI','VII','VIII','IX','X','XI'];
+  g.font='italic 22px Georgia, serif';g.textAlign='center';g.textBaseline='middle';
+  RN.forEach((t,i)=>atG(g,i/12*TAU,-62,c=>{c.fillStyle=br+'.4)';c.fillText(t,0,0);}));
+  // gear rings deeper inside
+  [[150,.25],[235,.18]].forEach(([d,al])=>{g.strokeStyle=`rgba(0,0,0,${al+.1})`;g.lineWidth=7;g.beginPath();g.arc(CX,CY,R-d,0,TAU);g.stroke();
+    for(let i=0;i<120;i++){const a=i/120*TAU;atG(g,a,-d+4,c=>{c.fillStyle=`rgba(0,0,0,${al+.12})`;c.fillRect(-3,-4,6,8);c.fillStyle=br+(al*.6)+')';c.fillRect(-3,-4,6,1);});}});
+  const sh=g.createRadialGradient(CX,CY,R-30,CX,CY,R);sh.addColorStop(0,'rgba(240,200,130,0)');sh.addColorStop(1,'rgba(240,200,130,.1)');g.fillStyle=sh;g.beginPath();g.arc(CX,CY,R,0,TAU);g.fill();
+}
+
+/* ================= planet III: the counter's ledger in the ice ================= */
+function countSurface(g,r){
+  const ink='rgba(176,204,234,';
+  for(let d=24;d<300;d+=19){g.strokeStyle=ink+(d<200?'.16)':'.09)');g.lineWidth=1;g.beginPath();g.arc(CX,CY,R-d,0,TAU);g.stroke();}
+  for(let a=-Math.PI;a<Math.PI;a+=.13){const p0=surf(a,-24),p1=surf(a,-290);g.strokeStyle=ink+'.11)';g.lineWidth=1;g.beginPath();g.moveTo(p0.x,p0.y);g.lineTo(p1.x,p1.y);g.stroke();}
+  g.textAlign='center';g.textBaseline='middle';g.font='13px Georgia, serif';
+  for(let d=33;d<280;d+=19)for(let a=-Math.PI+.065;a<Math.PI;a+=.13){if(r()<.25||(d<75&&Math.abs(a+0.2)<.3))continue;
+    const n=r()<.3?String(100+(r()*900|0)):String(10+(r()*90|0));atG(g,a,-d,c=>{c.fillStyle=ink+(.16+r()*.18)+')';c.fillText(n,0,0);});}
+  atG(g,-0.2,-52,c=>{c.font='italic 17px Georgia, serif';c.fillStyle=ink+'.55)';c.fillText('Итого: 501 622 731',0,0);c.strokeStyle=ink+'.45)';c.lineWidth=1;c.beginPath();c.moveTo(-86,-12);c.lineTo(86,-12);c.moveTo(-86,-15);c.lineTo(86,-15);c.stroke();});
+  // frost crystals
+  for(let i=0;i<70;i++){const q=surf(r()*TAU,-6-r()*240),s=2+r()*5;g.strokeStyle=`rgba(225,238,255,${.08+r()*.14})`;g.lineWidth=.8;
+    for(let k=0;k<3;k++){const a=k*Math.PI/3;g.beginPath();g.moveTo(q.x-Math.cos(a)*s,q.y-Math.sin(a)*s);g.lineTo(q.x+Math.cos(a)*s,q.y+Math.sin(a)*s);g.stroke();}}
+  const fr=g.createRadialGradient(CX,CY,R-36,CX,CY,R);fr.addColorStop(0,'rgba(220,236,255,0)');fr.addColorStop(1,'rgba(220,236,255,.14)');g.fillStyle=fr;g.beginPath();g.arc(CX,CY,R,0,TAU);g.fill();
+}
+
+/* ================= planet IV: the fox's wheat field ================= */
+function foxSurface(g,r){
+  // ploughed furrows following the curve, warm earth
+  for(let d=10;d<260;d+=12){const a0=r()*TAU;g.strokeStyle=`rgba(${d%24?'200,160,90':'30,20,8'},${d<120?.09:.05})`;g.lineWidth=d%24?2:4;g.beginPath();g.arc(CX,CY,R-d,a0,a0+TAU-.3);g.stroke();}
+  for(let i=0;i<260;i++){const q=surf(r()*TAU,-4-r()*80);g.fillStyle=`rgba(226,186,104,${.05+r()*.1})`;g.fillRect(q.x,q.y,2,1);}
+  const sun=g.createRadialGradient(CX,CY,R-40,CX,CY,R);sun.addColorStop(0,'rgba(240,180,100,0)');sun.addColorStop(1,'rgba(240,180,100,.14)');g.fillStyle=sun;g.beginPath();g.arc(CX,CY,R,0,TAU);g.fill();
+}
+
+/* ================= planet V: home — moss and the simple one-row flowers ================= */
+function roseSurface(g,r){
+  for(let i=0;i<120;i++){const d=4+r()*120,a0=r()*TAU;g.strokeStyle=`rgba(${r()<.5?'90,110,70':'60,74,46'},${.07+r()*.1})`;g.lineWidth=3+r()*6;g.lineCap='round';g.beginPath();g.arc(CX,CY,R-d,a0,a0+.04+r()*.14);g.stroke();}
+  const warm=g.createRadialGradient(CX,CY,R-40,CX,CY,R);warm.addColorStop(0,'rgba(240,170,150,0)');warm.addColorStop(1,'rgba(240,170,150,.12)');g.fillStyle=warm;g.beginPath();g.arc(CX,CY,R,0,TAU);g.fill();
+}
+function roseFlowers(g,r){
+  // «простые цветы с одним рядом лепестков»
+  const clear=SCENES[5].clear;
+  for(let i=0;i<80;i++){const th=r()*TAU-Math.PI;if(clear.some(a=>Math.abs(wrapPI(th-a))<.07))continue;
+    atG(g,th,0,c=>{const h=9+r()*10,col=r()<.5?'226,210,196':'214,176,186';c.strokeStyle='#3f4a33';c.lineWidth=1;c.beginPath();c.moveTo(0,0);c.quadraticCurveTo(1.5,-h*.5,0,-h);c.stroke();
+      c.fillStyle=`rgba(${col},.75)`;for(let k=0;k<5;k++){const a=k/5*TAU;c.beginPath();c.ellipse(Math.cos(a)*3.4,-h+Math.sin(a)*3.4,2.6,1.7,a,0,7);c.fill();}
+      c.fillStyle='rgba(230,190,110,.9)';c.beginPath();c.arc(0,-h,1.6,0,7);c.fill();});}
 }
 
 /* ================= loop ================= */
@@ -1597,10 +1748,10 @@ function frame(now){
   sc.light(T);
   drawPrince(T);drawBursts(dt);
   ctx.setTransform(K,0,0,K,0,0);
-  const snow=sc.dust==='snow';
+  const snow=sc.dust==='snow',gold=sc.dust==='gold';
   for(const d of dust){d.x+=(d.vx+A.wind*45)*dt/W;d.y+=(snow?Math.abs(d.vy)*3:-d.vy)*dt/H;
     if(d.y<-.01){d.y=1.01;d.x=Math.random();}if(d.y>1.01){d.y=-.01;d.x=Math.random();}if(d.x<-.01)d.x=1.01;if(d.x>1.01)d.x=-.01;
-    ctx.fillStyle=snow?`rgba(226,236,250,${d.a*2})`:`rgba(214,206,190,${d.a})`;ctx.fillRect(d.x*W,d.y*H,d.s*(snow?1.4:1),d.s*(snow?1.4:1));}
+    ctx.fillStyle=snow?`rgba(226,236,250,${d.a*2})`:gold?`rgba(240,198,120,${d.a*(1.2+Math.sin(T*2+d.x*40)*.8)})`:`rgba(214,206,190,${d.a})`;ctx.fillRect(d.x*W,d.y*H,d.s*(snow?1.4:1),d.s*(snow?1.4:1));}
   ctx.save();ctx.translate(0,H-720);fog(fogFront,dt,-.06);ctx.restore();
   drawStreaks(dt);
   worldT();drawTaps(dt);drawMarkers(T);ctx.setTransform(K,0,0,K,0,0);
