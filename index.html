@@ -60,6 +60,7 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1608,7 +1609,7 @@ function startPobeg(){const fr=document.getElementById('pb-frame');try{fr.focus(
  addEventListener('message',on);return()=>removeEventListener('message',on)}
 // игры книги, которые живут отдельной страницей: BOOKDATA[книга].games[узел] = {ep, title, card, done, hook}
 const BOOKGAME={lp:{src:'prince/index.html',msg:'lp'}};
-function vBookGame(){const G=BK().games[S.level],B=BOOKGAME[BK().id];return `<div class="slashwrap"><iframe id="bg-frame" src="${B.src}?embed=1&ep=${G.ep}" title="${G.title}" allow="autoplay"></iframe></div>`}
+function vBookGame(){const G=BK().games[S.level],B=BOOKGAME[BK().id];return `<div class="slashwrap"><iframe id="bg-frame" src="${B.src}?embed=1&ep=${G.ep}" title="${G.title}" allow="fullscreen; autoplay" allowfullscreen></iframe></div>`}
 function startBookGame(){const fr=document.getElementById('bg-frame');try{fr.focus()}catch(e){}const id=S.level,B=BOOKGAME[BK().id];
  const on=e=>{const d=e.data;if(!d||d.src!==B.msg||S.screen!=='bookgame'||S.level!==id)return;
   if(d.type==='exit'){go('map');return}
