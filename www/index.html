@@ -55,6 +55,8 @@
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta charset="utf-8">
+<meta charset="utf-8">
+<meta charset="utf-8">
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -682,6 +684,7 @@ window.PERO_REG={HINTS:{},CARDS:{},LEVELS:{},ART:{},DECOS:{},SHORTTEXT:{},CHECKS
 </script>
 <script src="./books/kd.js"></script>
 <script src="./books/sh.js"></script>
+<script src="./books/lp.js"></script>
 <script>
 (function(){
 const R=window.PERO_REG;const {HINTS,CARDS,LEVELS,ART,DECOS,SHORTTEXT,CHECKS,CARDICON,ANIMS,BOOKDATA}=R;let {FINALQ,BOSS4,DUELQ,BOSS,LOCKQ,SNOS_WORDS,SNOS_WORDS3,NODES,NODES2,NODES3,NODES4,NODES5,ACTS,CLOUD,COMPASS,MTN}=R;
@@ -689,7 +692,8 @@ const BOOKS=[
  {id:'kd',title:'Капитанская дочка',author:'А. С. Пушкин',age:'14–17',levels:20,mins:260,cls:'c1',playable:true},
  {id:'sk',title:'Сказки',author:'А. С. Пушкин',age:'7–9',levels:30,mins:140,cls:'c3'},
  {id:'ka',title:'Каштанка',author:'А. П. Чехов',age:'10–13',levels:18,mins:90,cls:'c2'},
- {id:'sh',title:'Шинель',author:'Н. В. Гоголь',age:'14–17',levels:7,mins:80,cls:'c4',playable:true}
+ {id:'sh',title:'Шинель',author:'Н. В. Гоголь',age:'14–17',levels:7,mins:80,cls:'c4',playable:true},
+ {id:'lp',title:'Маленький принц',author:'А. де Сент-Экзюпери',age:'10–13',levels:11,mins:150,cls:'c2',playable:true}
 ];
 
 function BK(){return BOOKDATA[S&&S.book]||BOOKDATA.kd}
@@ -1084,9 +1088,9 @@ function unlocked(i){return (ADM.on&&ADM.open)||i===0||isDone(actNodes()[i-1].id
 function progressPct(){const ns=allNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 
-const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2,slash:2,pobeg:2};
+const DEPTH={doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2,slash:2,pobeg:2,bookgame:2};
 const ROOT_TITLES={library:'Библиотека',map:'Карта',cards:'Коллекция',profile:'Профиль'};
-function backTarget(){const sc=S.screen;if(sc==='duel'||sc==='zalp'||sc==='honor'||sc==='slash'||sc==='pobeg')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
+function backTarget(){const sc=S.screen;if(sc==='duel'||sc==='zalp'||sc==='honor'||sc==='slash'||sc==='pobeg'||sc==='bookgame')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
 function navTitle(){const L=LEVELS[S.level];switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'zalp':return 'Последний залп';case 'honor':return 'Честь смолоду';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
 const CHEV='<svg viewBox="0 0 13 21" aria-hidden="true"><path d="M11 2L2.5 10.5L11 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function top(){
@@ -1181,7 +1185,7 @@ function vProfile(){
  <button class="grow link" data-doc="credits"><span>Авторские права и лицензии</span><span aria-hidden="true">›</span></button>
  <div class="grow" data-ver="1"><span>Версия</span><span>${APP_VERSION}</span></div></div>
  <div class="group"><button class="grow btnrow" data-act="reset">Сбросить прогресс прототипа</button></div>
- <p class="foot">${S.short?'Сокращённая версия: отрывки из глав и пересказ между ними.':BK().foot}</p>`;
+ <p class="foot">${S.short&&BK().short?'Сокращённая версия: отрывки из глав и пересказ между ними.':BK().foot}</p>`;
 }
 
 function para(t){return t.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,(m,w,k)=>`<button class="hw" data-hint="${k}">${w}</button>`)}
@@ -1224,8 +1228,8 @@ function vMap(){
  ${BK().env==='kd'?kdEnv():(BK().envImgs||[]).map(e=>`<img decoding="async" class="mtn env" src="${ART[e.img]}" alt="" style="${e.style}">`).join('')}
  ${NODES.map((n,i)=>{const L=LEVELS[n.id];const st=isDone(n.id)?'done':(i===cur?'cur':'');const lock=!unlocked(i);
   const inner=isDone(n.id)?ICONS.check:(n.kind==='chest'?ICONS.chest:n.kind==='boss'?ICONS.boss:n.kind==='game'?ICONS.game:L.n);
-  const kind=n.kind==='level'?'Уровень':n.kind==='chest'?'Награда':n.kind==='game'?'Головоломка':'Финал акта';
-  return `<button class="node ${st}" style="left:${n.x}%;top:${i*rowH+60}px;--n:${i}" data-node="${n.id}" ${lock?'disabled':''} aria-label="${L?L.title:n.title}${lock?', закрыто':''}"><span class="disc">${inner}</span><span class="kind">${kind}</span><span class="lbl">${L?L.title:n.title}</span><span class="place">${n.place}</span></button>`}).join('')}
+  const kind=n.kind==='level'?'Уровень':n.kind==='chest'?'Награда':n.kind==='game'?(n.label||'Головоломка'):'Финал акта';
+  return `<button class="node ${st}" style="left:${n.x}%;top:${i*rowH+60}px;--n:${i}" data-node="${n.id}" ${lock?'disabled':''} aria-label="${L?L.title:n.title}${n.kind==='game'?', '+(n.label||'игра'):''}${lock?', закрыто':''}"><span class="disc">${inner}</span><span class="kind">${kind}</span><span class="lbl">${L?L.title:n.title}</span><span class="place">${n.place}</span></button>`}).join('')}
  </div>`;
 }
 
@@ -1298,6 +1302,10 @@ function cardHTML(id,cls){const c=CARDS[id];return `<div class="pcard ${c.rare?'
 
 function vResult(){
  const L=LEVELS[S.level]||null;
+ {const GG=BK().games&&BK().games[S.level];if(GG)return `<div class="card res"><div class="eyebrow">Игра · ${GG.title}</div><h2>${GG.done}</h2><div class="big">+${S.gained} XP</div>
+ ${S.earned?`<div class="pop">${cardHTML(S.earned)}</div><p class="meta">Воспоминание в коллекции</p>`:''}
+ <p class="hook">${GG.hook||''}</p></div>
+ <button class="btn wide" data-go="map">На карту</button>`}
  {const GC=BK().chests&&BK().chests[S.level],GF=BK().finals&&BK().finals[S.level];
  if(GC||GF){const X=GC||GF;return `<div class="card res"><div class="eyebrow">${GC?'Награда':`${X.title}: ${S.genScore} из ${S.genTotal}`}</div><h2>${X.done||(GC?'Сундук открыт':'Часть пройдена')}</h2><div class="big">+${S.gained} XP</div>
  ${S.earned?`<div class="pop">${cardHTML(S.earned)}</div><p class="meta">Новая карточка в коллекции</p>`:''}
@@ -1594,6 +1602,14 @@ function startPobeg(){const fr=document.getElementById('pb-frame');try{fr.focus(
  const on=e=>{const d=e.data;if(!d||d.src!=='pb'||S.screen!=='pobeg')return;
   if(d.type==='exit'){go('map');return}
   if(d.type==='win'){S.pbStars=d.stars||0;S.pbMist=d.mistakes||0;if(S.pbStars>=36)S.pbPerfect=true;if(!isDone('pb5'))addXp(40);save();finishLevel('pb5')}};
+ addEventListener('message',on);return()=>removeEventListener('message',on)}
+// игры книги, которые живут отдельной страницей: BOOKDATA[книга].games[узел] = {ep, title, card, done, hook}
+const BOOKGAME={lp:{src:'prince/index.html',msg:'lp'}};
+function vBookGame(){const G=BK().games[S.level],B=BOOKGAME[BK().id];return `<div class="slashwrap"><iframe id="bg-frame" src="${B.src}?embed=1&ep=${G.ep}" title="${G.title}" allow="autoplay"></iframe></div>`}
+function startBookGame(){const fr=document.getElementById('bg-frame');try{fr.focus()}catch(e){}const id=S.level,B=BOOKGAME[BK().id];
+ const on=e=>{const d=e.data;if(!d||d.src!==B.msg||S.screen!=='bookgame'||S.level!==id)return;
+  if(d.type==='exit'){go('map');return}
+  if(d.type==='win'){if(!isDone(id))addXp(40);save();finishLevel(id)}};
  addEventListener('message',on);return()=>removeEventListener('message',on)}
 function vSlash(){return `<div class="slashwrap"><iframe id="sl-frame" src="shinel/index.html?embed=1" title="Ночь мертвеца" allow="fullscreen; autoplay" allowfullscreen></iframe></div>`}
 function startSlash(){const fr=document.getElementById('sl-frame');try{fr.focus()}catch(e){}
@@ -2072,7 +2088,7 @@ function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.q
 window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
- const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,duel:vDuel,zalp:vZalp,honor:vHonor,slash:vSlash,pobeg:vPobeg}[S.screen];
+ const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,duel:vDuel,zalp:vZalp,honor:vHonor,slash:vSlash,pobeg:vPobeg,bookgame:vBookGame}[S.screen];
  const body=V();
  const root=DEPTH[S.screen]===0;
  app.classList.toggle('has-tabs',root);
@@ -2081,7 +2097,7 @@ function render(){
  if(S.screen==='lock')gameStop=startLock();
  if(S.screen==='snos')gameStop=startSnos();
  if(S.screen==='duel')gameStop=startDuel();
- if(S.screen==='zalp')gameStop=startZalp();if(S.screen==='honor')gameStop=startHonor();if(S.screen==='slash')gameStop=startSlash();if(S.screen==='pobeg')gameStop=startPobeg();
+ if(S.screen==='zalp')gameStop=startZalp();if(S.screen==='honor')gameStop=startHonor();if(S.screen==='slash')gameStop=startSlash();if(S.screen==='pobeg')gameStop=startPobeg();if(S.screen==='bookgame')gameStop=startBookGame();
  if(S.screen==='read'&&S.backPara!==null){const el=document.getElementById('p'+S.backPara);if(el)el.scrollIntoView({block:'center'})}
  if(S.screen==='map'){knockRoad();placeSeg();}
  a11yAfter();
@@ -2093,8 +2109,8 @@ function finishLevel(id){
  if(!isDone(id))S.done.push(id);
  S.justDone=id;
  {const A=BK().acts,k=Object.keys(A).find(k=>{const ns=A[k].nodes;return ns[ns.length-1].id===id});if(k&&A[+k+1])S.act=+k+1}
-const GC=BK().chests&&BK().chests[id],GF=BK().finals&&BK().finals[id];
- const card=GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.duelClean?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?((S.honorLast||0)>=HONOR.CARD?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):id==='pb5'?(S.pbStars>=36?'pobeg':null):LEVELS[id].card;
+const GC=BK().chests&&BK().chests[id],GF=BK().finals&&BK().finals[id],GG=BK().games&&BK().games[id];
+ const card=GG?GG.card:GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.duelClean?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?((S.honorLast||0)>=HONOR.CARD?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):id==='pb5'?(S.pbStars>=36?'pobeg':null):LEVELS[id].card;
  S.earned=card&&!S.cards.includes(card)?card:null;if(S.earned)S.cards.push(S.earned);
  save();go('result');SFX(S.earned?'card':'done');
 }
@@ -2116,6 +2132,7 @@ app.addEventListener('click',e=>{
  if(t.dataset.book){setBook(t.dataset.book);go('map');return}
  if(t.dataset.node){const id=t.dataset.node;const GC=BK().chests&&BK().chests[id],GF=BK().finals&&BK().finals[id];
   if(GC){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
+  {const GG=BK().games&&BK().games[id];if(GG){S.level=id;S.gained=0;go('bookgame');return}}
   if(GF&&id==='shf'&&BK().id==='sh'){S.level=id;S.gained=0;go('slash');return}
   if(GF){S.level=id;S.gained=0;S.boss={i:0,t:GF.time||20,ans:null,score:0,gen:id};go('boss');bossTick();return}
   if(id==='chest'||id==='chest2'){S.level=id;S.gained=0;if(!isDone(id))addXp(20);finishLevel(id);return}
@@ -2204,7 +2221,7 @@ document.addEventListener('touchend',e=>{if(!sw)return;const t=e.changedTouches[
  function prep(b,id){close();if(S.book!==b)setBook(b);S.act=actOf(b,id);save()}
  function openNode(b,id){prep(b,id);go('map');fire({node:id})}
  function refresh(){save();fixAct();if(['map','library','profile','cards'].includes(S.screen))render();draw()}
- const GAMES=[['Дуэль (II акт)','kd','boss2'],['Залп (III акт)','kd','boss3'],['Совет-блиц (IV)','kd','boss4'],['Честь (V акт)','kd','boss5'],['Ярмарка (I акт)','kd','boss'],['Ночь мертвеца','sh','shf'],['Побег (V)','kd','pb5']];
+ const GAMES=[['Дуэль (II акт)','kd','boss2'],['Залп (III акт)','kd','boss3'],['Совет-блиц (IV)','kd','boss4'],['Честь (V акт)','kd','boss5'],['Ярмарка (I акт)','kd','boss'],['Ночь мертвеца','sh','shf'],['Побег (V)','kd','pb5'],['Принц: Король','lp','lpg1'],['Принц: Фонарщик','lp','lpg2'],['Принц: Счётчик','lp','lpg3'],['Принц: Лис','lp','lpg4'],['Принц: Роза','lp','lpg5']];
  function draw(){
   let el=document.getElementById('adm');if(!el)return;
   const B=BOOKDATA[tab]||BOOKDATA.kd,A=B.acts;
