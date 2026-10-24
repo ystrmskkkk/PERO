@@ -139,6 +139,8 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 #rotate p{margin:0;max-width:20em;color:var(--mist)}
 @keyframes turn{0%,25%{transform:rotate(0)}55%,100%{transform:rotate(-90deg)}}
 @media (prefers-reduced-motion:reduce){#rotate .phone,#dlg.done .more,.slots button.bad{animation:none}#fade{transition:none}#title > *,#title > #titleArt,#dlg,#dlg .who.pop,#dlg .choices button,#card .sheet,#card .sheet > *,#menu .sheet,#puzzle .sheet,#end .inner > *,#end .epi p,#fade.on *,#cardIcon svg{animation:none!important}#title > .mote{display:none}#cardIcon svg *{stroke-dashoffset:0!important;animation:none!important}}
+@media (orientation:portrait){#title{justify-content:flex-start;padding-top:max(12vh,calc(env(safe-area-inset-top) + 40px));background:#342c43}
+#title > #titleArt{background-color:#342c43;background-size:100% 100%,100% 100%,250% auto;background-position:0 0,0 0,8% 100%}}
 </style>
 </head>
 <body>
@@ -222,6 +224,7 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
   <div class="phone" aria-hidden="true"></div>
   <p>Поверните телефон горизонтально: эта сказка рассказана широким кадром.</p>
   <button class="btn" id="bPortrait">Играть так</button>
+  <button class="btn" id="bRotMap" hidden>← На карту</button>
 </div>
 
 <script>
@@ -256,7 +259,7 @@ const KEY='lp_game_v2';
 const KEYS=['king','lamp','count','fox','rose'];
 const S={ep:1,maxEp:1,stage:0,f:{},ch:{},mem:{},done:false,phase:'title',L:0,sound:true};
 const prince={th:0.05,target:null,pending:null,dir:1,walking:false,wp:0,sit:false};
-let hintShown=false,camX=0,portraitOk=false,cineId=0;
+let hintShown=false,camX=0,portraitOk=(()=>{try{return sessionStorage.getItem('lp_portrait')==='1'}catch(e){return false}})(),cineId=0;
 /* animation state: wind, camera, talking, memory effect, flight, dome */
 const A={wind:0,gust:0,gustT:7,gustHold:0,talk:{},Z:1,fx:640,fy:360,look:0,mem:null,flight:null,dome:0};
 const TALKERS=['Принц','Король','Фонарщик','Счётчик','Лис','Роза'];
@@ -272,8 +275,9 @@ const SCN=()=>SCENES[S.ep];
 /* ================= sizing ================= */
 function resize(){
   const vw=Math.max(1,innerWidth),vh=Math.max(1,innerHeight),asp=vw/vh;
-  if(asp>=1100/720){H=720;W=H*asp;}else{W=1100;H=W/asp;}
-  CX=W/2;CY=H+460;SC=vw/W;A.fx=W/2;A.fy=H/2;A.Z=1;
+  // portrait phones get their own framing: a narrower world, the planet rising to the middle of the screen
+  if(asp<.9){W=560;H=W/asp;}else if(asp>=1100/720){H=720;W=H*asp;}else{W=1100;H=W/asp;}
+  CX=W/2;CY=asp<.9?H*.6+R:H+460;SC=vw/W;A.fx=W/2;A.fy=H/2;A.Z=1;
   document.documentElement.style.setProperty('--u',SC.toFixed(4));
   const dpr=Math.min(window.devicePixelRatio||1,2);
   cv.width=Math.round(vw*dpr);cv.height=Math.round(vh*dpr);
@@ -792,8 +796,8 @@ function drawMarkers(t){
   if(S.phase!=='play')return;
   for(const o of SCN().objs){
     if(!o.show())continue;
-    if(o.hidden){const dd=Math.abs(wrapPI(o.th-prince.th));if(dd>.32)continue;
-      const q=surf(o.th,o.hitH*.5+8),al=(1-dd/.32)*(.35+.35*Math.sin(t*4+o.th*7));
+    if(o.hidden){const dd=Math.abs(wrapPI(o.th-prince.th)),reach=(hint&&hint.o===o)||hinted===o?.6:.32;if(dd>reach)continue;
+      const q=surf(o.th,o.hitH*.5+8),al=(1-dd/reach)*(.35+.35*Math.sin(t*4+o.th*7));
       ctx.save();ctx.globalCompositeOperation='screen';glow(q.x,q.y,10,'255,230,180',al*.7);ctx.fillStyle=`rgba(255,240,210,${al})`;starPath(ctx,q.x,q.y,4,4,1);ctx.fill();ctx.restore();continue;}
     const m=surf(o.th,o.mark+Math.sin(t*2)*2.5),a=.45+.3*Math.sin(t*2.4+o.th*5);
     ctx.save();ctx.translate(m.x,m.y);ctx.rotate(o.th-ROT+Math.PI/4);
@@ -1679,6 +1683,42 @@ function roseFlowers(g,r){
       c.fillStyle='rgba(230,190,110,.9)';c.beginPath();c.arc(0,-h,1.6,0,7);c.fill();});}
 }
 
+
+/* ================= gentle hints ================= */
+// if nothing is found for a while, a falling star shows where to look (no arrows, no markers)
+const HINT_FIRST=45,HINT_AGAIN=28;
+let idleT=0,idleSig='',hint=null,hinted=null,hintedT=0;
+function hintTarget(){
+  let best=null,bd=9;
+  for(const o of SCN().objs){if(!o.hidden||!o.show()||!o.on())continue;const d=Math.abs(wrapPI(o.th-prince.th));if(d<.22)continue;if(d<bd){bd=d;best=o;}}
+  return best;
+}
+function tickHint(dt){
+  const sig=S.ep+'|'+S.stage+'|'+Object.keys(S.f).length;
+  if(sig!==idleSig){idleSig=sig;idleT=0;hint=null;hinted=null;}
+  if(hintedT>0){hintedT-=dt;if(hintedT<=0)hinted=null;}
+  if(S.phase!=='play')return;
+  idleT+=dt;
+  if(!hint&&idleT>HINT_FIRST){const o=hintTarget();if(o){hint={o,t:0,dir:Math.sign(wrapPI(o.th-prince.th))||1};idleT=HINT_FIRST-HINT_AGAIN;tone(1318,.025,1.6,'sine');tone(1760,.018,1.4,'sine',.18);}else idleT=HINT_FIRST-10;}
+}
+function drawHint(dt){
+  if(!hint)return;hint.t+=dt;const h=hint,o=h.o;
+  if(!o.show()){hint=null;return;}
+  const view=Math.min(.5,W/2/R*.75),far=Math.abs(wrapPI(o.th-prince.th))>view+.05;
+  const endTh=far?prince.th+h.dir*view:o.th,end=surf(endTh,far?34:o.hitH*.5+10),start=surf(prince.th-h.dir*.25,560);
+  const FLY=1.7,GLOW=3.2;
+  ctx.save();ctx.globalCompositeOperation='screen';
+  if(h.t<FLY){const k=ease(h.t/FLY),x=start.x+(end.x-start.x)*k,y=start.y+(end.y-start.y)*k-Math.sin(k*Math.PI)*60;
+    const k2=ease(Math.max(0,h.t-.18)/FLY),tx=start.x+(end.x-start.x)*k2,ty=start.y+(end.y-start.y)*k2-Math.sin(k2*Math.PI)*60;
+    const g=ctx.createLinearGradient(x,y,tx,ty);g.addColorStop(0,'rgba(255,236,196,.9)');g.addColorStop(1,'rgba(255,236,196,0)');
+    ctx.strokeStyle=g;ctx.lineWidth=2.2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(tx,ty);ctx.stroke();
+    glow(x,y,16,'255,226,170',.8);
+  }else if(h.t<FLY+GLOW){const k=(h.t-FLY)/GLOW,a=Math.sin(k*Math.PI)*(.55+.25*Math.sin(h.t*7));
+    glow(end.x,end.y,64,'255,214,150',a*.7);ctx.fillStyle=`rgba(255,242,214,${a})`;starPath(ctx,end.x,end.y,4,7,1.6);ctx.fill();
+  }else{hinted=o;hintedT=14;hint=null;}
+  ctx.restore();
+}
+
 /* ================= loop ================= */
 let last=performance.now(),T=0;
 function drawDreamHorizon(t){
@@ -1835,7 +1875,7 @@ function frame(now){
   for(const s of twinkle){ctx.fillStyle=`rgba(214,224,240,${.12+.45*(.5+.5*Math.sin(T*s.f+s.p))})`;ctx.beginPath();ctx.arc(((s.x*W-camX*.05)%W+W)%W,s.y*H,s.s,0,7);ctx.fill();}
   drawMemStars(T);drawMeteor(dt);drawDreamHorizon(T);drawRocks(T);drawClouds(dt);
   worldT();
-  ctx.save();ctx.translate(0,H-720);fog(fogBack,dt*(1+A.wind*2),.12);ctx.restore();
+  ctx.save();ctx.translate(0,CY-R-480);fog(fogBack,dt*(1+A.wind*2),.12);ctx.restore();
   drawPlanetBody();
   sc.back(T);drawTufts(T);drawExit(T);
   sc.light(T);
@@ -1845,9 +1885,9 @@ function frame(now){
   for(const d of dust){d.x+=(d.vx+A.wind*45)*dt/W;d.y+=(snow?Math.abs(d.vy)*3:-d.vy)*dt/H;
     if(d.y<-.01){d.y=1.01;d.x=Math.random();}if(d.y>1.01){d.y=-.01;d.x=Math.random();}if(d.x<-.01)d.x=1.01;if(d.x>1.01)d.x=-.01;
     ctx.fillStyle=snow?`rgba(226,236,250,${d.a*2})`:gold?`rgba(240,198,120,${d.a*(1.2+Math.sin(T*2+d.x*40)*.8)})`:`rgba(214,206,190,${d.a})`;ctx.fillRect(d.x*W,d.y*H,d.s*(snow?1.4:1),d.s*(snow?1.4:1));}
-  ctx.save();ctx.translate(0,H-720);fog(fogFront,dt,-.06);ctx.restore();
+  ctx.save();ctx.translate(0,CY-R-480);fog(fogFront,dt,-.06);ctx.restore();
   drawStreaks(dt);
-  worldT();drawTaps(dt);drawMarkers(T);ctx.setTransform(K,0,0,K,0,0);
+  worldT();drawTaps(dt);drawMarkers(T);tickHint(dt);drawHint(dt);ctx.setTransform(K,0,0,K,0,0);
   if(sc.over)sc.over(T);
   drawMemFx(dt);
   // Subtle cinematic color grade, with a breathing amber horizon and cool upper vignette.
@@ -2074,6 +2114,7 @@ function embedRun(fresh){const d=load()||{};Object.assign(S,{ch:d.ch||{},mem:d.m
   if(!fresh&&d.ep===EP&&d.stage>0&&d.stage<3&&!d.done){S.stage=d.stage;S.f=d.f||{};setScene(EP,true);resume();}
   else{if(S.ch[KEYS[EP-1]])delete S.ch[KEYS[EP-1]];travel(EP);}}
 $('bMap').addEventListener('click',()=>toBook({type:'exit'}));
+if(EMBED){$('bRotMap').hidden=false;$('bRotMap').addEventListener('click',()=>toBook({type:'exit'}));}
 $('bMapM').addEventListener('click',()=>{save();toBook({type:'exit'});});
 $('bStart').addEventListener('click',()=>{
   initAudio();goFs();if(EMBED){embedRun(false);return;}const d=load();
@@ -2097,7 +2138,7 @@ $('bResume').addEventListener('click',()=>{$('menu').hidden=true;S.phase=menuFro
 $('bRestart').addEventListener('click',()=>{if(!restartArmed){armRestart(true);return;}armRestart(false);$('menu').hidden=true;newGame();});
 $('bSound').addEventListener('click',()=>{S.sound=!S.sound;save();updSound();initAudio();});
 function updSound(){$('bSound').textContent='Звук: '+(S.sound?'вкл':'выкл');if(master&&AC)master.gain.setTargetAtTime(S.sound?1:0,AC.currentTime,.2);}
-$('bPortrait').addEventListener('click',()=>{portraitOk=true;$('rotate').hidden=true;});
+$('bPortrait').addEventListener('click',()=>{portraitOk=true;try{sessionStorage.setItem('lp_portrait','1')}catch(e){}$('rotate').hidden=true;});
 
 /* ================= sound ================= */
 let AC=null,master=null;
@@ -2149,7 +2190,7 @@ function start(data){
   ROT=prince.th;camX=ROT*420;camB=Math.sin(ROT)*420;
   requestAnimationFrame(t=>{last=t;requestAnimationFrame(frame);});
 }
-window.__LP={S,SCENES,prince,get phase(){return S.phase},memoryEvent,setScene,EMBED,EP};
+window.__LP={get hint(){return hint},setIdle(v){idleT=v},S,SCENES,prince,get phase(){return S.phase},memoryEvent,setScene,EMBED,EP};
 const hot=window.claude&&window.claude.hot;
 if(hot&&hot.snapshot)hot.snapshot(()=>(['title','trans'].includes(S.phase)?{}:{ep:S.ep,stage:S.stage,f:S.f,ch:S.ch,mem:S.mem,maxEp:S.maxEp,th:prince.th,phase:S.phase==='end'?'end':'play'}));
 if(hot&&hot.ready)hot.ready(start);else start(hot&&hot.data?hot.data:{});
