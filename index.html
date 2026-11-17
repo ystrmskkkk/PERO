@@ -66,7 +66,7 @@
 <title>PERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
 <style>
 /* Layout: one phone-width column set like an old provincial map: paper ground, sepia ink, red-ink route; a single paper look in every theme */
 :root{
@@ -679,6 +679,60 @@ h1[tabindex='-1']:focus,h2[tabindex='-1']:focus{outline:none}
 .doc a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere}
 .slashwrap{position:fixed;inset:0;z-index:1000;background:#05070d}.slashwrap iframe{width:100%;height:100%;border:0;display:block}
 </style>
+<style id="v124">
+:root{--f-display:"Cormorant Garamond",Georgia,serif;--f-ui:"Manrope",system-ui,sans-serif;--f-sys:"Manrope",-apple-system,system-ui,sans-serif}
+body{background-image:url(a/grain.png);background-size:240px 240px}
+h1,h2,h3{font-weight:500}
+.large{font-size:42px;font-weight:500;letter-spacing:-.01em}
+.wordmark{font-weight:600;font-size:18px;letter-spacing:.32em}
+.btn{font-weight:600;letter-spacing:.005em}
+.stat{font-weight:600}
+.bar{height:4px}
+.eyebrow{font-weight:500;letter-spacing:.2em}
+.band p,.hook,.node .place,.now .meta{font-family:var(--f-display);font-size:16px}
+/* продолжить чтение */
+.now{background:var(--band);color:var(--band-ink);border:0;border-radius:8px;padding:18px;grid-template-columns:62px 1fr;gap:18px;align-items:stretch}
+.now .cover{width:62px;height:84px;padding:0;box-sizing:border-box;box-shadow:inset 3px 0 0 rgba(0,0,0,.25)}
+.now h3{color:var(--band-ink);font-size:23px!important;line-height:1.15}
+.now .meta{color:color-mix(in srgb,var(--band-ink) 70%,transparent);font-style:italic}
+.now .bar{background:color-mix(in srgb,var(--band-ink) 18%,transparent);height:2px;margin-block:12px 4px}
+.now .bar i{background:#D9B464}
+.btn.nowgo{background:none;color:#D9B464;padding:0;min-height:40px;border:0;box-shadow:none;font-size:15px;justify-content:flex-start}
+/* фильтр по возрасту */
+.chips{gap:22px;border-bottom:1px solid var(--hair);padding-bottom:0}
+.chips .chip{border:0;border-bottom:2px solid transparent;background:none;border-radius:0;padding:0 0 9px;min-height:40px;display:flex;align-items:flex-end;margin-bottom:-1px;font:500 15px var(--f-ui);color:var(--muted)}
+.chips .chip[aria-pressed="true"]{background:none;color:var(--ink);border-bottom-color:var(--accent)}
+/* каталог */
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px;row-gap:26px}
+button.book{width:100%;min-width:0}
+button.book{background:none;border:0;padding:0;margin:0;text-align:left;color:inherit;font:inherit;cursor:pointer;gap:10px;-webkit-tap-highlight-color:transparent}
+button.book .cover{display:flex;width:100%;box-sizing:border-box;box-shadow:inset 4px 0 0 rgba(0,0,0,.22),0 12px 22px -14px rgba(46,35,24,.6);transition:transform .2s cubic-bezier(.2,.8,.2,1)}
+button.book:active .cover{transform:scale(.98)}
+button.book .cover b{font-size:19px;line-height:1.08;font-weight:600}
+button.book .cover small{font-family:var(--f-ui);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+button.book[disabled]{cursor:default}
+button.book[disabled] .cover{filter:grayscale(.85) contrast(.9);opacity:.65;box-shadow:inset 4px 0 0 rgba(0,0,0,.2)}
+.book .meta{gap:4px 10px}
+.book .soon{font-family:var(--f-display);font-style:italic;font-size:15px}
+/* карта: акты */
+.seg{display:flex;gap:10px;background:none;padding:0;border-radius:0;align-items:center}
+.seg .seg-ind{display:none}
+.seg button{flex:none;width:44px;height:44px;min-height:44px;border-radius:50%;padding:0;border:1px solid var(--hair);background:none;font:500 18px var(--f-display);color:var(--muted);box-shadow:none}
+.seg button .an,.seg button .lk{display:none}
+.seg button[aria-pressed="true"]{background:var(--ink)!important;border-color:var(--ink);color:var(--bg);box-shadow:none!important}
+.seg button:disabled{opacity:.5}
+/* карта: шапка акта */
+.band{background:none;border:0;border-radius:0;padding:6px 0 0;margin-bottom:22px;text-align:left}
+.band .eyebrow{color:var(--accent)}
+.band h2{font-size:36px;line-height:1.05;margin-top:6px}
+.band .meta{justify-content:flex-start!important;font-style:normal!important;margin-top:2px}
+.band .bar{background:var(--hair);height:2px}
+/* карта: подписи не перечёркиваются дорогой */
+.node .lbl,.node .place{text-shadow:0 0 3px var(--bg),0 0 6px var(--bg),0 0 10px var(--bg),0 0 14px var(--bg)}
+.node .lbl{font-size:19px;font-weight:500}
+.node.cur .lbl{font-size:21px;font-weight:600}
+.disc{font-weight:500}
+</style>
 </head>
 <body>
 
@@ -1103,8 +1157,8 @@ function top(){
  const xpCls=S.flashXp?' bump':'';S.flashXp=false;
  if(DEPTH[S.screen]===0){
   return `<header class="nav root"><div class="bar3"><span class="wordmark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2.5C13 3.5 8 8.5 6.2 15.5l-1 3.6l3.4-1.4C15.4 15.6 19.8 10.4 20.5 2.5z"/><path d="M3.5 21l8.5-9.5"/><path d="M9 15.5l3.5-.2M11 12.2l3.8-.1M13.3 8.9l3.6-.2"/></svg>PERO</span><div class="stats">
-  <span class="stat streak" title="Дней подряд">${ICONS.flame}${S.streak} дн.</span>
-  <span class="stat xp${xpCls}" title="Опыт">${ICONS.star}${S.xp} XP</span></div></div>
+  ${S.streak>0?`<span class="stat streak" title="Дней подряд">${ICONS.flame}${S.streak} дн.</span>`:''}
+  ${S.xp>0?`<span class="stat xp${xpCls}" title="Опыт">${ICONS.star}${S.xp} XP</span>`:''}</div></div>
   <h1 class="large">${ROOT_TITLES[S.screen]}</h1></header>`;
  }
  const bt=backTarget();const showBack=S.screen!=='result';
@@ -1120,7 +1174,7 @@ const TABICONS={
 function tabbar(){return `<nav class="tabbar" aria-label="Разделы"><div class="in">${Object.keys(ROOT_TITLES).map(k=>`<button class="tab" data-tab="${k}" ${S.screen===k?'aria-current="page"':''}>${TABICONS[k]}<span>${ROOT_TITLES[k]}</span></button>`).join('')}</div></nav>`}
 
 
-const APP_VERSION='65';
+const APP_VERSION='66';
 const DOC_DATE='13 октября 2026 г.';
 const CONTACT='<a href="https://github.com/ystrmskkkk/PERO/issues" target="_blank" rel="noopener">github.com/ystrmskkkk/PERO/issues</a>';
 const DOCS={
@@ -1199,16 +1253,15 @@ function para(t){return t.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,(m,w,k)=>`<butt
 function vLibrary(){
  const ages=['Все','7–9','10–13','14–17','18+'];
  const list=BOOKS.filter(b=>S.age==='Все'||b.age===S.age);
- return `<div class="eyebrow">Читаю сейчас</div>
+ return `<div class="eyebrow">Продолжить чтение</div>
  <div class="now">${(()=>{const b=BOOKS.find(b=>b.id===S.book)||BOOKS[0],a=ART['cov_'+b.id];return `<div class="cover ${b.cls}${a?' has-art':''}" aria-hidden="true"${a?` style="background-image:url(${a})"`:''}><b style="font-size:12px">${BK().coverTitle||BK().title}</b></div>`})()}
  <div><h3 role="heading" aria-level="2" style="font-family:var(--f-display);font-size:20px">${BK().title}</h3><div class="meta">${BK().author} · ${Object.keys(BK().acts).length>1?`Акт ${BK().acts[S.act].n} из ${Object.keys(BK().acts).length}`:`${allNodes().filter(n=>isDone(n.id)).length} из ${allNodes().length} мест`}</div>
  <div class="bar"><i style="--p:${progressPct()/100}"></i></div>
- <button class="btn" data-go="map" style="padding:10px 16px">${allNodes().some(n=>isDone(n.id))?'Продолжить':'Начать'}</button></div></div>
- <div class="eyebrow">Каталог · выбери книгу</div>
+ <button class="btn nowgo" data-go="map">${allNodes().some(n=>isDone(n.id))?'Продолжить':'Начать'} <span aria-hidden="true">→</span></button></div></div>
+ <div class="eyebrow">Каталог</div>
  <div class="chips" role="group" aria-label="Возраст">${ages.map(a=>`<button class="chip" data-age="${a}" aria-pressed="${S.age===a}">${a}</button>`).join('')}</div>
- <div class="grid">${list.map(b=>`<div class="book"><div class="cover ${b.cls}${ART['cov_'+b.id]?' has-art':''}"${ART['cov_'+b.id]?` style="background-image:url(${ART['cov_'+b.id]})"`:''}><small>${b.author}</small><b>${b.title}</b><small>${b.age}</small></div>
- <h3 role="heading" aria-level="2">${b.title}</h3><div class="meta"><span>${b.levels} ${plural(b.levels,'уровень','уровня','уровней')}</span><span>≈${Math.round(b.mins/60)} ч</span></div>
- <div>${BOOKDATA[b.id]?(b.id===S.book?'<button class="btn ghost wide" data-go="map" style="padding:9px">Читать</button>':`<button class="btn ghost wide" data-book="${b.id}" style="padding:9px">Читать</button>`):'<span class="tag lock">Откроется позже</span>'}</div></div>`).join('')||'<p class="meta">Нет книг для этого возраста.</p>'}</div>
+ <div class="grid">${list.map(b=>{const ok=!!BOOKDATA[b.id];return `<button class="book" ${ok?(b.id===S.book?'data-go="map"':`data-book="${b.id}"`):'disabled'} aria-label="${b.title}, ${b.author}${ok?'':', скоро'}"><span class="cover ${b.cls}${ART['cov_'+b.id]?' has-art':''}"${ART['cov_'+b.id]?` style="background-image:url(${ART['cov_'+b.id]})"`:''}><small>${b.author}</small><b>${b.title}</b></span>
+ <span class="meta">${ok?`<span>${b.levels} ${plural(b.levels,'уровень','уровня','уровней')}</span><span>≈${Math.round(b.mins/60)} ч</span><span>${b.age}</span>`:'<span class="soon">Скоро</span>'}</span></button>`}).join('')||'<p class="meta">Нет книг для этого возраста.</p>'}</div>
  <p class="foot">Прототип: ${BOOKS.filter(b=>BOOKDATA[b.id]).map(b=>`«${b.title}»`).join(' и ')} — целиком, с картой, заданиями и финалом.</p>`;
 }
 
