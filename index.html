@@ -681,7 +681,6 @@ h1[tabindex='-1']:focus,h2[tabindex='-1']:focus{outline:none}
 </style>
 <style id="v124">
 :root{--f-display:"Cormorant Garamond",Georgia,serif;--f-ui:"Manrope",system-ui,sans-serif;--f-sys:"Manrope",-apple-system,system-ui,sans-serif}
-body{background-image:url(a/grain.png);background-size:240px 240px}
 h1,h2,h3{font-weight:500}
 .large{font-size:42px;font-weight:500;letter-spacing:-.01em}
 .wordmark{font-weight:600;font-size:18px;letter-spacing:.32em}
@@ -1174,7 +1173,7 @@ const TABICONS={
 function tabbar(){return `<nav class="tabbar" aria-label="Разделы"><div class="in">${Object.keys(ROOT_TITLES).map(k=>`<button class="tab" data-tab="${k}" ${S.screen===k?'aria-current="page"':''}>${TABICONS[k]}<span>${ROOT_TITLES[k]}</span></button>`).join('')}</div></nav>`}
 
 
-const APP_VERSION='66';
+const APP_VERSION='67';
 const DOC_DATE='13 октября 2026 г.';
 const CONTACT='<a href="https://github.com/ystrmskkkk/PERO/issues" target="_blank" rel="noopener">github.com/ystrmskkkk/PERO/issues</a>';
 const DOCS={
