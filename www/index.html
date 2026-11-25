@@ -733,6 +733,52 @@ button.book[disabled] .cover{filter:grayscale(.85) contrast(.9);opacity:.65;box-
 .disc{font-weight:500}
 
 /* аккаунт и классы */
+.clhero{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.clh.big{font-size:38px;line-height:1.02}
+.clquill{color:var(--ink);flex:none}
+.clbens{display:flex;flex-direction:column;gap:14px}
+.clben{display:flex;gap:14px;align-items:flex-start}
+.clben b{display:block;font:600 15px var(--f-ui)}.clben small{display:block;font-size:13px;color:var(--muted);margin-top:2px;line-height:1.4}
+.clbic{width:36px;height:36px;flex:none;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.clsug{min-height:0;font-size:13.5px;color:var(--muted)}.clsug:empty{display:none}
+.clchips{display:flex;gap:8px;flex-wrap:wrap}
+.clchip{background:none;border:1px solid var(--line);border-radius:99px;padding:7px 12px;min-height:34px;font:600 13px var(--f-ui);color:var(--muted);cursor:pointer}
+.clchip:active{background:var(--surface)}
+.clin.bad{border-color:var(--bad)}
+.cllink.sm{font-size:12px;min-height:0;padding:0;text-decoration:underline}
+.clsr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.clmailrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:2px}.clmailrow b{font:600 16px var(--f-ui);overflow:hidden;text-overflow:ellipsis}
+.clcells{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.clotp{position:absolute;inset:0;width:100%;height:100%;opacity:.011;font-size:16px;border:0;background:transparent;color:transparent;caret-color:transparent;z-index:2;letter-spacing:40px}
+.clcell{height:60px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;font:600 28px var(--f-ui);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.clcell.fill{border-color:color-mix(in srgb,var(--ink) 35%,transparent)}
+.clcell.on{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 14%,transparent)}
+.clcell.on:empty::after{content:'';width:2px;height:26px;background:var(--accent);animation:clblink 1s steps(1) infinite}
+@keyframes clblink{50%{opacity:0}}
+.clcells.bad .clcell{border-color:var(--bad)}
+.clcells.bad{animation:clshake .35s}
+@keyframes clshake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.clhint{margin:0;font-size:13px;color:var(--muted);text-align:center}
+.clopen{display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;box-sizing:border-box;width:100%;max-width:100%}
+.clresend{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font-size:14px;color:var(--muted)}
+.clresend b{color:var(--ink);font-variant-numeric:tabular-nums}.clresend small{font-size:12.5px}
+.clwel{padding-top:16px}
+.clstamp{align-self:center;width:112px;height:112px;border-radius:50%;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;transform:rotate(-8deg);color:var(--accent);animation:clstamp .5s cubic-bezier(.2,1.4,.4,1) both}
+.clstamp span{width:96px;height:96px;border-radius:50%;border:1px dashed var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.clstamp small{font:800 9px var(--f-ui);letter-spacing:.18em}
+@keyframes clstamp{0%{transform:rotate(-8deg) scale(1.6);opacity:0}100%{transform:rotate(-8deg) scale(1);opacity:1}}
+.clroles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.clrole{text-align:left;padding:14px;border-radius:14px;border:1px solid var(--line);background:none;color:var(--ink);display:flex;flex-direction:column;gap:4px;cursor:pointer;font:inherit}
+.clrole b{font:600 15px var(--f-ui)}.clrole small{font-size:12.5px;color:var(--muted);line-height:1.35}
+.clrole[aria-pressed="true"]{border:1.5px solid var(--ink);background:var(--surface)}
+.clnudge{position:fixed;inset:0;z-index:90}
+.clnback{position:absolute;inset:0;background:rgba(46,35,24,.45);animation:clfade .2s}
+.clsheet{position:absolute;left:0;right:0;bottom:0;padding:14px 24px calc(28px + env(safe-area-inset-bottom));background:var(--surface);border-radius:24px 24px 0 0;display:flex;flex-direction:column;gap:14px;box-shadow:0 -20px 40px -20px rgba(0,0,0,.4);animation:clup .28s cubic-bezier(.2,.8,.2,1)}
+.clgrab{width:40px;height:5px;border-radius:3px;background:var(--line);align-self:center}
+.clsheetTop{display:flex;justify-content:space-between;align-items:flex-start}
+.clpill{padding:6px 12px;border-radius:99px;background:var(--bg);font:700 13px var(--f-ui);color:var(--accent)}
+.clnudge.out .clsheet{transform:translateY(100%);transition:transform .2s}.clnudge.out .clnback{opacity:0;transition:opacity .2s}
+@keyframes clup{from{transform:translateY(100%)}}@keyframes clfade{from{opacity:0}}
 .grow .tsub{display:block;font-size:13px;line-height:1.35;color:var(--muted);font-weight:400;margin-top:2px}
 .grow>span:first-child{min-width:0}
 .grow.link>span:first-child{text-align:left}
@@ -1177,10 +1223,10 @@ function unlocked(i){return (ADM.on&&ADM.open)||i===0||isDone(actNodes()[i-1].id
 function progressPct(){const ns=allNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 
-const DEPTH={auth:1,account:1,join:1,newclass:1,classview:1,doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2,slash:2,pobeg:2,bookgame:2};
+const DEPTH={welcome:1,auth:1,account:1,join:1,newclass:1,classview:1,doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2,slash:2,pobeg:2,bookgame:2};
 const ROOT_TITLES={library:'Библиотека',map:'Карта',cards:'Коллекция',profile:'Профиль'};
-function backTarget(){const sc=S.screen;if(['auth','account','join','newclass','classview'].includes(sc))return 'profile';if(sc==='duel'||sc==='zalp'||sc==='honor'||sc==='slash'||sc==='pobeg'||sc==='bookgame')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
-function navTitle(){const L=LEVELS[S.level];{const CT={auth:'Вход',account:'Аккаунт',join:'Класс',newclass:'Новый класс',classview:CL.cv?clEsc(CL.cv.name):'Класс'};if(CT[S.screen])return CT[S.screen]}switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'zalp':return 'Последний залп';case 'honor':return 'Честь смолоду';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
+function backTarget(){const sc=S.screen;if(['auth','account','join','newclass','classview','welcome'].includes(sc))return 'profile';if(sc==='duel'||sc==='zalp'||sc==='honor'||sc==='slash'||sc==='pobeg'||sc==='bookgame')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
+function navTitle(){const L=LEVELS[S.level];{const CT={welcome:'Аккаунт',auth:'Вход',account:'Аккаунт',join:'Класс',newclass:'Новый класс',classview:CL.cv?clEsc(CL.cv.name):'Класс'};if(CT[S.screen])return CT[S.screen]}switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'zalp':return 'Последний залп';case 'honor':return 'Честь смолоду';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
 const CHEV='<svg viewBox="0 0 13 21" aria-hidden="true"><path d="M11 2L2.5 10.5L11 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function top(){
  const xpCls=S.flashXp?' bump':'';S.flashXp=false;
@@ -1203,7 +1249,7 @@ const TABICONS={
 function tabbar(){return `<nav class="tabbar" aria-label="Разделы"><div class="in">${Object.keys(ROOT_TITLES).map(k=>`<button class="tab" data-tab="${k}" ${S.screen===k?'aria-current="page"':''}>${TABICONS[k]}<span>${ROOT_TITLES[k]}</span></button>`).join('')}</div></nav>`}
 
 
-const APP_VERSION='69';
+const APP_VERSION='70';
 const DOC_DATE='25 ноября 2026 г.';
 const CONTACT='<a href="https://github.com/ystrmskkkk/PERO/issues" target="_blank" rel="noopener">github.com/ystrmskkkk/PERO/issues</a>';
 const DOCS={
@@ -2182,7 +2228,7 @@ function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.q
 window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
- const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,auth:vAuth,account:vAccount,join:vJoin,newclass:vNewClass,classview:vClassView,duel:vDuel,zalp:vZalp,honor:vHonor,slash:vSlash,pobeg:vPobeg,bookgame:vBookGame}[S.screen];
+ const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,auth:vAuth,welcome:vWelcome,account:vAccount,join:vJoin,newclass:vNewClass,classview:vClassView,duel:vDuel,zalp:vZalp,honor:vHonor,slash:vSlash,pobeg:vPobeg,bookgame:vBookGame}[S.screen];
  const body=V();
  const root=DEPTH[S.screen]===0;
  app.classList.toggle('has-tabs',root);
@@ -2201,7 +2247,7 @@ function snow(cv){return null}
 
 function finishLevel(id){
  if(!isDone(id))S.done.push(id);
- S.justDone=id;
+ S.justDone=id;clNudgeMark();
  {const A=BK().acts,k=Object.keys(A).find(k=>{const ns=A[k].nodes;return ns[ns.length-1].id===id});if(k&&A[+k+1])S.act=+k+1}
 const GC=BK().chests&&BK().chests[id],GF=BK().finals&&BK().finals[id],GG=BK().games&&BK().games[id];
  const card=GG?GG.card:GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.duelClean?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?((S.honorLast||0)>=HONOR.CARD?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):id==='pb5'?(S.pbStars>=36?'pobeg':null):LEVELS[id].card;
@@ -2369,6 +2415,7 @@ function clOn(){return !!clCfg().url&&!!clCfg().key}
 function clEsc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 (function(){try{const s=JSON.parse(localStorage.getItem('pero-auth')||'null');if(s&&s.access_token&&s.user)CL.sess=s}catch(e){}
  try{const c=JSON.parse(localStorage.getItem('pero-cloud-cache')||'null');if(c){CL.profile=c.profile||null;CL.classes=c.classes||[];CL.teach=c.teach||[];CL.syncedAt=c.syncedAt||0}}catch(e){}})();
+(function(){try{const p=JSON.parse(localStorage.getItem('pero-auth-pending')||'null');if(p&&p.email&&!CL.sess&&Date.now()-p.sentAt<15*60000){CL.email=p.email;CL.lastEmail=p.email;CL.sentAt=p.sentAt;CL.tries=p.tries||0;CL.step='code';CL.resume=true}}catch(e){}})();
 function clSaveSess(){try{if(CL.sess)localStorage.setItem('pero-auth',JSON.stringify(CL.sess));else localStorage.removeItem('pero-auth')}catch(e){}}
 function clSaveCache(){try{localStorage.setItem('pero-cloud-cache',JSON.stringify({profile:CL.profile,classes:CL.classes,teach:CL.teach,syncedAt:CL.syncedAt}))}catch(e){}}
 function clUid(){return CL.sess&&CL.sess.user&&CL.sess.user.id}
@@ -2453,14 +2500,42 @@ function clProfileGroups(){if(!clOn())return '';
  h+=`<button class="grow link" data-cl="tonew"><span>Создать класс<small class="tsub">Ученики войдут по коду, а ты увидишь их прогресс</small></span><span aria-hidden="true">›</span></button></div>`;
  return h}
 function clErrHTML(){return CL.err?`<p class="clerr" role="alert">${clEsc(CL.err)}</p>`:''}
-function vAuth(){if(CL.step==='code')return `<div class="clpage"><h2 class="clh">Введи код из письма</h2><p class="clp">Мы отправили 6 цифр на <b>${clEsc(CL.email)}</b>. Письмо может прийти через минуту, загляни и в «Спам».</p>
- <form data-clf="code" class="clform"><label class="cllbl" for="clcode">Код</label><input id="clcode" class="clin code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="10" required autofocus>
- ${clErrHTML()}<button class="btn wide" ${CL.busy?'disabled':''}>${CL.busy?'Проверяю…':'Войти'}</button></form>
- <button class="cllink" data-cl="again">Другая почта или новый код</button></div>`;
- return `<div class="clpage"><h2 class="clh">Вход в PERO</h2><p class="clp">Введи почту: пришлём код для входа. Пароль не нужен. Если аккаунта ещё нет, он создастся сам.</p>
- <form data-clf="email" class="clform"><label class="cllbl" for="clmail">Почта</label><input id="clmail" class="clin" name="email" type="email" autocomplete="email" inputmode="email" value="${clEsc(CL.email)}" required autofocus>
- ${clErrHTML()}<button class="btn wide" ${CL.busy?'disabled':''}>${CL.busy?'Отправляю…':'Получить код'}</button></form>
- <p class="clsmall">Сохраним почту, имя и прогресс чтения, чтобы они были на всех твоих устройствах. Если тебе меньше 14 лет, создай аккаунт вместе с родителем. Подробнее — в политике конфиденциальности.</p></div>`}
+const CL_QUILL='<svg class="clquill" aria-hidden="true" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M52 6C36 10 22 22 16 40l-4 14"/><path d="M52 6c-2 10-8 20-18 26-5 3-11 5-17 6"/><path d="M52 6c-6 4-14 6-22 14M44 10c-3 6-6 10-12 15M38 16c-2 4-5 8-9 11"/><path d="M12 54l-3 4"/><circle cx="9" cy="59" r="1.4" fill="var(--accent)" stroke="none"/></svg>';
+const CL_IC={star:'<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/>',dev:'<rect x="2" y="5" width="13" height="10" rx="1.5"/><rect x="16" y="8" width="6" height="12" rx="1.5"/><path d="M6 19h6"/>',cls:'<circle cx="9" cy="8" r="3"/><path d="M3 20c.8-3.4 3.2-5 6-5s5.2 1.6 6 5"/><path d="M16 5.5a3 3 0 0 1 0 5.5M18.5 15c1.4.7 2.2 2.3 2.5 5"/>'};
+function clBen(k,t,sub){return `<div class="clben"><span class="clbic"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${CL_IC[k]}</svg></span><span><b>${t}</b><small>${sub}</small></span></div>`}
+const CL_DOMS=['yandex.ru','ya.ru','mail.ru','gmail.com','bk.ru','inbox.ru','list.ru','rambler.ru','icloud.com','outlook.com','yahoo.com','tusur.ru'];
+function clLev(a,b){const m=a.length,n=b.length,d=[];for(let i=0;i<=m;i++){d[i]=[i]}for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
+function clSuggest(em){const at=em.lastIndexOf('@');if(at<1)return '';const dom=em.slice(at+1).toLowerCase();if(!dom||CL_DOMS.includes(dom))return '';let best='',bd=3;for(const d of CL_DOMS){const x=clLev(dom,d);if(x<bd){bd=x;best=d}}return best&&bd<=2?em.slice(0,at+1)+best:''}
+function clMailApp(em){const d=(em.split('@')[1]||'').toLowerCase();if(/^(yandex\.|ya\.ru)/.test(d))return ['Яндекс Почту','https://mail.yandex.ru/'];if(/^(mail|bk|inbox|list)\.ru$/.test(d))return ['Почту Mail.ru','https://e.mail.ru/inbox/'];if(d==='gmail.com')return ['Gmail','https://mail.google.com/'];if(/^(icloud|me)\.com$/.test(d))return ['Почту','message://'];if(/^(outlook|hotmail)\.com$/.test(d))return ['Outlook','https://outlook.live.com/mail/'];return null}
+function clPendSave(){try{localStorage.setItem('pero-auth-pending',JSON.stringify({email:CL.email,sentAt:CL.sentAt,tries:CL.tries||0}))}catch(e){}}
+function clPendClear(){try{localStorage.removeItem('pero-auth-pending')}catch(e){}}
+function clLeft(){return Math.max(0,60-Math.floor((Date.now()-(CL.sentAt||0))/1000))}
+function clTimerText(){const l=clLeft();return l>0?`Отправить ещё раз через <b>${Math.floor(l/60)}:${String(l%60).padStart(2,'0')}</b>`:''}
+function vAuth(){
+ if(CL.step==='code'){const app=clMailApp(CL.email),l=clLeft(),locked=(CL.tries||0)>=5;
+  let cells='';for(let i=0;i<6;i++)cells+=`<span class="clcell${i===0?' on':''}" aria-hidden="true"></span>`;
+  return `<div class="clpage"><div><h2 class="clh">Введи код из письма</h2><p class="clp" style="margin-top:8px">Отправили 6 цифр на</p>
+  <div class="clmailrow"><b>${clEsc(CL.email)}</b><button class="cllink" data-cl="again">Изменить</button></div></div>
+  <form data-clf="code" class="clform">${locked?`<p class="clerr" role="alert">Слишком много неверных попыток. Запроси новый код.</p>`:`<label class="clsr" for="clcode">Код из письма</label><div class="clcells${CL.err?' bad':''}"><input id="clcode" class="clotp" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="6" ${CL.busy?'disabled':''} autofocus>${cells}</div>
+  ${CL.err?`<p class="clerr" role="alert">${clEsc(CL.err)}</p>`:`<p class="clhint">${CL.busy?'Проверяю…':'После шестой цифры вход произойдёт сам'}</p>`}`}</form>
+  ${app?`<a class="btn ghost wide clopen" href="${app[1]}" target="_blank" rel="noopener"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Открыть ${app[0]}</a>`:''}
+  <div class="clresend"><div id="cltimer">${l>0?clTimerText():`<button class="cllink" data-cl="resend" ${CL.busy?'disabled':''}>Отправить код ещё раз</button>`}</div><small>Письмо от PERO. Нет во «Входящих» — загляни в «Спам»</small></div></div>`}
+ const sug=clSuggest(CL.email||'');
+ const b1=S.xp>0?`${S.xp} XP и все главы останутся с тобой`:'Прочитанное не потеряется';
+ return `<div class="clpage"><div class="clhero"><h2 class="clh big">Сохрани<br>свой путь</h2>${CL_QUILL}</div>
+ <div class="clbens">${clBen('star',b1,'Даже если сменишь или потеряешь телефон')}${clBen('dev','Читай на любом устройстве','Телефон, планшет, компьютер — с того же места')}${clBen('cls','Вступай в класс','Учитель увидит, сколько ты прочитал')}</div>
+ <form data-clf="email" class="clform" novalidate><label class="cllbl" for="clmail">Почта</label><input id="clmail" class="clin${CL.err?' bad':''}" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" value="${clEsc(CL.email)}" placeholder="name@yandex.ru">
+ <div id="clsug" class="clsug">${sug?`Может, <button type="button" class="cllink" data-cl="sug" data-v="${clEsc(sug)}">${clEsc(sug)}</button>?`:''}</div>
+ <div class="clchips">${['yandex.ru','mail.ru','gmail.com'].map(d=>`<button type="button" class="clchip" data-cl="dom" data-d="${d}">@${d}</button>`).join('')}</div>
+ ${CL.err?`<p class="clerr" role="alert">${clEsc(CL.err)}</p>`:''}<button class="btn wide" ${CL.busy?'disabled':''}>${CL.busy?'Отправляю…':'Получить код'}</button></form>
+ <p class="clsmall" style="text-align:center">Пароль не нужен. Младше 14 лет — вместе с родителем. <button class="cllink sm" data-doc="privacy">Конфиденциальность</button></p></div>`}
+function vWelcome(){const nm=(CL.profile&&CL.profile.name)||'';const role=CL.wrole||'student';const places=(S.done||[]).length;
+ return `<div class="clpage clwel"><div class="clstamp" aria-hidden="true"><span><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg><small>СОХРАНЕНО</small></span></div>
+ <div style="text-align:center"><h2 class="clh">Прогресс сохранён</h2><p class="clp" style="margin-top:8px">${S.xp>0||places?`${S.xp} XP и ${places} ${plural(places,'место','места','мест')} на карте теперь в облаке`:'Теперь всё прочитанное будет в облаке'}</p></div>
+ <form data-clf="welcome" class="clform"><label class="cllbl" for="clwn">Как тебя зовут?</label><input id="clwn" class="clin" name="name" maxlength="60" autocomplete="name" value="${clEsc(nm)}" placeholder="Имя и фамилия">
+ <p class="clhint" style="text-align:left">Это имя увидит только учитель твоего класса</p>
+ <div class="cllbl">Кто ты?</div><div class="clroles"><button type="button" class="clrole" data-cl="role" data-r="student" aria-pressed="${role==='student'}"><b>Я ученик</b><small>Читаю и могу вступить в класс</small></button><button type="button" class="clrole" data-cl="role" data-r="teacher" aria-pressed="${role==='teacher'}"><b>Я учитель</b><small>Создам класс и увижу прогресс</small></button></div>
+ ${CL.err?`<p class="clerr" role="alert">${clEsc(CL.err)}</p>`:''}<button class="btn wide" ${CL.busy?'disabled':''}>${CL.busy?'Сохраняю…':'Готово'}</button></form></div>`}
 function vAccount(){if(!CL.sess)return vAuth();const nm=CL.profile&&CL.profile.name||'';
  return `<div class="clpage"><div class="group"><div class="grow"><span>Почта</span><span>${clEsc(CL.sess.user.email)}</span></div><div class="grow"><span>Синхронизация</span><span id="clsync">${clSyncText()}</span></div></div>
  <form data-clf="name" class="clform"><label class="cllbl" for="clname">Имя и фамилия<small> — так тебя увидит учитель</small></label><input id="clname" class="clin" name="name" maxlength="60" autocomplete="name" value="${clEsc(nm)}">
@@ -2494,8 +2569,14 @@ async function clLoadRoster(){const c=CL.cv;if(!c)return;CL.roster=null;render()
 
 async function clDo(fn){if(CL.busy)return;CL.busy=true;CL.err='';render();try{await fn()}catch(e){CL.err=clErrText(e&&e.status,e&&e.json)}CL.busy=false;render()}
 app.addEventListener('submit',e=>{const f=e.target.closest('form[data-clf]');if(!f)return;e.preventDefault();const k=f.dataset.clf,v=n=>((f.elements[n]&&f.elements[n].value)||'').trim();
- if(k==='email'){const em=v('email').toLowerCase();CL.email=em;clDo(async()=>{await clFetch('/auth/v1/otp',{method:'POST',body:JSON.stringify({email:em,create_user:true})},false);CL.step='code'})}
- if(k==='code'){const code=v('code').replace(/\D/g,'');clDo(async()=>{const j=await clFetch('/auth/v1/verify',{method:'POST',body:JSON.stringify({type:'email',email:CL.email,token:code})},false);clSetSess(j);CL.step='email';await clPull(true);go(CL.after||'account');CL.after=null})}
+ if(k==='email'){const em=v('email').toLowerCase().replace(/\s+/g,'');CL.email=em;
+  if(!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(em)){CL.err='Похоже, в адресе почты ошибка.';render();return}
+  if(CL.sentAt&&CL.lastEmail===em&&clLeft()>0){CL.step='code';CL.err='';render();return}
+  clDo(async()=>{await clFetch('/auth/v1/otp',{method:'POST',body:JSON.stringify({email:em,create_user:true})},false);CL.step='code';CL.sentAt=Date.now();CL.lastEmail=em;CL.tries=0;clPendSave();clTick()})}
+ if(k==='code'){clVerify();return}
+ if(k==='welcome'){const nm=v('name').slice(0,60);if(!nm){CL.err='Напиши, как тебя зовут — это нужно для класса.';render();return}
+  const role=CL.wrole||'student';clDo(async()=>{await clFetch('/rest/v1/profiles',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({id:clUid(),name:nm,role:role})});CL.profile=Object.assign({},CL.profile,{name:nm,role:role});clSaveCache();
+   const nx=CL.after||(role==='teacher'?'newclass':'profile');CL.after=null;go(nx);toastCl('Добро пожаловать, '+nm.split(' ')[0]+'!')})}
  if(k==='name'){const nm=v('name').slice(0,60);clDo(async()=>{await clFetch('/rest/v1/profiles',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({id:clUid(),name:nm})});CL.profile=Object.assign({role:'student'},CL.profile,{name:nm});clSaveCache();toastCl('Имя сохранено')})}
  if(k==='join'){const code=v('code').toUpperCase(),nm=v('name').slice(0,60);clDo(async()=>{
   if(nm&&nm!==(CL.profile&&CL.profile.name)){await clFetch('/rest/v1/profiles',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({id:clUid(),name:nm})});CL.profile=Object.assign({role:'student'},CL.profile,{name:nm})}
@@ -2503,10 +2584,27 @@ app.addEventListener('submit',e=>{const f=e.target.closest('form[data-clf]');if(
   if(c&&!CL.classes.some(x=>x.id===c.id))CL.classes.push({id:c.id,name:c.name});clSaveCache();await clPush(true);go('profile');toastCl('Ты в классе «'+(c?c.name:'')+'»')})}
  if(k==='newclass'){const nm=v('cname');clDo(async()=>{const r=await clFetch('/rest/v1/rpc/create_class',{method:'POST',body:JSON.stringify({p_name:nm})});const c=r&&r[0];if(c){CL.teach.push(c);CL.profile=Object.assign({name:''},CL.profile,{role:'teacher'});clSaveCache();CL.cv=c;go('classview');clLoadRoster()}})}
 });
+async function clVerify(){const inp=document.getElementById('clcode');const code=(inp&&inp.value||'').replace(/\D/g,'');if(code.length<6||CL.busy)return;
+ CL.busy=true;CL.err='';clCellsPaint();const hint=document.querySelector('.clhint');if(hint)hint.textContent='Проверяю…';if(inp)inp.disabled=true;
+ try{const j=await clFetch('/auth/v1/verify',{method:'POST',body:JSON.stringify({type:'email',email:CL.email,token:code})},false);clSetSess(j);clPendClear();CL.step='email';CL.sentAt=0;CL.tries=0;
+  await clPull(true);CL.busy=false;if(!(CL.profile&&CL.profile.name)){go('welcome')}else{const nx=CL.after||'account';CL.after=null;go(nx);toastCl('Прогресс сохранён')}}
+ catch(e){CL.busy=false;CL.tries=(CL.tries||0)+1;clPendSave();CL.err=clErrText(e&&e.status,e&&e.json);render();const i2=document.getElementById('clcode');if(i2){i2.value='';i2.focus()}if(navigator.vibrate)navigator.vibrate(60)}}
+function clCellsPaint(){const inp=document.getElementById('clcode');if(!inp)return;const v=inp.value.replace(/\D/g,'').slice(0,6);if(inp.value!==v)inp.value=v;
+ document.querySelectorAll('.clcell').forEach((c,i)=>{c.textContent=v[i]||'';c.classList.toggle('on',i===Math.min(v.length,5)&&document.activeElement===inp&&!CL.busy);c.classList.toggle('fill',!!v[i])})}
+app.addEventListener('input',e=>{if(e.target.id==='clcode'){if(CL.err){CL.err='';const c=document.querySelector('.clcells');if(c)c.classList.remove('bad');const er=document.querySelector('form[data-clf="code"] .clerr');if(er){er.outerHTML='<p class="clhint">После шестой цифры вход произойдёт сам</p>'}}clCellsPaint();if(e.target.value.length===6)clVerify()}
+ if(e.target.id==='clmail'){const el=document.getElementById('clsug');if(el){const sg=clSuggest(e.target.value.trim().toLowerCase());el.innerHTML=sg?`Может, <button type="button" class="cllink" data-cl="sug" data-v="${clEsc(sg)}">${clEsc(sg)}</button>?`:''}}});
+app.addEventListener('focusin',e=>{if(e.target.id==='clcode')clCellsPaint()});app.addEventListener('focusout',e=>{if(e.target.id==='clcode')setTimeout(clCellsPaint,0)});
+function clTick(){clearInterval(CL.tickT);CL.tickT=setInterval(()=>{if(S.screen!=='auth'||CL.step!=='code'){clearInterval(CL.tickT);return}const el=document.getElementById('cltimer');if(!el)return;const l=clLeft();if(l>0)el.innerHTML=clTimerText();else{el.innerHTML='<button class="cllink" data-cl="resend">Отправить код ещё раз</button>';clearInterval(CL.tickT)}},1000)}
 function toastCl(t){const el=document.createElement('div');el.className='cltoast';el.setAttribute('role','status');el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),2400)}
 app.addEventListener('click',e=>{const t=e.target.closest('[data-cl]');if(!t)return;const a=t.dataset.cl;CL.err='';
- if(a==='toauth'){CL.step='email';go('auth');return}
- if(a==='again'){CL.step='email';render();return}
+ if(a==='toauth'){CL.step=CL.sentAt&&CL.email&&(Date.now()-CL.sentAt<15*60000)?'code':'email';go('auth');if(CL.step==='code')clTick();return}
+ if(a==='again'){CL.step='email';CL.err='';clPendClear();render();setTimeout(()=>{const i=document.getElementById('clmail');if(i)i.focus()},50);return}
+ if(a==='resend'){clDo(async()=>{await clFetch('/auth/v1/otp',{method:'POST',body:JSON.stringify({email:CL.email,create_user:true})},false);CL.sentAt=Date.now();CL.tries=0;clPendSave();toastCl('Новый код отправлен')});setTimeout(clTick,50);return}
+ if(a==='sug'){const i=document.getElementById('clmail');if(i){i.value=t.dataset.v;CL.email=t.dataset.v;i.dispatchEvent(new Event('input',{bubbles:true}));i.focus()}return}
+ if(a==='dom'){const i=document.getElementById('clmail');if(i){const loc=i.value.trim().split('@')[0];i.value=loc+'@'+t.dataset.d;CL.email=i.value;i.dispatchEvent(new Event('input',{bubbles:true}));i.focus();if(!loc)i.setSelectionRange(0,0)}return}
+ if(a==='role'){CL.wrole=t.dataset.r;const nm=document.getElementById('clwn');if(nm)CL.wname=nm.value;document.querySelectorAll('.clrole').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.r===CL.wrole)));return}
+ if(a==='nudgego'){clNudgeClose();CL.step=CL.sentAt&&clLeft()>0?'code':'email';go('auth');return}
+ if(a==='nudgelater'){clNudgeClose();return}
  if(a==='toaccount'){go('account');clPull(true);return}
  if(a==='tojoin'){if(!CL.sess){CL.after='join';CL.step='email';go('auth');return}go('join');return}
  if(a==='tonew'){go('newclass');return}
@@ -2521,6 +2619,14 @@ app.addEventListener('click',e=>{const t=e.target.closest('[data-cl]');if(!t)ret
   if(navigator.share){navigator.share({text:txt}).catch(()=>{})}else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>toastCl('Скопировано: код и инструкция')).catch(()=>toastCl('Код: '+c.code))}else toastCl('Код: '+c.code);return}
 });
 if(clOn()&&CL.sess)setTimeout(()=>clPull(true),300);
+if(clOn()&&CL.resume&&!CL.sess){S.screen='auth';setTimeout(clTick,100)}
+function clNudgeMark(){if(!clOn()||CL.sess)return;let st={};try{st=JSON.parse(localStorage.getItem('pero-nudge')||'{}')}catch(e){}const n=(S.done||[]).length,sh=st.shown||0;if((sh===0&&n>=1)||(sh===1&&n>=6)){st.due=true;try{localStorage.setItem('pero-nudge',JSON.stringify(st))}catch(e){}}}
+function clNudgeClose(){const el=document.getElementById('clnudge');if(el){el.classList.add('out');setTimeout(()=>el.remove(),220)}}
+function clNudgeCheck(){if(!clOn()||CL.sess||S.screen!=='map'||document.getElementById('clnudge'))return;let st={};try{st=JSON.parse(localStorage.getItem('pero-nudge')||'{}')}catch(e){}if(!st.due)return;
+ st.due=false;st.shown=(st.shown||0)+1;try{localStorage.setItem('pero-nudge',JSON.stringify(st))}catch(e){}
+ const d=document.createElement('div');d.id='clnudge';d.className='clnudge';d.innerHTML=`<div class="clnback" data-cl="nudgelater"></div><div class="clsheet" role="dialog" aria-modal="true" aria-labelledby="clnt"><span class="clgrab" aria-hidden="true"></span><div class="clsheetTop">${CL_QUILL}<span class="clpill">${(S.done||[]).length} ${plural((S.done||[]).length,'место пройдено','места пройдено','мест пройдено')} · ${S.xp} XP</span></div><h2 class="clh" id="clnt">Не потеряй прочитанное</h2><p class="clp">Сейчас всё хранится только на этом телефоне. Сохрани за 20 секунд — и продолжай с любого устройства.</p><button class="btn wide" data-cl="nudgego">Сохранить</button><button class="cllink" data-cl="nudgelater">Позже</button></div>`;
+ app.appendChild(d);setTimeout(()=>{const b=d.querySelector('[data-cl="nudgego"]');if(b)b.focus()},250)}
+{const _render=render;render=function(){_render();setTimeout(clNudgeCheck,400)}}
 
 render();
 })();
