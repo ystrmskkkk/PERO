@@ -1249,7 +1249,7 @@ const TABICONS={
 function tabbar(){return `<nav class="tabbar" aria-label="Разделы"><div class="in">${Object.keys(ROOT_TITLES).map(k=>`<button class="tab" data-tab="${k}" ${S.screen===k?'aria-current="page"':''}>${TABICONS[k]}<span>${ROOT_TITLES[k]}</span></button>`).join('')}</div></nav>`}
 
 
-const APP_VERSION='71';
+const APP_VERSION='72';
 const DOC_DATE='25 ноября 2026 г.';
 const CONTACT='<a href="https://github.com/ystrmskkkk/PERO/issues" target="_blank" rel="noopener">github.com/ystrmskkkk/PERO/issues</a>';
 const DOCS={
@@ -2491,7 +2491,7 @@ function clAgo(ts){if(!ts)return 'ещё не заходил';const d=Math.floor
 function clProfileGroups(){if(!clOn())return '';
  if(!CL.sess)return `<div class="ghead">Аккаунт</div><div class="group"><button class="grow link" data-cl="toauth"><span>Войти или создать аккаунт<small class="tsub">Прогресс сохранится на всех устройствах, можно вступить в класс</small></span><span aria-hidden="true">›</span></button><button class="grow link" data-cl="tojoin"><span>Вступить в класс по коду<small class="tsub">Если учитель дал тебе код</small></span><span aria-hidden="true">›</span></button></div>`;
  const nm=CL.profile&&CL.profile.name;
- let h=`<div class="ghead">Аккаунт</div><div class="group"><button class="grow link" data-cl="toaccount"><span>${clEsc(nm||CL.sess.user.email)}<small class="tsub">${nm?clEsc(CL.sess.user.email)+' · ':''}${clSyncText()}</small></span><span aria-hidden="true">›</span></button></div>`;
+ let h=`<div class="ghead">Аккаунт</div><div class="group"><button class="grow link" data-cl="toaccount"><span>${clEsc(nm||CL.sess.user.email)}${nm?`<small class="tsub">${clEsc(CL.sess.user.email)}</small>`:''}</span><span aria-hidden="true">›</span></button></div>`;
  h+=`<div class="ghead">Класс</div><div class="group">`;
  for(const c of CL.classes)h+=`<div class="grow"><span>${clEsc(c.name)}<small class="tsub">Ты ученик этого класса</small></span><button class="clmini" data-cl="leave" data-id="${clEsc(c.id)}">Выйти</button></div>`;
  h+=`<button class="grow link" data-cl="tojoin"><span>Вступить в класс по коду</span><span aria-hidden="true">›</span></button></div>`;
@@ -2537,12 +2537,12 @@ function vWelcome(){const nm=(CL.profile&&CL.profile.name)||'';const role=CL.wro
  <div class="cllbl">Кто ты?</div><div class="clroles"><button type="button" class="clrole" data-cl="role" data-r="student" aria-pressed="${role==='student'}"><b>Я ученик</b><small>Читаю и могу вступить в класс</small></button><button type="button" class="clrole" data-cl="role" data-r="teacher" aria-pressed="${role==='teacher'}"><b>Я учитель</b><small>Создам класс и увижу прогресс</small></button></div>
  ${CL.err?`<p class="clerr" role="alert">${clEsc(CL.err)}</p>`:''}<button class="btn wide" ${CL.busy?'disabled':''}>${CL.busy?'Сохраняю…':'Готово'}</button></form></div>`}
 function vAccount(){if(!CL.sess)return vAuth();const nm=CL.profile&&CL.profile.name||'';
- return `<div class="clpage"><div class="group"><div class="grow"><span>Почта</span><span>${clEsc(CL.sess.user.email)}</span></div><div class="grow"><span>Синхронизация</span><span id="clsync">${clSyncText()}</span></div></div>
+ return `<div class="clpage"><div class="group"><div class="grow"><span>Почта</span><span>${clEsc(CL.sess.user.email)}</span></div></div>
  <form data-clf="name" class="clform"><label class="cllbl" for="clname">Имя и фамилия<small> — так тебя увидит учитель</small></label><input id="clname" class="clin" name="name" maxlength="60" autocomplete="name" value="${clEsc(nm)}">
  ${clErrHTML()}<button class="btn ghost wide" ${CL.busy?'disabled':''}>Сохранить имя</button></form>
  <div class="group"><button class="grow btnrow" style="color:var(--ink)" data-cl="logout">Выйти из аккаунта</button></div>
  <div class="group"><button class="grow btnrow" data-cl="delme">Удалить аккаунт</button></div>
- <p class="foot">Прогресс синхронизируется сам. После выхода он останется на этом устройстве. Удаление аккаунта стирает почту, имя и прогресс с сервера навсегда.</p></div>`}
+ <p class="foot">После выхода прогресс останется на этом устройстве. Удаление аккаунта стирает почту, имя и прогресс с сервера навсегда.</p></div>`}
 function vJoin(){const nm=CL.profile&&CL.profile.name||'';
  return `<div class="clpage"><h2 class="clh">Вступить в класс</h2><p class="clp">Попроси у учителя код класса из 6 символов.</p>
  <form data-clf="join" class="clform"><label class="cllbl" for="cljc">Код класса</label><input id="cljc" class="clin code" name="code" maxlength="6" autocapitalize="characters" autocomplete="off" spellcheck="false" required autofocus>
