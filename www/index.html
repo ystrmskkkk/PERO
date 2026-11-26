@@ -732,6 +732,71 @@ button.book[disabled] .cover{filter:grayscale(.85) contrast(.9);opacity:.65;box-
 .node.cur .lbl{font-size:21px;font-weight:600}
 .disc{font-weight:500}
 
+/* итоговое сочинение */
+.esroot{display:flex;flex-direction:column;gap:14px}
+.eseyebrow{font:700 11px var(--f-ui);letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.esroot .large{margin:-6px 0 0}
+.esintro{margin:0;color:var(--muted);font-size:14.5px;line-height:1.5}
+.estiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.estile{display:flex;flex-direction:column;gap:3px;text-align:left;padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);color:var(--ink);font:inherit;cursor:pointer}
+.estile b{font:700 15px var(--f-ui)}.estile span{font-size:12.5px;color:var(--muted);line-height:1.35}
+.estile.dark{background:var(--band);color:var(--band-ink);border-color:transparent}.estile.dark span{color:color-mix(in srgb,var(--band-ink) 72%,transparent)}
+.eschips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:2px 16px;scrollbar-width:none}.eschips::-webkit-scrollbar{display:none}
+.eschip{flex:none;padding:8px 14px;border-radius:99px;border:1px solid var(--line);background:none;color:var(--muted);font:600 13.5px var(--f-ui);min-height:36px;cursor:pointer}
+.eschip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.escard{padding:16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.eshead{display:flex;gap:12px;align-items:center}
+.escov{width:34px;height:46px;flex:none;border-radius:2px 4px 4px 2px;background:var(--line) center/cover;box-shadow:inset 3px 0 0 rgba(0,0,0,.2)}
+.escov.sm{width:30px;height:40px}
+.esmeta{min-width:0}.esbook{font:700 11px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.estitle{margin:2px 0 0;font:600 20px/1.12 var(--f-display)}
+.estext{margin:0;font-size:14px;line-height:1.5}
+.esq{margin:0;padding-left:10px;border-left:2px solid var(--accent);font:italic 500 17px/1.3 var(--f-display)}
+.esq cite{display:block;font:normal 500 12px var(--f-ui);color:var(--muted);margin-top:4px}
+.esthink{margin:0;font-size:13.5px;line-height:1.45;color:var(--muted)}.esthink b{color:var(--ink);font-weight:600}
+.esfoot{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.estags{display:flex;gap:6px;flex-wrap:wrap}.estags span{padding:4px 10px;border-radius:99px;border:1px solid var(--line);font:600 12px var(--f-ui);color:var(--muted)}
+.essubs{display:flex;gap:4px}.essubs span{font:700 11px var(--f-ui);color:var(--muted);padding:3px 6px;border-radius:6px;background:var(--bg)}
+.esempty,.eslock{color:var(--muted);font-size:14px;text-align:center;margin:6px 0}
+.esdel{align-self:flex-start;background:none;border:0;color:var(--bad);font:600 13px var(--f-ui);padding:6px 0;cursor:pointer}
+.esrules{border-radius:14px;border:1px solid var(--line);padding:12px 16px;font-size:13.5px;line-height:1.5}
+.esrules summary{font:600 15px var(--f-ui);cursor:pointer;min-height:28px}
+.esrules p{margin:10px 0 0}.essrc{color:var(--muted);font-size:12px}
+.esnew{margin-bottom:14px;padding:16px;border-radius:16px;background:var(--band);color:var(--band-ink);display:flex;flex-direction:column;gap:12px;animation:clup .3s cubic-bezier(.2,.8,.2,1)}
+.esnewh{display:flex;gap:12px;align-items:flex-start}
+.esnewic{width:34px;height:34px;flex:none;border-radius:50%;background:var(--accent);color:#F4ECDA;display:flex;align-items:center;justify-content:center}
+.esk{font:700 11px var(--f-ui);letter-spacing:.14em;text-transform:uppercase;color:#D9B464}
+.esdraft .esk,.estopic .esk{color:var(--muted)}
+.esnewt{font:600 21px/1.12 var(--f-display);margin-top:3px}
+.esnew .estags span{border-color:color-mix(in srgb,var(--band-ink) 25%,transparent);color:var(--band-ink)}
+.esnewgo{height:44px;border-radius:22px;border:0;background:var(--band-ink);color:var(--band);font:700 15px var(--f-ui);cursor:pointer}
+.estrtop{display:flex;justify-content:space-between;font:700 12px var(--f-ui);letter-spacing:.06em;color:var(--muted)}
+.estopic{padding:18px;border-radius:16px;background:var(--band);color:var(--band-ink)}.estopic .esk{color:#D9B464}
+.estopict{font:600 25px/1.15 var(--f-display);margin-top:6px}
+.esopts{display:flex;flex-direction:column;gap:10px}
+.esopt{display:flex;gap:12px;align-items:center;text-align:left;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer;min-height:64px}
+.esoptx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.esoptx b{font:600 15px var(--f-ui)}.esoptx small{font-size:12.5px;color:var(--muted)}
+.esopt.ok{border:1.5px solid var(--good,#3E7B4F);background:color-mix(in srgb,var(--good,#3E7B4F) 10%,var(--surface))}
+.esopt.bad{border:1.5px solid var(--bad)}.esopt.dim{opacity:.5}
+.esok{width:24px;height:24px;border-radius:50%;background:var(--good,#3E7B4F);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none}
+.esfb{padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-size:14px;line-height:1.5}
+.esfb.ok{border-color:color-mix(in srgb,var(--good,#3E7B4F) 40%,transparent)}.esfb.bad{border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
+.esfb b{font-weight:700}.esfb p{margin:6px 0 0}.esfb .essub{color:var(--muted);font-size:12.5px}
+.estrdone{align-items:stretch}.estrdone .clstamp{margin-bottom:4px}
+.esta{min-height:90px;resize:vertical;font:400 16px/1.5 var(--f-ui)}.esta.big{min-height:220px}
+select.clin{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
+.eshide{display:none}
+.essteps{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+.esstep{display:flex;gap:12px}.esstep>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.esn{width:26px;height:26px;flex:none;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font:700 12px var(--f-ui);margin-top:2px}
+.eshint{margin:0;font-size:13px;color:var(--muted);line-height:1.4}.eshint:empty{display:none}
+.eschk{padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.eschkh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.eschkh b{font:700 14.5px var(--f-ui)}.eschkh span{font-size:12.5px;color:var(--muted)}
+.eschr{display:flex;gap:10px;align-items:flex-start}.eschr b{display:block;font:600 13.5px var(--f-ui)}.eschr small{display:block;font-size:12.5px;color:var(--muted);line-height:1.4;margin-top:1px}
+.esci{width:20px;height:20px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 12px var(--f-ui);border:1.5px solid var(--line);color:var(--muted)}
+.eschr.ok .esci{background:var(--good,#3E7B4F);border-color:transparent;color:#fff}
+.eschr.warn .esci{background:#C08A2B;border-color:transparent;color:#fff}
+.eschr.bad .esci{background:var(--bad);border-color:transparent;color:#fff}.eschr.bad small{color:var(--bad)}
 /* аккаунт и классы */
 .clhero{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
 .clh.big{font-size:38px;line-height:1.02}
@@ -820,6 +885,7 @@ window.PERO_REG={HINTS:{},CARDS:{},LEVELS:{},ART:{},DECOS:{},SHORTTEXT:{},CHECKS
 <script src="./books/kd.js"></script>
 <script src="./books/sh.js"></script>
 <script src="./books/lp.js"></script>
+<script src="./essay.js"></script>
 <script>
 (function(){
 const R=window.PERO_REG;const {HINTS,CARDS,LEVELS,ART,DECOS,SHORTTEXT,CHECKS,CARDICON,ANIMS,BOOKDATA}=R;let {FINALQ,BOSS4,DUELQ,BOSS,LOCKQ,SNOS_WORDS,SNOS_WORDS3,NODES,NODES2,NODES3,NODES4,NODES5,ACTS,CLOUD,COMPASS,MTN}=R;
@@ -1128,13 +1194,13 @@ let S={book:'kd',actBy:{},screen:'library',age:'Все',xp:0,streak:0,lastDay:nu
 try{const saved=JSON.parse(localStorage.getItem('bq-proto')||'null');if(saved&&typeof saved==='object'){Object.assign(S,saved,{screen:'library'});}}catch(e){}
 (function(){const A=v=>Array.isArray(v)?v.filter(x=>typeof x==='string'):[],N=(v,d)=>Number.isFinite(v)?v:d,O=v=>v&&typeof v==='object'&&!Array.isArray(v)?v:{};
  S.done=A(S.done);S.cards=A(S.cards);S.dossier=A(S.dossier);S.xp=Math.max(0,N(S.xp,0));S.streak=Math.max(0,N(S.streak,0));S.act=N(+S.act,1);S.duelBest=N(S.duelBest,0);S.duelPerf=Math.max(0,N(S.duelPerf,0));S.duelClean=S.duelClean===true;S.zalpBest=Math.max(0,N(S.zalpBest,0));
- S.bm=O(S.bm);S.ck=O(S.ck);S.resetAt=N(S.resetAt,0);const F=O(S.fair);S.fair={blitz:Number.isFinite(F.blitz)?F.blitz:null,lock:N(F.lock,0),snos:N(F.snos,0),lockOk:!!F.lockOk,snosOk:!!F.snosOk};
+ S.bm=O(S.bm);S.ck=O(S.ck);S.resetAt=N(S.resetAt,0);S.essayMode=!!S.essayMode;S.ess=O(S.ess);const F=O(S.fair);S.fair={blitz:Number.isFinite(F.blitz)?F.blitz:null,lock:N(F.lock,0),snos:N(F.snos,0),lockOk:!!F.lockOk,snosOk:!!F.snosOk};
  if(!['paper','night','auto'].includes(S.theme))S.theme='paper'})();
 function dayNum(d){d=d||new Date();return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/86400000)}
 if(S.lastDay===undefined){S.streak=0;S.lastDay=null}
 (function(){const t=dayNum();if(S.lastDay!=null&&t-S.lastDay>1)S.streak=0})();
 function touchStreak(){const t=dayNum();if(S.lastDay===t)return;S.streak=(S.lastDay===t-1)?(S.streak||0)+1:1;S.lastDay=t;setTimeout(()=>NATIVE.remind(),0)}
-function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest,duelPerf:S.duelPerf,duelClean:S.duelClean,zalpBest:S.zalpBest,honorLast:S.honorLast,honorBest:S.honorBest,slashBest:S.slashBest,pbStars:S.pbStars,pbPerfect:S.pbPerfect,_t:Date.now(),resetAt:S.resetAt||0}))}catch(e){}cloudDirty()}
+function save(){try{localStorage.setItem('bq-proto',JSON.stringify({book:S.book,actBy:S.actBy,notifAsked:S.notifAsked,xp:S.xp,streak:S.streak,lastDay:S.lastDay,blitz4:S.blitz4,snos3perfect:S.snos3perfect,snos3ok:S.snos3ok,lockLast:S.lockLast,final5:S.final5,done:S.done,cards:S.cards,fair:S.fair,dossier:S.dossier,theme:S.theme,sound:S.sound,short:S.short,bm:S.bm,ck:S.ck,act:S.act,duelBest:S.duelBest,duelPerf:S.duelPerf,duelClean:S.duelClean,zalpBest:S.zalpBest,honorLast:S.honorLast,honorBest:S.honorBest,slashBest:S.slashBest,pbStars:S.pbStars,pbPerfect:S.pbPerfect,essayMode:!!S.essayMode,ess:S.ess||{},_t:Date.now(),resetAt:S.resetAt||0}))}catch(e){}cloudDirty()}
 
 function bmKey(){return S.level+(S.short?':s':':f')}
 function ckOrder(k,i,n){let h=0;for(const c of k+i)h=(h*31+c.charCodeAt(0))>>>0;const a=[...Array(n).keys()];for(let j=n-1;j>0;j--){h=(h*1103515245+12345)>>>0;const r=h%(j+1);[a[j],a[r]]=[a[r],a[j]]}return a}
@@ -1223,10 +1289,10 @@ function unlocked(i){return (ADM.on&&ADM.open)||i===0||isDone(actNodes()[i-1].id
 function progressPct(){const ns=allNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 function actPct(){const ns=actNodes();return Math.round(ns.filter(n=>isDone(n.id)).length/ns.length*100)}
 
-const DEPTH={welcome:1,auth:1,account:1,join:1,newclass:1,classview:1,doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2,slash:2,pobeg:2,bookgame:2};
-const ROOT_TITLES={library:'Библиотека',map:'Карта',cards:'Коллекция',profile:'Профиль'};
-function backTarget(){const sc=S.screen;if(sc==='auth'&&CL.first)return 'library';if(['auth','account','join','newclass','classview','welcome'].includes(sc))return 'profile';if(sc==='duel'||sc==='zalp'||sc==='honor'||sc==='slash'||sc==='pobeg'||sc==='bookgame')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
-function navTitle(){const L=LEVELS[S.level];{const CT={welcome:'Аккаунт',auth:'Вход',account:'Аккаунт',join:'Класс',newclass:'Новый класс',classview:CL.cv?clEsc(CL.cv.name):'Класс'};if(CT[S.screen])return CT[S.screen]}switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'zalp':return 'Последний залп';case 'honor':return 'Честь смолоду';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
+const DEPTH={essay:0,esstrain:1,essdrafts:1,essdraft:2,essmine:1,welcome:1,auth:1,account:1,join:1,newclass:1,classview:1,doc:1,library:0,map:0,cards:0,profile:0,read:1,game:1,fair:1,result:1,boss:2,lock:2,snos:2,duel:2,zalp:2,honor:2,slash:2,pobeg:2,bookgame:2};
+const ROOT_TITLES={library:'Библиотека',map:'Карта',essay:'Сочинение',cards:'Коллекция',profile:'Профиль'};
+function backTarget(){const sc=S.screen;if(sc==='essdraft')return 'essdrafts';if(['esstrain','essdrafts','essmine'].includes(sc))return 'essay';if(sc==='auth'&&CL.first)return 'library';if(['auth','account','join','newclass','classview','welcome'].includes(sc))return 'profile';if(sc==='duel'||sc==='zalp'||sc==='honor'||sc==='slash'||sc==='pobeg'||sc==='bookgame')return 'map';if(sc==='boss'&&S.boss&&S.boss.gen)return 'map';if(sc==='doc')return 'profile';if(sc==='snos')return (S.snosCfg&&S.snosCfg.act===3)?'map':'fair';if(sc==='boss')return (S.boss&&S.boss.act===4)?'map':'fair';if(sc==='lock')return (S.lockCfg&&(S.lockCfg.act===2||S.lockCfg.act===5))?'map':'fair';return 'map'}
+function navTitle(){const L=LEVELS[S.level];{const CT={esstrain:'Тренажёр',essdrafts:'Черновики',essdraft:'Черновик',essmine:'Свой эпизод',welcome:'Аккаунт',auth:'Вход',account:'Аккаунт',join:'Класс',newclass:'Новый класс',classview:CL.cv?clEsc(CL.cv.name):'Класс'};if(CT[S.screen])return CT[S.screen]}switch(S.screen){case 'read':case 'game':return L?L.title:'';case 'fair':return 'Постоялый двор';case 'boss':return (S.boss&&S.boss.gen)?BK().finals[S.boss.gen].title:(S.boss&&S.boss.act===4)?'Военный совет':'Разговор у печи';case 'snos':return (S.snosCfg&&S.snosCfg.act===3)?'Оборона крепости':'Сквозь буран';case 'lock':return (S.lockCfg&&S.lockCfg.act===5)?'Честь смолоду':(S.lockCfg&&S.lockCfg.act===2)?'Поединок':'Дядькина наука';case 'result':return 'Итоги';case 'duel':return 'Поединок';case 'zalp':return 'Последний залп';case 'honor':return 'Честь смолоду';case 'doc':return (DOCS[S.doc]||DOCS.privacy).title;default:return ''}}
 const CHEV='<svg viewBox="0 0 13 21" aria-hidden="true"><path d="M11 2L2.5 10.5L11 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function top(){
  const xpCls=S.flashXp?' bump':'';S.flashXp=false;
@@ -1243,13 +1309,14 @@ function top(){
 const TABICONS={
  library:'<svg viewBox="0 0 26 26"><path d="M4 5.5c3-1.5 6-1.5 9 .5v15c-3-2-6-2-9-.5z"/><path d="M22 5.5c-3-1.5-6-1.5-9 .5v15c3-2 6-2 9-.5z"/></svg>',
  map:'<svg viewBox="0 0 26 26"><path d="M3 6l6-2l8 3l6-2v15l-6 2l-8-3l-6 2z"/><path d="M9 4v15M17 7v15"/></svg>',
+ essay:'<svg viewBox="0 0 26 26"><path d="M5 21h4.5L21 9.5 16.5 5 5 16.5z"/><path d="M14.5 7l4.5 4.5"/></svg>',
  cards:'<svg viewBox="0 0 26 26"><rect x="7" y="4" width="13" height="18" rx="2"/><path d="M4 7v13a2 2 0 0 0 2 2"/><path d="M11 10h5M11 14h5"/></svg>',
  profile:'<svg viewBox="0 0 26 26"><circle cx="13" cy="9" r="4.5"/><path d="M4 22c1.5-5 5-7 9-7s7.5 2 9 7"/></svg>'
 };
-function tabbar(){return `<nav class="tabbar" aria-label="Разделы"><div class="in">${Object.keys(ROOT_TITLES).map(k=>`<button class="tab" data-tab="${k}" ${S.screen===k?'aria-current="page"':''}>${TABICONS[k]}<span>${ROOT_TITLES[k]}</span></button>`).join('')}</div></nav>`}
+function tabbar(){const TK=Object.keys(ROOT_TITLES).filter(k=>k!=='essay'||(typeof essOn==='function'&&essOn()));return `<nav class="tabbar" aria-label="Разделы"><div class="in" style="grid-template-columns:repeat(${TK.length},minmax(0,1fr))">${TK.map(k=>`<button class="tab" data-tab="${k}" ${S.screen===k?'aria-current="page"':''}>${TABICONS[k]}<span>${ROOT_TITLES[k]}</span></button>`).join('')}</div></nav>`}
 
 
-const APP_VERSION='72';
+const APP_VERSION='73';
 const DOC_DATE='25 ноября 2026 г.';
 const CONTACT='<a href="https://github.com/ystrmskkkk/PERO/issues" target="_blank" rel="noopener">github.com/ystrmskkkk/PERO/issues</a>';
 const DOCS={
@@ -1314,7 +1381,7 @@ function vProfile(){
  <div class="ghead">Тема</div><div class="group"><div class="themes" role="group" aria-label="Тема оформления">
  ${[['paper','Бумага'],['night','Ночь'],['auto','Как в системе']].map(([k,n])=>`<button class="th" data-theme-set="${k}" aria-pressed="${S.theme===k}"><span class="sw ${k}"><i class="t"></i><i></i><i style="width:80%"></i><i class="r"></i></span>${n}</button>`).join('')}
  </div></div>
- <div class="ghead">Звук</div><div class="group">
+ ${typeof essProfileGroup==='function'?essProfileGroup():''}<div class="ghead">Звук</div><div class="group">
  <button class="grow tog" data-act="sound" role="switch" aria-checked="${S.sound!==false}"><span>Звуки интерфейса</span><span class="sw2 ${S.sound!==false?'on':''}" aria-hidden="true"><i></i></span></button></div>
  <div class="ghead">Чтение</div><div class="group">
  <button class="grow tog" data-act="short" role="switch" aria-checked="${!!S.short}"><span>Сокращённый текст<small class="tsub">${S.short?'Ключевые отрывки и короткий пересказ':'Полный текст повести'}</small></span><span class="sw2 ${S.short?'on':''}" aria-hidden="true"><i></i></span></button>
@@ -2228,7 +2295,7 @@ function knockRoad(){const m=app.querySelector('.map');if(!m)return;const sv=m.q
 window.addEventListener('resize',()=>{if(S.screen==='map')knockRoad()});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.screen==='map')knockRoad()});
 function render(){
- const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,auth:vAuth,welcome:vWelcome,account:vAccount,join:vJoin,newclass:vNewClass,classview:vClassView,duel:vDuel,zalp:vZalp,honor:vHonor,slash:vSlash,pobeg:vPobeg,bookgame:vBookGame}[S.screen];
+ const V={doc:vDoc,library:vLibrary,map:vMap,read:vRead,game:vGame,result:vResult,boss:vBoss,cards:vCards,fair:vFair,lock:vLock,snos:vSnos,profile:vProfile,auth:vAuth,welcome:vWelcome,essay:vEssay,esstrain:vEssTrain,essdrafts:vEssDrafts,essdraft:vEssDraft,essmine:vEssMine,account:vAccount,join:vJoin,newclass:vNewClass,classview:vClassView,duel:vDuel,zalp:vZalp,honor:vHonor,slash:vSlash,pobeg:vPobeg,bookgame:vBookGame}[S.screen];
  const body=V();
  const root=DEPTH[S.screen]===0;
  app.classList.toggle('has-tabs',root);
@@ -2247,7 +2314,7 @@ function snow(cv){return null}
 
 function finishLevel(id){
  if(!isDone(id))S.done.push(id);
- S.justDone=id;clNudgeMark();
+ S.justDone=id;clNudgeMark();S.essNew=null;if(typeof essOnFinish==='function')essOnFinish(id);
  {const A=BK().acts,k=Object.keys(A).find(k=>{const ns=A[k].nodes;return ns[ns.length-1].id===id});if(k&&A[+k+1])S.act=+k+1}
 const GC=BK().chests&&BK().chests[id],GF=BK().finals&&BK().finals[id],GG=BK().games&&BK().games[id];
  const card=GG?GG.card:GC?GC.card:GF?(S.genScore===S.genTotal&&GF.perfectCard?GF.perfectCard:GF.card):id==='chest'?'kib':id==='chest2'?'shpaga':id==='boss'?(S.fair.blitz===BOSS.length?'buran':null):id==='boss2'?(S.duelClean?'duel':null):id==='chest3'?'pushka':id==='chest4'?'orenburg':id==='chest5'?'tsarskoe':id==='boss5'?((S.honorLast||0)>=HONOR.CARD?'chest':null):id==='boss4'?(S.blitz4===BOSS4.length?'sovet':null):id==='boss3'?(S.snos3perfect?'oborona':null):id==='pb5'?(S.pbStars>=36?'pobeg':null):LEVELS[id].card;
@@ -2319,7 +2386,7 @@ app.addEventListener('click',e=>{
  if(act==='closeact'){S.level='boss';finishLevel('boss');return}
  if(act==='reset'){S.xp=0;S.done=[];S.cards=[];S.dossier=[];S.duelBest=0;S.act=1;S.ck={};S.bm={};S.bmFrom=null;S.streak=0;S.lastDay=null;S.blitz4=0;S.snos3perfect=false;S.snos3ok=false;S.lockLast=0;S.final5=0;S.pvKey=null;S.fair={blitz:null,lock:0,snos:0,lockOk:false,snosOk:false};cloudAfterReset();save();go('library');return}
 });
-window.__PERO={LEVELS,get qs(){return S.boss&&S.boss.gen?BQ():null}};
+window.__PERO={LEVELS,get qs(){return S.boss&&S.boss.gen?BQ():null},finish(id){S.level=id;S.gained=0;finishLevel(id)}};
 fixAct();
 applyTheme();
 let sw=null;
@@ -2448,6 +2515,8 @@ function clMerge(a,b){a=a||{};b=b||{};const ra=+a.resetAt||0,rb=+b.resetAt||0;
  for(const k of CL_MAX){const v=Math.max(Number.isFinite(o[k])?o[k]:-Infinity,Number.isFinite(n[k])?n[k]:-Infinity);if(Number.isFinite(v))m[k]=v}
  for(const k of CL_OR){if(o[k]||n[k])m[k]=true}
  m.ck=Object.assign({},o.ck||{},n.ck||{});
+ {const eo=o.ess||{},en=n.ess||{},byId=(a,b,f)=>{const M={};for(const x of [].concat(a||[],b||[]))if(x&&x.id){const p=M[x.id];if(!p||(f&&(x[f]||0)>(p[f]||0))||!f)M[x.id]=p&&!f?p:x}return Object.values(M)};
+  m.ess={mine:byId(eo.mine,en.mine),drafts:byId(eo.drafts,en.drafts,'ts'),seen:[...new Set([].concat(eo.seen||[],en.seen||[]))],train:{n:Math.max((eo.train||{}).n||0,(en.train||{}).n||0),ok:Math.max((eo.train||{}).ok||0,(en.train||{}).ok||0)}}}
  const fo=o.fair||{},fn=n.fair||{};m.fair=Object.assign({},fo,fn,{lock:Math.max(fo.lock||0,fn.lock||0),snos:Math.max(fo.snos||0,fn.snos||0),lockOk:!!(fo.lockOk||fn.lockOk),snosOk:!!(fo.snosOk||fn.snosOk),blitz:Math.max(fo.blitz==null?-1:fo.blitz,fn.blitz==null?-1:fn.blitz)});if(m.fair.blitz<0)m.fair.blitz=null;
  const lo=o.lastDay==null?-1:o.lastDay,ln=n.lastDay==null?-1:n.lastDay;
  if(lo>ln){m.lastDay=o.lastDay;m.streak=o.streak}else if(lo===ln){m.streak=Math.max(o.streak||0,n.streak||0)}
@@ -2629,6 +2698,153 @@ function clNudgeCheck(){if(!clOn()||CL.sess||S.screen!=='map'||document.getEleme
  st.due=false;st.shown=(st.shown||0)+1;try{localStorage.setItem('pero-nudge',JSON.stringify(st))}catch(e){}
  const d=document.createElement('div');d.id='clnudge';d.className='clnudge';d.innerHTML=`<div class="clnback" data-cl="nudgelater"></div><div class="clsheet" role="dialog" aria-modal="true" aria-labelledby="clnt"><span class="clgrab" aria-hidden="true"></span><div class="clsheetTop">${CL_QUILL}<span class="clpill">${(S.done||[]).length} ${plural((S.done||[]).length,'место пройдено','места пройдено','мест пройдено')} · ${S.xp} XP</span></div><h2 class="clh" id="clnt">Не потеряй прочитанное</h2><p class="clp">Сейчас всё хранится только на этом телефоне. Сохрани за 20 секунд — и продолжай с любого устройства.</p><button class="btn wide" data-cl="nudgego">Сохранить</button><button class="cllink" data-cl="nudgelater">Позже</button></div>`;
  app.appendChild(d);setTimeout(()=>{const b=d.querySelector('[data-cl="nudgego"]');if(b)b.focus()},250)}
+/* ---- Режим «Итоговое сочинение» ---- */
+const ESD=window.PERO_ESSAY||{sections:[],episodes:[],topics:[]};
+var ES={filter:'all',tr:null,cur:null};
+function essOn(){return !!S.essayMode&&ESD.episodes.length>0}
+function essState(){if(!S.ess||typeof S.ess!=='object')S.ess={};const E=S.ess;if(!Array.isArray(E.mine))E.mine=[];if(!Array.isArray(E.drafts))E.drafts=[];if(!Array.isArray(E.seen))E.seen=[];if(!E.train||typeof E.train!=='object')E.train={n:0,ok:0};return E}
+function essSubName(c){for(const s of ESD.sections)for(const x of s.subs)if(x[0]===c)return x[1];return ''}
+function essSecOf(c){return String(c).split('.')[0]}
+function essBook(id){return BOOKS.find(b=>b.id===id)||{title:id,author:''}}
+function essAllDone(){const d=new Set(S.done||[]);return d}
+function essUnlocked(){const d=essAllDone();return ESD.episodes.filter(e=>d.has(e.node))}
+function essAll(){const E=essState();return essUnlocked().concat(E.mine.map(m=>Object.assign({mine:true},m)))}
+function essFind(id){return ESD.episodes.find(e=>e.id===id)||essState().mine.find(m=>m.id===id)||null}
+function essCover(b){const a=ART['cov_'+b];return a?`style="background-image:url(${a})"`:''}
+function essWords(t){return (String(t||'').match(/[A-Za-zА-Яа-яЁё0-9]+(?:[-'][A-Za-zА-Яа-яЁё0-9]+)*/g)||[]).length}
+function essQuoteWords(t){let n=0;String(t||'').replace(/«([^»]*)»/g,(m,q)=>{n+=essWords(q);return m});return n}
+
+/* в профиле */
+function essProfileGroup(){if(!ESD.episodes.length)return '';
+ return `<div class="ghead">Учёба</div><div class="group"><button class="grow tog" data-ess="toggle" role="switch" aria-checked="${!!S.essayMode}"><span>Режим итогового сочинения<small class="tsub">Копилка аргументов, тренажёр и черновики по требованиям ФИПИ</small></span><span class="sw2 ${S.essayMode?'on':''}" aria-hidden="true"><i></i></span></button></div>`}
+
+/* карточка на экране результата */
+function essOnFinish(id){if(!essOn())return;const E=essState();S.essNew=ESD.episodes.filter(e=>e.node===id&&!E.seen.includes(e.id)).map(e=>e.id);for(const x of S.essNew)E.seen.push(x)}
+function essResultCard(){if(!essOn()||!S.essNew||!S.essNew.length)return '';const eps=S.essNew.map(essFind).filter(Boolean);if(!eps.length)return '';
+ return `<div class="esnew" role="status"><div class="esnewh"><span class="esnewic" aria-hidden="true">${ES_PEN}</span><div><div class="esk">${eps.length>1?'Аргументы для сочинения':'Аргумент для сочинения'}</div>${eps.map(e=>`<div class="esnewt">${clEsc(e.title)}</div>`).join('')}</div></div>
+ <div class="estags">${[...new Set(eps.flatMap(e=>e.tags))].slice(0,4).map(t=>`<span>${clEsc(t)}</span>`).join('')}</div>
+ <button class="esnewgo" data-ess="open">Уже в копилке — открыть</button></div>`}
+const ES_PEN='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg>';
+
+/* копилка */
+function essCard(e){const b=essBook(e.book);const subs=(e.subs||[]).map(c=>`<span title="${clEsc(essSubName(c))}">${c}</span>`).join('');
+ return `<article class="escard"><div class="eshead"><span class="escov" ${e.mine?'':essCover(e.book)} aria-hidden="true"></span><div class="esmeta"><div class="esbook">${clEsc(e.mine?(e.bookTitle||'Своё произведение'):b.title)}${e.chap?' · '+clEsc(e.chap):''}</div><h3 class="estitle">${clEsc(e.title)}</h3></div></div>
+ ${e.text?`<p class="estext">${clEsc(e.text)}</p>`:''}${e.quote?`<blockquote class="esq">${clEsc(e.quote)}<cite>${clEsc(e.mine?(e.author||''):b.author)}</cite></blockquote>`:''}
+ ${e.think?`<p class="esthink"><b>Подумай:</b> ${clEsc(e.think)}</p>`:''}
+ <div class="esfoot"><div class="estags">${(e.tags||[]).map(t=>`<span>${clEsc(t)}</span>`).join('')}</div><div class="essubs" aria-label="Подразделы банка тем">${subs}</div></div>
+ ${e.mine?`<button class="esdel" data-ess="delmine" data-id="${clEsc(e.id)}">Удалить</button>`:''}</article>`}
+function vEssay(){const all=essAll(),E=essState();const f=ES.filter;const list=f==='all'?all:all.filter(e=>(e.subs||[]).some(c=>essSecOf(c)===f));
+ const locked=ESD.episodes.length-essUnlocked().length;
+ const chips=[['all','Все'],['1','Нравственные ориентиры'],['2','Семья, общество, Отечество'],['3','Природа и культура']].map(([k,n])=>`<button class="eschip" data-ess="filter" data-f="${k}" aria-pressed="${f===k}">${n}</button>`).join('');
+ return `<div class="esroot"><div class="eseyebrow">Копилка аргументов · итоговое сочинение</div>
+ <p class="esintro">Эпизоды из прочитанного, которые можно взять в сочинение. Фильтр — по разделам банка тем ФИПИ.</p>
+ <div class="estiles"><button class="estile dark" data-ess="train"><b>Тренажёр</b><span>Подбери аргумент к теме</span></button><button class="estile" data-ess="drafts"><b>Черновики</b><span>${E.drafts.length?E.drafts.length+' '+plural(E.drafts.length,'черновик','черновика','черновиков'):'Собери план сочинения'}</span></button></div>
+ <div class="eschips" role="group" aria-label="Раздел банка тем">${chips}</div>
+ ${list.length?list.map(essCard).join(''):`<div class="esempty">${all.length?'В этом разделе пока нет аргументов из прочитанного.':'Аргументы появятся, когда ты пройдёшь первые главы. Начни с любой книги.'}</div>`}
+ ${locked>0?`<p class="eslock">Ещё ${locked} ${plural(locked,'эпизод откроется','эпизода откроются','эпизодов откроются')} по ходу чтения</p>`:''}
+ <button class="btn ghost wide" data-ess="addmine">Добавить свой эпизод</button>
+ ${essRulesHTML()}</div>`}
+function essRulesHTML(){return `<details class="esrules"><summary>Требования и критерии ФИПИ</summary>
+ <p><b>Требование № 1. Объём.</b> Рекомендуется от 350 слов. Если меньше 250, ставится «незачёт».</p>
+ <p><b>Требование № 2. Самостоятельность.</b> Списывать и воспроизводить чужой текст нельзя. Цитировать можно со ссылкой на источник, но цитат не больше, чем своего текста.</p>
+ <p><b>Критерии:</b> 1 — соответствие теме; 2 — аргументация, привлечение литературного материала; 3 — композиция и логика рассуждения; 4 — качество письменной речи; 5 — грамотность.</p>
+ <p><b>Зачёт:</b> обязательно по критериям 1 и 2 и хотя бы по одному из критериев 3–5.</p>
+ <p><b>Комплект</b> — шесть тем, по две из каждого раздела. Достаточно опоры на одно произведение: важнее глубина, чем количество.</p>
+ ${ESD.sections.map(s=>`<p><b>${s.n}. ${s.t}</b><br>${s.subs.map(x=>x[0]+' '+x[1]).join('<br>')}</p>`).join('')}
+ <p class="essrc">Источник: документы ФИПИ к итоговому сочинению 2026/27, fipi.ru</p></details>`}
+
+/* свой эпизод */
+function vEssMine(){return `<div class="clpage"><h2 class="clh">Свой эпизод</h2><p class="clp">Любое произведение, которое ты читал: отечественная или мировая литература, мемуары, публицистика.</p>
+ <form data-essf="mine" class="clform">
+ <label class="cllbl" for="esmb">Произведение и автор</label><input id="esmb" class="clin" name="book" maxlength="80" placeholder="Например: «Война и мир», Л. Н. Толстой" required>
+ <label class="cllbl" for="esmt">Эпизод</label><input id="esmt" class="clin" name="title" maxlength="80" placeholder="Коротко: что происходит" required>
+ <label class="cllbl" for="esmx">Своими словами</label><textarea id="esmx" class="clin esta" name="text" maxlength="600" rows="4" placeholder="Что произошло и почему это важно"></textarea>
+ <label class="cllbl" for="esmq">Цитата <small>— по желанию</small></label><input id="esmq" class="clin" name="quote" maxlength="200">
+ <label class="cllbl" for="esms">Раздел банка тем</label><select id="esms" class="clin" name="sub">${ESD.sections.map(s=>`<optgroup label="${s.n}. ${clEsc(s.t)}">${s.subs.map(x=>`<option value="${x[0]}">${x[0]} ${clEsc(x[1])}</option>`).join('')}</optgroup>`).join('')}</select>
+ <button class="btn wide">Добавить в копилку</button></form></div>`}
+
+/* тренажёр */
+function essTrainNew(){const un=essUnlocked();const unIds=new Set(un.map(e=>e.id));
+ let pool=ESD.topics.filter(t=>t.fit.some(f=>unIds.has(f)));if(!pool.length){ES.tr={none:true};return}
+ pool=pool.sort(()=>Math.random()-.5);ES.tr={round:0,total:Math.min(5,pool.length),ok:0,topics:pool.slice(0,5),pick:null};essTrainOpts()}
+function essTrainOpts(){const T=ES.tr,t=T.topics[T.round];const un=essUnlocked();const unIds=new Set(un.map(e=>e.id));
+ const good=t.fit.filter(f=>unIds.has(f));const right=good[Math.floor(Math.random()*good.length)];
+ let wrong=un.filter(e=>!t.fit.includes(e.id)).map(e=>e.id);if(wrong.length<2)wrong=wrong.concat(ESD.episodes.filter(e=>!t.fit.includes(e.id)&&!wrong.includes(e.id)).map(e=>e.id));
+ wrong=wrong.sort(()=>Math.random()-.5).slice(0,2);T.opts=[right].concat(wrong).sort(()=>Math.random()-.5);T.right=right;T.pick=null}
+function vEssTrain(){if(!ES.tr)essTrainNew();const T=ES.tr;
+ if(T.none)return `<div class="clpage"><h2 class="clh">Пока рано</h2><p class="clp">Тренажёр подбирает темы к эпизодам, которые ты уже прочитал. Пройди ещё пару глав — и возвращайся.</p><button class="btn wide" data-go="library">К книгам</button></div>`;
+ if(T.round>=T.total)return `<div class="clpage estrdone"><div class="clstamp" aria-hidden="true"><span>${ES_PEN}<small>${T.ok} из ${T.total}</small></span></div><h2 class="clh" style="text-align:center">${T.ok===T.total?'Все аргументы в точку':T.ok?'Хороший подход':'Ничего, это тренировка'}</h2>
+ <p class="clp" style="text-align:center">+${T.ok*3} XP. Темы берутся из тех книг, что ты прочитал, — чем больше читаешь, тем шире выбор.</p><button class="btn wide" data-ess="trainagain">Ещё пять тем</button><button class="btn ghost wide" data-ess="open">В копилку</button></div>`;
+ const t=T.topics[T.round];
+ const opts=T.opts.map(id=>{const e=essFind(id);if(!e)return '';const b=essBook(e.book);let st='';if(T.pick){st=id===T.right?' ok':id===T.pick?' bad':' dim'}
+  return `<button class="esopt${st}" data-ess="pick" data-id="${id}" ${T.pick?'disabled':''}><span class="escov sm" ${essCover(e.book)} aria-hidden="true"></span><span class="esoptx"><b>${clEsc(e.title)}</b><small>${clEsc(b.title)}${e.chap?' · '+clEsc(e.chap):''}</small></span>${T.pick&&id===T.right?'<span class="esok" aria-label="Верно">✓</span>':''}</button>`}).join('');
+ let fb='';if(T.pick){const e=essFind(T.right),ok=T.pick===T.right;fb=`<div class="esfb ${ok?'ok':'bad'}" role="status"><b>${ok?'Точное попадание':'Лучше подойдёт «'+clEsc(e.title)+'»'}</b><p>${clEsc(e.text)}</p><p><b>Подумай, как связать с темой:</b> ${clEsc(e.think)}</p><p class="essub">Подраздел ${t.sub}: ${clEsc(essSubName(t.sub))}</p></div>
+  <button class="btn wide" data-ess="next">${T.round+1<T.total?'Дальше':'Итоги'}</button>`}
+ return `<div class="clpage"><div class="estrtop"><span>Тема ${T.round+1} из ${T.total}</span><span>${t.src==='fipi'?'Образец ФИПИ 2026/27':'По разделу '+essSecOf(t.sub)}</span></div>
+ <div class="estopic"><div class="esk">Тема сочинения</div><div class="estopict">${clEsc(t.t)}</div></div>
+ <p class="clp">Какой эпизод подойдёт лучше всего?</p><div class="esopts">${opts}</div>${fb}</div>`}
+
+/* черновики */
+function vEssDrafts(){const E=essState();
+ return `<div class="clpage"><h2 class="clh">Черновики</h2><p class="clp">План сочинения: тезис, аргументы из копилки, вывод. Пишешь сам — приложение подсказывает, чего не хватает по критериям ФИПИ.</p>
+ ${E.drafts.length?`<div class="group">${E.drafts.slice().sort((a,b)=>(b.ts||0)-(a.ts||0)).map(d=>`<button class="grow link" data-ess="draft" data-id="${clEsc(d.id)}"><span>${clEsc(d.topic||'Без темы')}<small class="tsub">${essWords(d.text)} ${plural(essWords(d.text),'слово','слова','слов')} · ${new Date(d.ts||Date.now()).toLocaleDateString('ru-RU',{day:'numeric',month:'short'})}</small></span><span aria-hidden="true">›</span></button>`).join('')}</div>`:''}
+ <button class="btn wide" data-ess="newdraft">Новый черновик</button></div>`}
+function essDraft(){const E=essState();return E.drafts.find(d=>d.id===ES.cur)||null}
+function vEssDraft(){const d=essDraft();if(!d)return vEssDrafts();const all=essAll();
+ const optsArg=sel=>`<option value="">— выбрать из копилки —</option>`+all.map(e=>`<option value="${clEsc(e.id)}" ${sel===e.id?'selected':''}>${clEsc(e.title)} · ${clEsc(e.mine?(e.bookTitle||''):essBook(e.book).title)}</option>`).join('');
+ const topicOpts=`<option value="">— выбрать тему —</option>`+ESD.topics.map(t=>`<option ${d.topic===t.t?'selected':''}>${clEsc(t.t)}</option>`).join('')+`<option value="__own" ${d.own?'selected':''}>Своя тема…</option>`;
+ return `<form class="clform esdraft" data-essf="draft" onsubmit="return false">
+ <label class="cllbl" for="esdt">Тема</label><select id="esdt" class="clin" name="topicSel">${topicOpts}</select>
+ <input id="esdo" class="clin${d.own?'':' eshide'}" name="topicOwn" maxlength="200" placeholder="Впиши тему" value="${clEsc(d.own?d.topic:'')}">
+ <div class="essteps">
+ <div class="esstep"><span class="esn">1</span><div><label class="esk" for="esd1">Тезис — твой ответ на вопрос темы</label><textarea id="esd1" class="clin esta" name="thesis" rows="3" maxlength="600">${clEsc(d.thesis||'')}</textarea></div></div>
+ <div class="esstep"><span class="esn">2</span><div><label class="esk" for="esd2">Аргумент 1</label><select id="esd2" class="clin" name="a1">${optsArg(d.a1)}</select><p class="eshint" id="esh2">${d.a1&&essFind(d.a1)?'Подумай: '+clEsc(essFind(d.a1).think||''):''}</p></div></div>
+ <div class="esstep"><span class="esn">3</span><div><label class="esk" for="esd3">Аргумент 2 <small>— по желанию</small></label><select id="esd3" class="clin" name="a2">${optsArg(d.a2)}</select><p class="eshint" id="esh3">${d.a2&&essFind(d.a2)?'Подумай: '+clEsc(essFind(d.a2).think||''):''}</p></div></div>
+ <div class="esstep"><span class="esn">4</span><div><label class="esk" for="esd4">Вывод</label><textarea id="esd4" class="clin esta" name="concl" rows="3" maxlength="600">${clEsc(d.concl||'')}</textarea></div></div>
+ </div>
+ <label class="cllbl" for="esd5">Текст сочинения <small>— по желанию, чтобы проверить объём</small></label><textarea id="esd5" class="clin esta big" name="text" rows="10">${clEsc(d.text||'')}</textarea>
+ <div id="eschk" class="eschk" aria-live="polite">${essChecksHTML(d)}</div>
+ <button type="button" class="esdel" data-ess="deldraft">Удалить черновик</button></form>`}
+function essChecksHTML(d){const w=essWords(d.text),qw=essQuoteWords(d.text),own=w-qw;const has=s=>essWords(s)>=3;
+ const row=(st,t,sub)=>`<div class="eschr ${st}"><span class="esci" aria-hidden="true">${st==='ok'?'✓':st==='bad'?'!':st==='warn'?'!':'·'}</span><div><b>${t}</b>${sub?`<small>${sub}</small>`:''}</div></div>`;
+ const vol=!d.text?row('na','Требование № 1. Объём','Напиши текст, чтобы проверить: рекомендуется от 350 слов'):w<250?row('bad','Требование № 1. Объём',`${w} ${plural(w,'слово','слова','слов')} — меньше 250, это «незачёт»`):w<350?row('warn','Требование № 1. Объём',`${w} ${plural(w,'слово','слова','слов')} — рекомендуется от 350`):row('ok','Требование № 1. Объём',`${w} ${plural(w,'слово','слова','слов')}`);
+ const self=!d.text?row('na','Требование № 2. Самостоятельность','Пиши своими словами. Цитаты — со ссылкой на автора'):qw>own?row('bad','Требование № 2. Самостоятельность','Цитат больше, чем своего текста'):row('ok','Требование № 2. Самостоятельность',qw?`Цитаты: ${qw} ${plural(qw,'слово','слова','слов')} из ${w}`:'Пиши своими словами. Цитаты — со ссылкой на автора');
+ const k1=(d.topic&&has(d.thesis))?row('ok','Критерий 1. Соответствие теме','Есть тема и тезис — ответ на её вопрос'):row('na','Критерий 1. Соответствие теме','Выбери тему и сформулируй тезис');
+ const k2=(d.a1||d.a2)?row('ok','Критерий 2. Аргументация, литературный материал','Аргумент из произведения есть. Раскрой его, а не просто упомяни'):row('na','Критерий 2. Аргументация, литературный материал','Нужен хотя бы один пример из литературы');
+ const k3=(has(d.thesis)&&(d.a1||d.a2)&&has(d.concl))?row('ok','Критерий 3. Композиция и логика','Тезис — аргументы — вывод'):row('na','Критерий 3. Композиция и логика','Нужны тезис, аргумент и вывод');
+ const k45=row('na','Критерии 4 и 5. Речь и грамотность','Проверь сам: не больше 5 ошибок на 100 слов');
+ const pass=(d.topic&&has(d.thesis))&&(d.a1||d.a2)&&has(d.concl);
+ return `<div class="eschkh"><b>Проверка по требованиям ФИПИ</b><span>${pass?'План готов':'Заполни план'}</span></div>${vol}${self}${k1}${k2}${k3}${k45}<p class="essrc">Зачёт: критерии 1 и 2 обязательно и хотя бы один из 3–5. Это подсказка, а не оценка эксперта.</p>`}
+
+/* события */
+app.addEventListener('click',e=>{const t=e.target.closest('[data-ess]');if(!t)return;const a=t.dataset.ess;
+ if(a==='toggle'){S.essayMode=!S.essayMode;save();render();if(S.essayMode)toastCl('Вкладка «Сочинение» появилась внизу');return}
+ if(a==='open'){go('essay');return}
+ if(a==='filter'){ES.filter=t.dataset.f;render();return}
+ if(a==='train'){ES.tr=null;go('esstrain');return}
+ if(a==='trainagain'){ES.tr=null;render();return}
+ if(a==='pick'){const T=ES.tr;if(!T||T.pick)return;T.pick=t.dataset.id;const ok=T.pick===T.right;if(ok){T.ok++;S.xp+=3}const E=essState();E.train.n++;if(ok)E.train.ok++;save();try{SFX(ok?'ok':'bad')}catch(_){}render();return}
+ if(a==='next'){const T=ES.tr;T.round++;if(T.round<T.total)essTrainOpts();render();window.scrollTo(0,0);return}
+ if(a==='drafts'){go('essdrafts');return}
+ if(a==='newdraft'){const E=essState();const d={id:'d'+Date.now().toString(36),topic:'',own:false,thesis:'',a1:'',a2:'',concl:'',text:'',ts:Date.now()};E.drafts.push(d);ES.cur=d.id;save();go('essdraft');return}
+ if(a==='draft'){ES.cur=t.dataset.id;go('essdraft');return}
+ if(a==='deldraft'){if(!confirm('Удалить черновик?'))return;const E=essState();E.drafts=E.drafts.filter(d=>d.id!==ES.cur);ES.cur=null;save();go('essdrafts');return}
+ if(a==='addmine'){go('essmine');return}
+ if(a==='delmine'){if(!confirm('Удалить этот эпизод из копилки?'))return;const E=essState();E.mine=E.mine.filter(m=>m.id!==t.dataset.id);save();render();return}
+});
+app.addEventListener('submit',e=>{const f=e.target.closest('form[data-essf]');if(!f)return;e.preventDefault();if(f.dataset.essf!=='mine')return;
+ const v=n=>((f.elements[n]&&f.elements[n].value)||'').trim();if(!v('book')||!v('title'))return;const sub=v('sub');
+ const E=essState();E.mine.push({id:'m'+Date.now().toString(36),bookTitle:v('book').slice(0,80),title:v('title').slice(0,80),text:v('text').slice(0,600),quote:v('quote')?('«'+v('quote').replace(/^«|»$/g,'')+'»').slice(0,202):'',subs:sub?[sub]:[],tags:[],think:''});save();go('essay');toastCl('Эпизод добавлен в копилку')});
+let essT=0;
+function essDraftInput(e){const f=e.target.closest('form[data-essf="draft"]');if(!f)return;const d=essDraft();if(!d)return;const n=e.target.name;
+ if(n==='topicSel'){const own=e.target.value==='__own';d.own=own;d.topic=own?(f.elements.topicOwn.value||'').trim():e.target.value;f.elements.topicOwn.classList.toggle('eshide',!own);if(own)f.elements.topicOwn.focus()}
+ else if(n==='topicOwn'){d.topic=e.target.value.trim()}
+ else if(['thesis','concl','text','a1','a2'].includes(n)){d[n]=e.target.value}
+ if(n==='a1'||n==='a2'){const h=document.getElementById(n==='a1'?'esh2':'esh3');const x=essFind(d[n]);if(h)h.textContent=x&&x.think?'Подумай: '+x.think:''}
+ d.ts=Date.now();const c=document.getElementById('eschk');if(c)c.innerHTML=essChecksHTML(d);clearTimeout(essT);essT=setTimeout(save,700)}
+app.addEventListener('input',essDraftInput);app.addEventListener('change',essDraftInput);
+{const _vr=vResult;vResult=function(){return essResultCard()+_vr()}}
+
 {const _render=render;render=function(){_render();setTimeout(clNudgeCheck,400)}}
 
 render();
